@@ -22,8 +22,16 @@ const SignUp = () => {
   };
   return (
     <div>
-      <input type="text" placeholder="email" onChange={setEmail} />
-      <input type="password" placeholder="password" onChange={setPassword} />
+      <input
+        type="text"
+        placeholder="email"
+        onChange={(e) => setEmail(e.target.value)}
+      />
+      <input
+        type="password"
+        placeholder="password"
+        onChange={(e) => setPassword(e.target.value)}
+      />
       <br />
       <button onClick={handleSignUp}>Sign Up</button>
       <br /> <br />
