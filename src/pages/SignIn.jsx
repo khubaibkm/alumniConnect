@@ -14,7 +14,7 @@ const SignIn = () => {
   const handleSignIn = async () => {
     try {
       await createUserWithEmailAndPassword(auth, email, password);
-      navigate("/home");
+      navigate("/");
       toast.success("SignedIn successfully!");
     } catch (error) {
       toast.error("Error signing in");
@@ -24,7 +24,7 @@ const SignIn = () => {
   const SignInWithGoogle = async () => {
     try {
       await signInWithPopup(auth, googleProvider);
-      navigate("/home");
+      navigate("/");
       toast.success("SignedIn successfully!");
     } catch (error) {
       console.log(error);

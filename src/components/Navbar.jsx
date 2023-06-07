@@ -4,7 +4,7 @@ export const Navbar = () => {
   return (
     <nav className="navbar navbar-expand-lg navbar-light bg-light fixed-top">
       <div className="container-fluid">
-        <a className="navbar-brand" href="/">
+        <a style={{color:"#5143d9"}} className="navbar-brand" href="/">
           Alumni Connect
         </a>
         <button
