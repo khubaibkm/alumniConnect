@@ -6,12 +6,14 @@ import SignUp from "./pages/signUp";
 import HomePage from "./pages/homePage";
 import SignIn from "./pages/SignIn";
 import OnBoardingForm from "./components/OnBoardingForm";
+import { Navbar } from "./components/Navbar";
 
 function App() {
   return (
     <div className="App">
+      <Navbar />
       <ToastContainer />
-
+      
       <Router>
         <Routes>
           <Route path="/" element={<HomePage />} />

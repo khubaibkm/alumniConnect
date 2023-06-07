@@ -1,9 +1,10 @@
 import React, { useState } from "react";
-import { createUserWithEmailAndPassword, signInWithPopup } from "firebase/auth";
+import { createUserWithEmailAndPassword, signInWithPopup} from "firebase/auth";
 import { auth, googleProvider } from "../config/firebase.js";
 import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { useNavigate } from "react-router-dom";
+import "./SignUp.css"
 
 const SignUp = () => {
   const navigate = useNavigate();
@@ -31,7 +32,6 @@ const SignUp = () => {
     }
   };
   return (
-    <>
       <div className="container">
         <section className="vh-xxl-100 pt-5">
           <div className="container h-100 d-flex px-0 px-sm-4">
@@ -62,27 +62,26 @@ const SignUp = () => {
                           </a>
                         </div>
                         {/* <!-- Title --> */}
-                        <h1 className="mb-2 h3">Welcome back</h1>
-                        <p className="mb-0">
-                          New here?
-                          <a> Create an account</a>
-                        </p>
-                        <div className="mt-5">
+                        <h1 className="mb-2 h2">Welcome to Alumni Connect</h1>
+                          <a className="h3">Get Started</a>
+                        <div className="mt-3">
                           <input
+                            className="cred"
                             type="text"
                             placeholder="email"
                             onChange={(e) => setEmail(e.target.value)}
                           />
                           <input
+                            className="cred"
                             type="password"
                             placeholder="password"
                             onChange={(e) => setPassword(e.target.value)}
                           />
                           <br />
-                          <button onClick={handleSignUp}>Sign Up</button>
+                          <button className="signup" onClick={handleSignUp}>SignUp</button>
                           <br /> <br />
-                          <button onClick={SignUpWithGoogle}>
-                            Sign Up with Google
+                          <button className="signup google" onClick={SignUpWithGoogle}>
+                          <img src="../public/google.svg" width={30} style={{marginRight:"5px"}}></img>Continue with Google
                           </button>
                         </div>
                       </div>
@@ -94,7 +93,6 @@ const SignUp = () => {
           </div>
         </section>
       </div>
-    </>
   );
 };
 

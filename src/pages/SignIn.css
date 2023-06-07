@@ -11,8 +11,14 @@
     color: black;
 }
 
-.signup{
+.signin{
     position: relative;
     top: -1.5rem;
     width: 16rem;
+}
+
+
+.signout{
+    display: block;
+    margin: auto;
 }
