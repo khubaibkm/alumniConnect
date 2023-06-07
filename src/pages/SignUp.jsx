@@ -3,14 +3,17 @@ import { createUserWithEmailAndPassword, signInWithPopup } from "firebase/auth";
 import { auth, googleProvider } from "../config/firebase.js";
 import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import { useNavigate } from "react-router-dom";
 
 const SignUp = () => {
+  const navigate = useNavigate();
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
 
   const handleSignUp = async () => {
     try {
       await createUserWithEmailAndPassword(auth, email, password);
+      navigate("/On_boarding_form");
       toast.success("User registered successfully!");
     } catch (error) {
       toast.error("Error signing up");
@@ -20,6 +23,7 @@ const SignUp = () => {
   const SignUpWithGoogle = async () => {
     try {
       await signInWithPopup(auth, googleProvider);
+
       toast.success("User registered successfully!");
     } catch (error) {
       console.log(error);
