@@ -8,6 +8,7 @@ import SignIn from "./pages/SignIn";
 import OnBoardingForm from "./components/OnBoardingForm";
 import { Navbar } from "./components/Navbar";
 
+
 function App() {
   return (
     <div className="App">
@@ -20,6 +21,7 @@ function App() {
           <Route path="/signup" element={<SignUp />} />
           <Route path="/signin" element={<SignIn />} />
           <Route path="/On_boarding_form" element={<OnBoardingForm />} />
+          <Route path="/homebanner" element={<OnBoardingForm />} />
           {/* Add other routes for your pages */}
         </Routes>
       </Router>
