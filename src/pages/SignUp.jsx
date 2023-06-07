@@ -23,7 +23,7 @@ const SignUp = () => {
   const SignUpWithGoogle = async () => {
     try {
       await signInWithPopup(auth, googleProvider);
-
+      navigate("/On_boarding_form");
       toast.success("User registered successfully!");
     } catch (error) {
       console.log(error);
