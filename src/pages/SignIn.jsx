@@ -106,9 +106,6 @@ const SignIn = () => {
                           ></img>
                           Continue with Google
                         </button>
-                        <button className="signout" onClick={signingOut}>
-                          Log Out
-                        </button>
                       </div>
                     </div>
                   </div>
