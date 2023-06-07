@@ -2,7 +2,7 @@ import "./Navbar.css";
 import React, { useState, useEffect } from "react";
 import { auth } from "../config/firebase.js";
 import { onAuthStateChanged, signOut } from "firebase/auth";
-import { useNavigate } from "react-router-dom";
+import { Link } from "react-router-dom";
 
 export const Navbar = () => {
   const [isSignedIn, setIsSignedIn] = useState(false);
@@ -27,9 +27,9 @@ export const Navbar = () => {
   return (
     <nav className="navbar navbar-expand-lg navbar-light bg-light fixed-top">
       <div className="container-fluid">
-        <a style={{ color: "#5143d9" }} className="navbar-brand" href="/">
+        <Link to="/" style={{ color: "#5143d9" }} className="navbar-brand">
           Alumni Connect
-        </a>
+        </Link>
         <button
           className="navbar-toggler"
           type="button"
@@ -47,9 +47,9 @@ export const Navbar = () => {
         >
           <ul className="navbar-nav">
             <li className="nav-item">
-              <a className="nav-link" aria-current="page" href="/">
+              <Link to="/" className="nav-link" aria-current="page">
                 Home
-              </a>
+              </Link>
             </li>
             <li className="nav-item">
               {isSignedIn ? (
@@ -57,20 +57,20 @@ export const Navbar = () => {
                   Logout
                 </a>
               ) : (
-                <a className="nav-link" href="/signin">
+                <Link to="/signin" className="nav-link">
                   SignIn
-                </a>
+                </Link>
               )}
             </li>
             <li className="nav-item">
-              <a className="nav-link" href="/signup">
+              <Link to="/signup" className="nav-link">
                 SignUp
-              </a>
+              </Link>
             </li>
             <li className="nav-item">
-              <a className="nav-link" href="/On_boarding_form">
+              <Link to="/On_boarding_form" className="nav-link">
                 Onboard Form
-              </a>
+              </Link>
             </li>
           </ul>
         </div>

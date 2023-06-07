@@ -11,10 +11,10 @@ import { Navbar } from "./components/Navbar";
 function App() {
   return (
     <div className="App">
-      <Navbar />
       <ToastContainer />
-      
+
       <Router>
+        <Navbar />
         <Routes>
           <Route path="/" element={<HomePage />} />
           <Route path="/signup" element={<SignUp />} />
