@@ -2,7 +2,6 @@ import React, { useState } from "react";
 import {
   createUserWithEmailAndPassword,
   signInWithPopup,
-  signOut,
 } from "firebase/auth";
 import { auth, googleProvider } from "../config/firebase.js";
 import { toast } from "react-toastify";
@@ -32,15 +31,6 @@ const SignIn = () => {
       toast.success("SignedIn successfully!");
     } catch (error) {
       console.log(error);
-      toast.error("Error signing in");
-    }
-  };
-  const signingOut = async () => {
-    try {
-      await signOut(auth);
-      navigate("/signup");
-      toast.success("You are now Logged Out");
-    } catch (err) {
       toast.error("Error signing in");
     }
   };

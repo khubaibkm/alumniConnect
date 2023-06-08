@@ -8,12 +8,6 @@ export const HomeBanner = () => {
       <section className="mt-5 p-5">
         <div
           className="banner"
-          style={{
-            minHeight: "80vh",
-            minWidth: "80vw",
-            display: "flex",
-            alignItems: "center",
-          }}
         >
           <div className="container">
             <div className="row">

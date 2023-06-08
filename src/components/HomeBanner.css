@@ -3,6 +3,10 @@
     background-position: bottom right; 
     background-size: 38%; 
     background-repeat: no-repeat;
+    min-height: 85vh;
+    min-width: 80vw;
+    display: flex;
+    align-items: center;
   }
 
   .lead{
@@ -17,5 +21,12 @@
   @media (max-width: 768px) {
     .banner {
       background-image: none;
+    }
+
+  }
+
+  @media (min-width: 2000px) {
+    .banner {
+      min-height: 110vh;
     }
   }
