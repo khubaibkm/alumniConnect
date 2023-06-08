@@ -8,7 +8,6 @@ import SignIn from "./pages/SignIn";
 import OnBoardingForm from "./components/OnBoardingForm";
 import { Navbar } from "./components/Navbar";
 
-
 function App() {
   return (
     <div className="App">

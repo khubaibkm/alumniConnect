@@ -32,7 +32,7 @@ const SignUp = () => {
     }
   };
   return (
-    <div className="container">
+    <div className="container mt-5 p-5">
       <section className="vh-xxl-100 pt-5">
         <div className="container h-100 d-flex px-0 px-sm-4">
           <div className="row justify-content-center align-items-center m-auto">
