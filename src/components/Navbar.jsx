@@ -27,7 +27,7 @@ export const Navbar = () => {
   return (
     <nav className="navbar navbar-expand-lg navbar-light bg-light fixed-top">
       <div className="container-fluid">
-        <Link to="/" className="navbar-brand text-primary">
+        <Link to="/" className="navbar-brand" style={{color: "#4885ed"}}>
           Alumni Connect
         </Link>
         <button

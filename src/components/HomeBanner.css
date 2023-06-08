@@ -1,5 +1,21 @@
-.banner {
-    background-image: url('path/to/texture-image.png');
-    background-repeat: repeat;
+.banner{
+    background-image: url("./homebanner.png");
+    background-position: bottom right; 
+    background-size: 38%; 
+    background-repeat: no-repeat;
   }
-  
+
+  .lead{
+    color: #4885ed;
+  }
+
+  .btn{
+    background-color: #4885ed;
+  }
+
+
+  @media (max-width: 768px) {
+    .banner {
+      background-image: none;
+    }
+  }
