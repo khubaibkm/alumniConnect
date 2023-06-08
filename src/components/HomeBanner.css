@@ -25,8 +25,18 @@
 
   }
 
-  @media (min-width: 2000px) {
+  @media (min-width: 1550px) {
     .banner {
       min-height: 110vh;
+    }
+  }
+  @media (min-width: 2100px) {
+    .banner {
+      min-height: 140vh;
+    }
+  }
+  @media (min-width: 2500px) {
+    .banner {
+      min-height: 160vh;
     }
   }
