@@ -40,7 +40,7 @@ const HomePage = () => {
           </div>
         </div>
       </section>
-      <section className="content-inner overflow-hidden position-relative ">
+      <section className="content-inner overflow-hidden position-relative" style={{ minHeight: "100vh" }}>
         <div className="container">
           <div className="section-head text-center">
             <h6
