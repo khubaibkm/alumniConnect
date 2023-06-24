@@ -6,11 +6,9 @@ export const HomeBanner = () => {
   return (
     <>
       <section className="mt-5 p-5">
-        <div
-          className="banner"
-        >
+        <div className="banner">
           <div className="container">
-            <div className="row">
+            <div className="row ">
               <div
                 className="col-md-12"
                 style={{ textAlign: "left", marginBottom: "15rem" }}

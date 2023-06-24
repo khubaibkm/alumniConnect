@@ -1,42 +1,44 @@
-.banner{
-    background-image: url("./homebanner.png");
-    background-position: bottom right; 
-    background-size: 38%; 
-    background-repeat: no-repeat;
-    min-height: 85vh;
-    min-width: 80vw;
-    display: flex;
-    align-items: center;
+.banner {
+  background-image: url("/homebanner.png");
+  background-position: bottom right;
+  background-size: 38%;
+  background-repeat: no-repeat;
+  min-height: 85vh;
+  min-width: 80vw;
+  display: flex;
+  align-items: center;
+}
+
+.lead {
+  color: #4885ed;
+}
+
+.btn {
+  background-color: #4885ed;
+}
+
+
+@media (max-width: 768px) {
+  .banner {
+    background-image: none;
   }
 
-  .lead{
-    color: #4885ed;
-  }
+}
 
-  .btn{
-    background-color: #4885ed;
+@media (min-width: 1550px) {
+  .banner {
+    min-height: 110vh;
   }
+}
 
+@media (min-width: 2100px) {
+  .banner {
+    min-height: 140vh;
+  }
+}
 
-  @media (max-width: 768px) {
-    .banner {
-      background-image: none;
-    }
-
+@media (min-width: 2500px) {
+  .banner {
+    min-height: 160vh;
   }
-
-  @media (min-width: 1550px) {
-    .banner {
-      min-height: 110vh;
-    }
-  }
-  @media (min-width: 2100px) {
-    .banner {
-      min-height: 140vh;
-    }
-  }
-  @media (min-width: 2500px) {
-    .banner {
-      min-height: 160vh;
-    }
-  }
+}

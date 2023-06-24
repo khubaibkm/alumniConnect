@@ -40,8 +40,11 @@ const HomePage = () => {
           </div>
         </div>
       </section>
-      <section className="content-inner overflow-hidden position-relative" style={{ minHeight: "100vh" }}>
-        <div className="container">
+      <section
+        className="content-inner overflow-hidden position-relative mt-3"
+        style={{ minHeight: "100vh" }}
+      >
+        <div className="container ">
           <div className="section-head text-center">
             <h6
               className="text wow fadeInUp"
@@ -67,7 +70,7 @@ const HomePage = () => {
             </h2>
           </div>
           <div className="row justify-content-center">
-            <div className="col-lg-4 col-md-6 m-b30">
+            <div className="col-lg-4 col-md-6 mb-3">
               <div
                 className="icon-bx-wraper style-1 bg-clr-sky wow bounceInLeft"
                 data-wow-delay="1.2s"
@@ -91,7 +94,7 @@ const HomePage = () => {
               </div>
             </div>
 
-            <div className="col-lg-4 col-md-6 m-b30">
+            <div className="col-lg-4 col-md-6 mb-3">
               <div
                 className="icon-bx-wraper style-1 bg-clr-green wow bounceInRight"
                 data-wow-delay="1.2s"
@@ -114,7 +117,7 @@ const HomePage = () => {
                 <h3 className="count">02</h3>
               </div>
             </div>
-            <div className="col-lg-4 col-md-6 m-b30">
+            <div className="col-lg-4 col-md-6 mb-3">
               <div
                 className="icon-bx-wraper style-1 bg-clr-pink wow bounceInUp"
                 data-wow-delay="1.0s"
