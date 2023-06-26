@@ -9,29 +9,40 @@ import SignIn from "./pages/SignIn";
 import OnBoardingForm from "./components/OnBoardingForm";
 import { Navbar } from "./components/Navbar";
 import Protected from "./components/services/Protected";
+import Footer from "./components/Footer";
+import ScrollToTop from "react-scroll-to-top";
 
 function App() {
   return (
-    <div className="App">
-      <React.Fragment>
-        <ToastContainer />
+    <>
+      {" "}
+      <ScrollToTop
+        className=""
+        smooth
+        style={{ paddingRight: "45px", borderRadius: "20px" }}
+      />
+      <div className="App">
+        <React.Fragment>
+          <ToastContainer />
 
-        <Router>
-          <Navbar />
-          <Routes>
-            <Route path="/" element={<HomePage />} />
-            <Route path="/signup" element={<SignUp />} />
-            <Route path="/signin" element={<SignIn />} />
-            <Route
-              path="/On_boarding_form"
-              element={<Protected Component={OnBoardingForm} />}
-            />
-            <Route path="/homebanner" element={<OnBoardingForm />} />
-            {/* Add other routes for your pages */}
-          </Routes>
-        </Router>
-      </React.Fragment>
-    </div>
+          <Router>
+            <Navbar />
+            <Routes>
+              <Route path="/" element={<HomePage />} />
+              <Route path="/signup" element={<SignUp />} />
+              <Route path="/signin" element={<SignIn />} />
+              <Route
+                path="/On_boarding_form"
+                element={<Protected Component={OnBoardingForm} />}
+              />
+              <Route path="/homebanner" element={<OnBoardingForm />} />
+              {/* Add other routes for your pages */}
+            </Routes>
+            <Footer />
+          </Router>
+        </React.Fragment>
+      </div>
+    </>
   );
 }
 
