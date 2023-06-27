@@ -10,7 +10,12 @@ const HomePage = () => {
         <div className="container">
           <div className="row align-items-center">
             <div className="col-lg-6">
-              <img src="/job_01.png" alt="Job" className="img-fluid" />
+              <img
+                src="/alumni.jpg"
+                alt="Job"
+                className="img-fluid"
+                style={{ backgroundBlendMode: "cover" }}
+              />
             </div>
             <div className="col-lg-6">
               <div className="section-head text-start">
@@ -55,7 +60,7 @@ const HomePage = () => {
                 animationName: "fadeInUp",
               }}
             >
-              Working Process
+              Working Process - (for Alumni)
             </h6>
             <h2
               className="title wow fadeInUp"
@@ -84,7 +89,7 @@ const HomePage = () => {
                   <img src="/vite.svg" alt="image" className="rounded" />
                 </div>
                 <div className="icon-content">
-                  <h4 className="title">Regiter Your Account</h4>
+                  <h4 className="title">Register Your Account</h4>
                   <p className="text">
                     Get tailored job recommendations based on your preferences
                     and skills by signing up today
@@ -108,7 +113,7 @@ const HomePage = () => {
                   <img src="/vite.svg" alt="image" className="rounded" />
                 </div>
                 <div className="icon-content">
-                  <h4 className="title">Upload Your Resume</h4>
+                  <h4 className="title">Fill up the OnBoadring Form</h4>
                   <p className="text">
                     Showcase your qualifications and expertise by uploading your
                     resume.
@@ -130,8 +135,8 @@ const HomePage = () => {
                 <div className="icon-media">
                   <img src="/vite.svg" alt="image" className="rounded" />
                 </div>
-                <div className="icon-content">
-                  <h4 className="title">Apply Your Dream Job</h4>
+                <div className="icon-content ">
+                  <h4 className="title">Done, listed on the website!</h4>
                   <p className="text">
                     Take the first step towards pursuing your passion by
                     applying for your dream job today.
