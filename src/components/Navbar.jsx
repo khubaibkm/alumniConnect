@@ -25,9 +25,9 @@ export const Navbar = () => {
   };
 
   return (
-    <nav className="navbar navbar-expand-lg navbar-light bg-light fixed-top">
+    <nav className="navbar navbar-expand-lg navbar-light bg-light fixed-top ">
       <div className="container-fluid">
-        <Link to="/" className="navbar-brand" style={{color: "#4885ed"}}>
+        <Link to="/" className="navbar-brand" style={{ color: "#4885ed" }}>
           Alumni Connect
         </Link>
         <button
@@ -67,6 +67,17 @@ export const Navbar = () => {
                 SignUp
               </Link>
             </li>
+
+            {/* //uncomment this after completing the onboarding form */}
+
+            {/* <li className="nav-item">
+              {isSignedIn && (
+                <Link to="/On_boarding_form" className="nav-link">
+                  Onboard Form
+                </Link>
+              )}
+            </li> */}
+
             <li className="nav-item">
               <Link to="/On_boarding_form" className="nav-link">
                 Onboard Form
