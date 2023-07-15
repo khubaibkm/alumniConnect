@@ -1,8 +1,5 @@
 import React, { useState } from "react";
-import {
-  createUserWithEmailAndPassword,
-  signInWithPopup,
-} from "firebase/auth";
+import { createUserWithEmailAndPassword, signInWithPopup } from "firebase/auth";
 import { auth, googleProvider } from "../config/firebase.js";
 import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
@@ -15,6 +12,10 @@ const SignIn = () => {
   const [password, setPassword] = useState("");
 
   const handleSignIn = async () => {
+    if (email === "" || password === "") {
+      toast.error("Please fill all the fields");
+      return;
+    }
     try {
       await createUserWithEmailAndPassword(auth, email, password);
       navigate("/");
@@ -34,9 +35,9 @@ const SignIn = () => {
       toast.error("Error signing in");
     }
   };
-  
+
   return (
-    <div className="container mt-5 p-5" >
+    <div className="container mt-5 p-5">
       <section className="vh-xxl-100 pt-5">
         <div className="container h-100 d-flex px-0 px-sm-4">
           <div className="row justify-content-center align-items-center m-auto">
@@ -71,7 +72,7 @@ const SignIn = () => {
                       <div className="mt-3">
                         <input
                           className="cred"
-                          type="text"
+                          type="email"
                           placeholder="email"
                           onChange={(e) => setEmail(e.target.value)}
                         />

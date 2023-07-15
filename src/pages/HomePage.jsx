@@ -17,7 +17,7 @@ const HomePage = () => {
                 style={{ backgroundBlendMode: "cover" }}
               />
             </div>
-            <div className="col-lg-6">
+            <div className="col-lg-6 py-4">
               <div className="section-head text-start">
                 <h3>About Us</h3>
                 <h2 className="title">
@@ -46,8 +46,8 @@ const HomePage = () => {
         </div>
       </section>
       <section
-        className="content-inner overflow-hidden position-relative mt-3"
-        style={{ minHeight: "100vh" }}
+        className="content-inner overflow-hidden position-relative mb-5 py-5 "
+        // style={{ minHeight: "100vh" }}
       >
         <div className="container ">
           <div className="section-head text-center">

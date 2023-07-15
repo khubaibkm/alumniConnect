@@ -12,6 +12,11 @@ const SignUp = () => {
   const [password, setPassword] = useState("");
 
   const handleSignUp = async () => {
+    if (email === "" || password === "") {
+      toast.error("Please fill all the fields");
+      return;
+    }
+
     try {
       await createUserWithEmailAndPassword(auth, email, password);
       navigate("/On_boarding_form");
@@ -67,7 +72,7 @@ const SignUp = () => {
                       <div className="mt-3">
                         <input
                           className="cred"
-                          type="text"
+                          type="email"
                           placeholder="email"
                           onChange={(e) => setEmail(e.target.value)}
                         />
