@@ -52,6 +52,11 @@ export const Navbar = () => {
               </Link>
             </li>
             <li className="nav-item">
+              <Link to="/profilelist" className="nav-link">
+                View Profiles
+              </Link>
+            </li>
+            <li className="nav-item">
               {isSignedIn ? (
                 <a className="nav-link" href="#" onClick={handleSignOut}>
                   Logout
@@ -68,20 +73,12 @@ export const Navbar = () => {
               </Link>
             </li>
 
-            {/* //uncomment this after completing the onboarding form */}
-
-            {/* <li className="nav-item">
+            <li className="nav-item">
               {isSignedIn && (
                 <Link to="/On_boarding_form" className="nav-link">
                   Onboard Form
                 </Link>
               )}
-            </li> */}
-
-            <li className="nav-item">
-              <Link to="/On_boarding_form" className="nav-link">
-                Onboard Form
-              </Link>
             </li>
           </ul>
         </div>

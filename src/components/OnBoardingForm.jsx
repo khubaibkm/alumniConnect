@@ -1,4 +1,8 @@
 import React, { useState } from "react";
+import { db, storage } from "../config/firebase.js"; // Import the storage reference
+import { collection, addDoc } from "firebase/firestore";
+import { ref, uploadBytes } from "firebase/storage"; // Import storage-related functions
+import { getDownloadURL } from "firebase/storage";
 
 const OnBoardingForm = () => {
   const [formData, setFormData] = useState({
@@ -10,6 +14,7 @@ const OnBoardingForm = () => {
     bio: "",
     currentCompany: "",
   });
+  const [image, setImage] = useState(null); // State for the selected image
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -19,20 +24,56 @@ const OnBoardingForm = () => {
     }));
   };
 
-  const handleSubmit = (e) => {
+  const handleImageChange = (e) => {
+    // Handle the selected image file
+    const file = e.target.files[0];
+    setImage(file);
+  };
+
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    // Perform form submission logic here
-    console.log(formData);
-    // Reset form after submission
-    setFormData({
-      name: "",
-      graduationYear: "",
-      major: "",
-      email: "",
-      linkedin: "",
-      bio: "",
-      currentCompany: "",
-    });
+
+    try {
+      // Reference to the Firestore collection
+      const alumniCollection = collection(db, "alumni");
+
+      // Upload the image to Firebase Storage
+      let imageUrl = "";
+      if (image) {
+        const storageRef = ref(storage, `profile_images/${formData.email}`);
+        const snapshot = await uploadBytes(storageRef, image);
+        imageUrl = await getDownloadURL(snapshot.ref); // Retrieve the download URL
+      }
+
+      // Add a new document with the form data and image URL
+      await addDoc(alumniCollection, {
+        name: formData.name,
+        graduationYear: formData.graduationYear,
+        major: formData.major,
+        email: formData.email,
+        linkedin: formData.linkedin,
+        bio: formData.bio,
+        currentCompany: formData.currentCompany,
+        profileImageUrl: imageUrl, // Add the image URL to the document
+      });
+
+      // Reset form after successful submission
+      setFormData({
+        name: "",
+        graduationYear: "",
+        major: "",
+        email: "",
+        linkedin: "",
+        bio: "",
+        currentCompany: "",
+      });
+      setImage(null);
+
+      // Display a success message or redirect to another page
+      console.log("Form submitted successfully!");
+    } catch (error) {
+      console.error("Error adding document: ", error);
+    }
   };
 
   return (
@@ -136,6 +177,21 @@ const OnBoardingForm = () => {
             required
           ></textarea>
         </div>
+
+        {/* Image upload field */}
+        <div className="mb-3">
+          <label htmlFor="profileImage" className="form-label">
+            Profile Picture
+          </label>
+          <input
+            type="file"
+            id="profileImage"
+            accept="image/*"
+            onChange={handleImageChange}
+            className="form-control"
+          />
+        </div>
+
         <button type="submit" className="btn btn-primary">
           Submit
         </button>

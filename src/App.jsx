@@ -11,6 +11,7 @@ import { Navbar } from "./components/Navbar";
 import Protected from "./components/services/Protected";
 import Footer from "./components/Footer";
 import ScrollToTop from "react-scroll-to-top";
+import ProfileList from "./pages/ProfileList";
 
 function App() {
   return (
@@ -36,6 +37,7 @@ function App() {
                 element={<Protected Component={OnBoardingForm} />}
               />
               <Route path="/homebanner" element={<OnBoardingForm />} />
+              <Route path="/profilelist" element={<ProfileList />} />
               {/* Add other routes for your pages */}
             </Routes>
             <Footer />
