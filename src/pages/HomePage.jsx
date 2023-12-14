@@ -1,6 +1,7 @@
 import React from "react";
 import { HomeBanner } from "../components/HomeBanner";
 import "../pages/HomePage.css";
+import Sliderr from "../components/Sliderr";
 
 const HomePage = () => {
   return (
@@ -148,6 +149,7 @@ const HomePage = () => {
           </div>
         </div>
       </section>
+      <Sliderr/>
     </div>
   );
 };
