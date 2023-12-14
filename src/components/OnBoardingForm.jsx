@@ -13,6 +13,7 @@ const OnBoardingForm = () => {
     linkedin: "",
     bio: "",
     currentCompany: "",
+    isVerified: false,
   });
   const [image, setImage] = useState(null); // State for the selected image
 
@@ -54,7 +55,8 @@ const OnBoardingForm = () => {
         linkedin: formData.linkedin,
         bio: formData.bio,
         currentCompany: formData.currentCompany,
-        profileImageUrl: imageUrl, // Add the image URL to the document
+        profileImageUrl: imageUrl,
+        isVerified: formData.isVerified,
       });
 
       // Reset form after successful submission

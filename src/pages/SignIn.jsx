@@ -1,5 +1,10 @@
 import React, { useState } from "react";
-import { createUserWithEmailAndPassword, signInWithPopup } from "firebase/auth";
+import {
+  getAuth,
+  createUserWithEmailAndPassword,
+  fetchSignInMethodsForEmail,
+  signInWithPopup,
+} from "firebase/auth";
 import { auth, googleProvider } from "../config/firebase.js";
 import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
@@ -16,7 +21,20 @@ const SignIn = () => {
       toast.error("Please fill all the fields");
       return;
     }
+
+    const auth = getAuth();
+
     try {
+      // Check if the email already exists
+      const signInMethods = await fetchSignInMethodsForEmail(auth, email);
+
+      if (signInMethods.length === 0) {
+        // Email does not exist, prompt the user to sign up
+        toast.error("You don't have an account yet. Please sign up first.");
+        return;
+      }
+
+      // Email exists, proceed with signing in
       await createUserWithEmailAndPassword(auth, email, password);
       navigate("/");
       toast.success("SignedIn successfully!");
@@ -27,9 +45,25 @@ const SignIn = () => {
   };
   const SignInWithGoogle = async () => {
     try {
+      const auth = getAuth();
+
+      // Sign in with Google
       await signInWithPopup(auth, googleProvider);
+
+      // Check if the user's email already exists
+      const user = auth.currentUser;
+      const signInMethods = await fetchSignInMethodsForEmail(auth, user.email);
+
+      if (signInMethods.length === 0) {
+        // Email does not exist, sign out the user and prompt to sign up
+        await auth.signOut();
+        toast.error("You don't have an account yet. Please sign up first.");
+        return;
+      }
+
+      // Email exists, proceed with navigation
       navigate("/");
-      toast.success("SignedIn successfully!");
+      toast.success("Signed in successfully!");
     } catch (error) {
       console.log(error);
       toast.error("Error signing in");
