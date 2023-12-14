@@ -3,7 +3,7 @@ import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import "./App.css";
-import SignUp from "./pages/signUp";
+import SignUp from "./pages/SignUp";
 import HomePage from "./pages/homePage";
 import SignIn from "./pages/SignIn";
 import OnBoardingForm from "./components/OnBoardingForm";
@@ -12,6 +12,8 @@ import Protected from "./components/services/Protected";
 import Footer from "./components/Footer";
 import ScrollToTop from "react-scroll-to-top";
 import ProfileList from "./pages/ProfileList";
+import UnderReview from "./pages/UnderReview";
+import AdminDashboard from "./pages/AdminDashboard";
 
 function App() {
   return (
@@ -38,6 +40,8 @@ function App() {
               />
               <Route path="/homebanner" element={<OnBoardingForm />} />
               <Route path="/profilelist" element={<ProfileList />} />
+              <Route path="/undereview" element={<UnderReview />} />
+              <Route path="/admin" element={<AdminDashboard />} />
               {/* Add other routes for your pages */}
             </Routes>
             <Footer />

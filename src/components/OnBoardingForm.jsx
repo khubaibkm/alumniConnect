@@ -3,8 +3,10 @@ import { db, storage } from "../config/firebase.js"; // Import the storage refer
 import { collection, addDoc } from "firebase/firestore";
 import { ref, uploadBytes } from "firebase/storage"; // Import storage-related functions
 import { getDownloadURL } from "firebase/storage";
+import { useNavigate } from "react-router-dom";
 
 const OnBoardingForm = () => {
+  const navigate = useNavigate();
   const [formData, setFormData] = useState({
     name: "",
     graduationYear: "",
@@ -73,6 +75,7 @@ const OnBoardingForm = () => {
 
       // Display a success message or redirect to another page
       console.log("Form submitted successfully!");
+      navigate("/undereview");
     } catch (error) {
       console.error("Error adding document: ", error);
     }
