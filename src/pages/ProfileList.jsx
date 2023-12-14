@@ -11,10 +11,8 @@ const ProfileList = () => {
   const [majorFilter, setMajorFilter] = useState("");
 
   useEffect(() => {
-    // Reference to the Firestore collection
     const profilesCollection = collection(db, "alumni");
 
-    // Real-time listener for Firestore data
     const unsubscribe = onSnapshot(profilesCollection, (snapshot) => {
       const profileData = [];
       snapshot.forEach((doc) => {
@@ -23,7 +21,6 @@ const ProfileList = () => {
       setProfiles(profileData);
     });
 
-    // Clean up the listener when component unmounts
     return () => unsubscribe();
   }, []);
 
@@ -35,25 +32,20 @@ const ProfileList = () => {
             const storageRef = ref(db.storage, profile.profileImageUrl);
             const downloadURL = await getDownloadURL(storageRef);
 
-            // Log the profile image URL to the console
-            console.log("Profile Image URL:", downloadURL);
-
-            // Update the profile object with the image URL
             return {
               ...profile,
               profileImageUrl: downloadURL,
             };
           } catch (error) {
             console.error("Error fetching image URL:", error);
-            return profile; // Return the original profile if there's an error
+            return profile;
           }
         } else {
-          return profile; // Return the profile as-is if there's no image URL
+          return profile;
         }
       })
     );
 
-    // Update the state with the modified profiles
     setProfiles(updatedProfiles);
   };
 
@@ -76,7 +68,6 @@ const ProfileList = () => {
     );
   });
 
-  // Get unique values for company, graduation year, and major
   const companies = Array.from(
     new Set(profiles.map((profile) => profile.currentCompany))
   );
@@ -147,10 +138,18 @@ const ProfileList = () => {
           </select>
         </div>
       </div>
-      <div className="row">
+      <div className="row row-cols-1 row-cols-md-2 row-cols-xl-3">
         {filteredProfiles.map((profile) => (
-          <div key={profile.id} className="col-md-4 mb-3">
-            <div className="card">
+          <div key={profile.id} className="col mb-3">
+            <div className="card h-100">
+              {profile.profileImageUrl && (
+                <img
+                  src={profile.profileImageUrl}
+                  alt={`Profile of ${profile.name}`}
+                  className="card-img-top img-fluid"
+                  style={{ height: "350px"}} 
+                />
+              )}
               <div className="card-body">
                 <h2 className="card-title">{profile.name}</h2>
                 <p className="card-text">
@@ -163,14 +162,6 @@ const ProfileList = () => {
                 <p className="card-text">
                   Current Company: {profile.currentCompany}
                 </p>
-                {/* Display profile image if available */}
-                {profile.profileImageUrl && (
-                  <img
-                    src={profile.profileImageUrl}
-                    alt={`Profile of ${profile.name}`}
-                    className="img-fluid"
-                  />
-                )}
               </div>
             </div>
           </div>
