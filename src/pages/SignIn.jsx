@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import {
   getAuth,
-  createUserWithEmailAndPassword,
+  signInWithEmailAndPassword,
   fetchSignInMethodsForEmail,
   signInWithPopup,
 } from "firebase/auth";
@@ -18,29 +18,21 @@ const SignIn = () => {
 
   const handleSignIn = async () => {
     if (email === "" || password === "") {
-      toast.error("Please fill all the fields");
+      toast.error("Please fill in all the fields");
       return;
     }
 
     const auth = getAuth();
 
     try {
-      // Check if the email already exists
-      const signInMethods = await fetchSignInMethodsForEmail(auth, email);
+      // Sign in the user with email and password
+      await signInWithEmailAndPassword(auth, email, password);
 
-      if (signInMethods.length === 0) {
-        // Email does not exist, prompt the user to sign up
-        toast.error("You don't have an account yet. Please sign up first.");
-        return;
-      }
-
-      // Email exists, proceed with signing in
-      await createUserWithEmailAndPassword(auth, email, password);
       navigate("/");
-      toast.success("SignedIn successfully!");
+      toast.success("Signed in successfully!");
     } catch (error) {
       toast.error("Error signing in");
-      console.log(error);
+      console.error(error);
     }
   };
   const SignInWithGoogle = async () => {
