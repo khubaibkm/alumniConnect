@@ -2,10 +2,11 @@ import "./Navbar.css";
 import React, { useState, useEffect } from "react";
 import { auth } from "../config/firebase.js";
 import { onAuthStateChanged, signOut } from "firebase/auth";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 
 export const Navbar = () => {
   const [isSignedIn, setIsSignedIn] = useState(false);
+  const navigate = useNavigate();
 
   useEffect(() => {
     const unsubscribe = onAuthStateChanged(auth, (user) => {
@@ -18,9 +19,13 @@ export const Navbar = () => {
   const handleSignOut = async () => {
     try {
       await signOut(auth);
-      window.location.href = "/signin"; // Redirect to the SignIn page
+      // Redirect to the SignIn page after sign-out
+      navigate("/signin");
     } catch (err) {
       console.log(err);
+    } finally {
+      // Update the state only after the operation is complete
+      setIsSignedIn(false);
     }
   };
 
@@ -68,11 +73,12 @@ export const Navbar = () => {
               )}
             </li>
             <li className="nav-item">
-              <Link to="/signup" className="nav-link">
-                SignUp
-              </Link>
+              {isSignedIn ? null : (
+                <Link to="/signup" className="nav-link">
+                  SignUp
+                </Link>
+              )}
             </li>
-
             <li className="nav-item">
               {isSignedIn && (
                 <Link to="/On_boarding_form" className="nav-link">
