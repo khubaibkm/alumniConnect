@@ -50,6 +50,7 @@ const ProfileList = () => {
   };
 
   const filteredProfiles = profiles.filter((profile) => {
+    console.log("Profile:", profile); // Log the profile object to inspect its contents
     const nameMatches = profile.name
       .toLowerCase()
       .includes(searchText.toLowerCase());
@@ -62,9 +63,14 @@ const ProfileList = () => {
     const majorMatches =
       majorFilter === "" ||
       profile.major.toLowerCase() === majorFilter.toLowerCase();
+    const isVerified = profile.isVerified;
 
     return (
-      nameMatches && companyMatches && graduationYearMatches && majorMatches
+      nameMatches &&
+      companyMatches &&
+      graduationYearMatches &&
+      majorMatches &&
+      isVerified
     );
   });
 
@@ -147,7 +153,7 @@ const ProfileList = () => {
                   src={profile.profileImageUrl}
                   alt={`Profile of ${profile.name}`}
                   className="card-img-top img-fluid"
-                  style={{ height: "350px"}} 
+                  style={{ height: "350px" }}
                 />
               )}
               <div className="card-body">

@@ -5,11 +5,14 @@ import {
   fetchSignInMethodsForEmail,
   signInWithPopup,
 } from "firebase/auth";
-import { auth, googleProvider } from "../config/firebase.js";
+import { auth, googleProvider, db } from "../config/firebase.js";
 import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { useNavigate } from "react-router-dom";
+import { collection, getDocs, doc } from "firebase/firestore";
 import "./SignIn.css";
+// Declare the variables here
+let email, password;
 
 const SignIn = () => {
   const navigate = useNavigate();
@@ -28,13 +31,42 @@ const SignIn = () => {
       // Sign in the user with email and password
       await signInWithEmailAndPassword(auth, email, password);
 
-      navigate("/");
+      // Get the user's UID
+      const user = auth.currentUser;
+
+      // Reference to the Firestore collection
+      const alumniCollection = collection(db, "alumni");
+
+      // Get all documents in the "alumni" collection
+      const querySnapshot = await getDocs(alumniCollection);
+
+      // Loop through each document
+      querySnapshot.forEach(async (doc) => {
+        // Check if the firebaseUID matches the current user's UID
+        if (doc.data().firebaseUID === user.uid) {
+          // If the user document is found, check the isVerified field
+          const isVerified = doc.data().isVerified;
+
+          if (!isVerified) {
+            // User is not verified, navigate to under review page
+            navigate("/undereview");
+          } else {
+            // User is verified, proceed with navigation
+            navigate("/");
+          }
+
+          // Exit the loop once the user document is found
+          return;
+        }
+      });
+
       toast.success("Signed in successfully!");
     } catch (error) {
       toast.error("Error signing in");
       console.error(error);
     }
   };
+
   const SignInWithGoogle = async () => {
     try {
       const auth = getAuth();

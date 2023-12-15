@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { db, storage } from "../config/firebase.js"; // Import the storage reference
+import { db, storage, auth } from "../config/firebase.js"; // Import the storage reference
 import { collection, addDoc } from "firebase/firestore";
 import { ref, uploadBytes } from "firebase/storage"; // Import storage-related functions
 import { getDownloadURL } from "firebase/storage";
@@ -37,6 +37,15 @@ const OnBoardingForm = () => {
     e.preventDefault();
 
     try {
+      // Retrieve the current authenticated user
+      const currentUser = auth.currentUser;
+
+      // If the user is not authenticated, handle accordingly
+      if (!currentUser) {
+        console.error("User not authenticated");
+        return;
+      }
+
       // Reference to the Firestore collection
       const alumniCollection = collection(db, "alumni");
 
@@ -48,7 +57,7 @@ const OnBoardingForm = () => {
         imageUrl = await getDownloadURL(snapshot.ref); // Retrieve the download URL
       }
 
-      // Add a new document with the form data and image URL
+      // Add a new document with the form data, image URL, and Firebase UID
       await addDoc(alumniCollection, {
         name: formData.name,
         graduationYear: formData.graduationYear,
@@ -59,6 +68,7 @@ const OnBoardingForm = () => {
         currentCompany: formData.currentCompany,
         profileImageUrl: imageUrl,
         isVerified: formData.isVerified,
+        firebaseUID: currentUser.uid, // Add the Firebase UID to the document
       });
 
       // Reset form after successful submission
@@ -80,7 +90,6 @@ const OnBoardingForm = () => {
       console.error("Error adding document: ", error);
     }
   };
-
   return (
     <div className="container mt-5">
       <h2 className="mb-4">Alumni Onboarding Form</h2>
