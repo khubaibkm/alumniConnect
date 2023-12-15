@@ -20,46 +20,20 @@ const AdminDashboard = () => {
   // Admin UID
   const adminUID = "AqQRH8DareOsa7FefRRw71oOqx03";
 
-  useEffect(() => {
-    const fetchUnverifiedUsers = async () => {
-      const alumniCollection = collection(db, "alumni");
-      const querySnapshot = await getDocs(alumniCollection);
+  const fetchUnverifiedUsers = async () => {
+    const alumniCollection = collection(db, "alumni");
+    const querySnapshot = await getDocs(alumniCollection);
 
-      const unverifiedUsersData = [];
-      querySnapshot.forEach((doc) => {
-        const userData = doc.data();
-        if (!userData.isVerified) {
-          unverifiedUsersData.push({ id: doc.id, ...userData });
-        }
-      });
-
-      setUnverifiedUsers(unverifiedUsersData);
-    };
-
-    const authListener = auth.onAuthStateChanged((user) => {
-      setUser(user);
-
-      // Check if the user is an admin based on UID
-      if (user && user.uid !== adminUID) {
-        // Redirect to an error page or display an error message
-        // Automatically sign out on component mount
-        navigate("/error");
-        handleSignOut();
-
-        // You can redirect using react-router-dom or window.location.href
-        // Example using window.location.href:
+    const unverifiedUsersData = [];
+    querySnapshot.forEach((doc) => {
+      const userData = doc.data();
+      if (!userData.isVerified) {
+        unverifiedUsersData.push({ id: doc.id, ...userData });
       }
     });
 
-    // Automatically sign out on component mount
-    handleSignOut();
-
-    fetchUnverifiedUsers();
-
-    return () => {
-      authListener(); // Unsubscribe from the auth listener when the component unmounts
-    };
-  }, []); // Empty dependency array to run the effect only once when the component mounts
+    setUnverifiedUsers(unverifiedUsersData);
+  };
 
   const handleSignIn = async () => {
     try {
@@ -79,6 +53,55 @@ const AdminDashboard = () => {
       console.error("Error signing out:", error);
     }
   };
+
+  const handleApprove = async (userId) => {
+    try {
+      // Add logic to update user data and set isVerified to true
+      const userDocRef = doc(db, "alumni", userId);
+      await updateDoc(userDocRef, { isVerified: true });
+
+      // Fetch updated unverified users
+      fetchUnverifiedUsers();
+    } catch (error) {
+      console.error("Error approving user:", error);
+    }
+  };
+
+  const handleDisapprove = async (userId) => {
+    try {
+      // Add logic to delete user data
+      const userDocRef = doc(db, "alumni", userId);
+      await deleteDoc(userDocRef);
+
+      // Fetch updated unverified users
+      fetchUnverifiedUsers();
+    } catch (error) {
+      console.error("Error disapproving user:", error);
+    }
+  };
+
+  useEffect(() => {
+    const authListener = auth.onAuthStateChanged((user) => {
+      setUser(user);
+
+      // Check if the user is an admin based on UID
+      if (user && user.uid !== adminUID) {
+        // Redirect to an error page or display an error message
+        // Automatically sign out on component mount
+        navigate("/error");
+        handleSignOut();
+      }
+    });
+
+    // Automatically sign out on component mount
+    handleSignOut();
+
+    fetchUnverifiedUsers();
+
+    return () => {
+      authListener(); // Unsubscribe from the auth listener when the component unmounts
+    };
+  }, []); // Empty dependency array to run the effect only once when the component mounts
 
   if (!user) {
     return (
