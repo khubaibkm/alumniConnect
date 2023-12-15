@@ -72,10 +72,10 @@ const SignIn = () => {
       const auth = getAuth();
 
       // Sign in with Google
-      await signInWithPopup(auth, googleProvider);
+      const result = await signInWithPopup(auth, googleProvider);
 
       // Check if the user's email already exists
-      const user = auth.currentUser;
+      const user = result.user;
       const signInMethods = await fetchSignInMethodsForEmail(auth, user.email);
 
       if (signInMethods.length === 0) {
@@ -85,8 +85,30 @@ const SignIn = () => {
         return;
       }
 
-      // Email exists, proceed with navigation
-      navigate("/");
+      // Email exists, check Firestore collection for user document
+      const alumniCollection = collection(db, "alumni");
+      const querySnapshot = await getDocs(alumniCollection);
+
+      // Loop through each document
+      querySnapshot.forEach(async (doc) => {
+        // Check if the firebaseUID matches the current user's UID
+        if (doc.data().firebaseUID === user.uid) {
+          // If the user document is found, check the isVerified field
+          const isVerified = doc.data().isVerified;
+
+          if (!isVerified) {
+            // User is not verified, navigate to under review page
+            navigate("/undereview");
+          } else {
+            // User is verified, proceed with navigation
+            navigate("/");
+          }
+
+          // Exit the loop once the user document is found
+          return;
+        }
+      });
+
       toast.success("Signed in successfully!");
     } catch (error) {
       console.log(error);
