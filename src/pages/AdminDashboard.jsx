@@ -66,7 +66,8 @@ const AdminDashboard = () => {
       const auth = getAuth();
       await signInWithEmailAndPassword(auth, email, password);
     } catch (error) {
-      console.error("Error signing in:", error);
+      navigate("/error");
+      handleSignOut();
     }
   };
 
