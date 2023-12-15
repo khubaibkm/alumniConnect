@@ -1,5 +1,5 @@
-import React, { useEffect, useState } from "react";
-import { db } from "../config/firebase";
+import React, { useState, useEffect } from "react";
+import { db, auth } from "../config/firebase";
 import {
   collection,
   getDocs,
@@ -7,12 +7,20 @@ import {
   doc,
   deleteDoc,
 } from "firebase/firestore";
+import { getAuth, signInWithEmailAndPassword, signOut } from "firebase/auth";
+import { useNavigate } from "react-router";
 
 const AdminDashboard = () => {
   const [unverifiedUsers, setUnverifiedUsers] = useState([]);
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+  const [user, setUser] = useState(null);
+  const navigate = useNavigate();
+
+  // Admin UID
+  const adminUID = "AqQRH8DareOsa7FefRRw71oOqx03";
 
   useEffect(() => {
-    // Fetch unverified users from Firestore
     const fetchUnverifiedUsers = async () => {
       const alumniCollection = collection(db, "alumni");
       const querySnapshot = await getDocs(alumniCollection);
@@ -28,32 +36,79 @@ const AdminDashboard = () => {
       setUnverifiedUsers(unverifiedUsersData);
     };
 
-    fetchUnverifiedUsers();
-  }, []); // Empty dependency array to run the effect only once when the component mounts
+    const authListener = auth.onAuthStateChanged((user) => {
+      setUser(user);
 
-  const handleApprove = async (userId) => {
-    // Update the isVerified field to true in Firestore
-    const alumniDocRef = doc(db, "alumni", userId);
-    await updateDoc(alumniDocRef, {
-      isVerified: true,
+      // Check if the user is an admin based on UID
+      if (user && user.uid !== adminUID) {
+        // Redirect to an error page or display an error message
+        // Automatically sign out on component mount
+        navigate("/error");
+        handleSignOut();
+
+        // You can redirect using react-router-dom or window.location.href
+        // Example using window.location.href:
+      }
     });
 
-    // Update the local state to reflect the change
-    setUnverifiedUsers((prevUsers) =>
-      prevUsers.filter((user) => user.id !== userId)
-    );
+    // Automatically sign out on component mount
+    handleSignOut();
+
+    fetchUnverifiedUsers();
+
+    return () => {
+      authListener(); // Unsubscribe from the auth listener when the component unmounts
+    };
+  }, []); // Empty dependency array to run the effect only once when the component mounts
+
+  const handleSignIn = async () => {
+    try {
+      const auth = getAuth();
+      await signInWithEmailAndPassword(auth, email, password);
+    } catch (error) {
+      console.error("Error signing in:", error);
+    }
   };
 
-  const handleDisapprove = async (userId) => {
-    // Delete the document from Firestore
-    const alumniDocRef = doc(db, "alumni", userId);
-    await deleteDoc(alumniDocRef);
-
-    // Update the local state to reflect the change
-    setUnverifiedUsers((prevUsers) =>
-      prevUsers.filter((user) => user.id !== userId)
-    );
+  const handleSignOut = async () => {
+    try {
+      const auth = getAuth();
+      await signOut(auth);
+    } catch (error) {
+      console.error("Error signing out:", error);
+    }
   };
+
+  if (!user) {
+    return (
+      <div className="container p-5">
+        <div className="card w-50 mx-auto sm-p-4 m-5">
+          <h2 className="mb-4">Sign In</h2>
+          <div className="mb-3">
+            <label className="form-label">Email:</label>
+            <input
+              type="email"
+              className="form-control"
+              value={email}
+              onChange={(e) => setEmail(e.target.value)}
+            />
+          </div>
+          <div className="mb-3">
+            <label className="form-label">Password:</label>
+            <input
+              type="password"
+              className="form-control"
+              value={password}
+              onChange={(e) => setPassword(e.target.value)}
+            />
+          </div>
+          <button className="btn btn-primary" onClick={handleSignIn}>
+            Sign In
+          </button>
+        </div>
+      </div>
+    );
+  }
 
   return (
     <div className="container mt-4">

@@ -14,6 +14,7 @@ import ScrollToTop from "react-scroll-to-top";
 import ProfileList from "./pages/ProfileList";
 import UnderReview from "./pages/UnderReview";
 import AdminDashboard from "./pages/AdminDashboard";
+import UnauthorizedError from "./pages/UnauthorizedError";
 
 function App() {
   return (
@@ -42,6 +43,7 @@ function App() {
               <Route path="/profilelist" element={<ProfileList />} />
               <Route path="/undereview" element={<UnderReview />} />
               <Route path="/admin" element={<AdminDashboard />} />
+              <Route path="/error" element={<UnauthorizedError />} />
               {/* Add other routes for your pages */}
             </Routes>
             <Footer />
