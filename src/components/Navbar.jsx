@@ -1,16 +1,42 @@
-import "./Navbar.css";
 import React, { useState, useEffect } from "react";
 import { auth } from "../config/firebase.js";
 import { onAuthStateChanged, signOut } from "firebase/auth";
 import { Link, useNavigate } from "react-router-dom";
+import { getDocs, collection, query, where } from "firebase/firestore";
+import { db } from "../config/firebase.js";
 
 export const Navbar = () => {
   const [isSignedIn, setIsSignedIn] = useState(false);
+  const [isVerified, setIsVerified] = useState(false);
   const navigate = useNavigate();
 
   useEffect(() => {
-    const unsubscribe = onAuthStateChanged(auth, (user) => {
+    const unsubscribe = onAuthStateChanged(auth, async (user) => {
       setIsSignedIn(!!user);
+
+      if (user) {
+        try {
+          // Reference to the Firestore collection
+          const alumniCollection = collection(db, "alumni");
+
+          // Get the user document from Firestore
+          const querySnapshot = await getDocs(
+            query(alumniCollection, where("firebaseUID", "==", user.uid))
+          );
+
+          // Check if the user document exists
+          if (querySnapshot.size > 0) {
+            const userData = querySnapshot.docs[0].data();
+            setIsVerified(userData.isVerified || false);
+          } else {
+            setIsVerified(false);
+          }
+        } catch (error) {
+          console.error("Error fetching user document:", error);
+        }
+      } else {
+        setIsVerified(false);
+      }
     });
 
     return () => unsubscribe();
@@ -26,11 +52,12 @@ export const Navbar = () => {
     } finally {
       // Update the state only after the operation is complete
       setIsSignedIn(false);
+      setIsVerified(false);
     }
   };
 
   return (
-    <nav className="navbar navbar-expand-lg navbar-light bg-light fixed-top ">
+    <nav className="navbar navbar-expand-lg navbar-light bg-light fixed-top">
       <div className="container-fluid">
         <Link to="/" className="navbar-brand" style={{ color: "#4885ed" }}>
           Alumni Connect
@@ -44,13 +71,13 @@ export const Navbar = () => {
           aria-expanded="false"
           aria-label="Toggle navigation"
         >
-          <span className="navbar-toggler-icon" />
+          <span className="navbar-toggler-icon"></span>
         </button>
         <div
           className="collapse navbar-collapse justify-content-end"
           id="navbarSupportedContent"
         >
-          <ul className="navbar-nav ">
+          <ul className="navbar-nav">
             <li className="nav-item">
               <Link to="/" className="nav-link" aria-current="page">
                 Home
@@ -76,6 +103,13 @@ export const Navbar = () => {
               {isSignedIn ? null : (
                 <Link to="/signup" className="nav-link">
                   SignUp
+                </Link>
+              )}
+            </li>
+            <li className="nav-item">
+              {isVerified && (
+                <Link to="/profile" className="nav-link">
+                  My Profile
                 </Link>
               )}
             </li>

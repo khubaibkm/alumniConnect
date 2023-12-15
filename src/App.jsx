@@ -12,6 +12,7 @@ import Protected from "./components/services/Protected";
 import Footer from "./components/Footer";
 import ScrollToTop from "react-scroll-to-top";
 import ProfileList from "./pages/ProfileList";
+import MyProfile from "./pages/MyProfile";
 import UnderReview from "./pages/UnderReview";
 import AdminDashboard from "./pages/AdminDashboard";
 import UnauthorizedError from "./pages/UnauthorizedError";
@@ -41,6 +42,7 @@ function App() {
               />
               <Route path="/homebanner" element={<OnBoardingForm />} />
               <Route path="/profilelist" element={<ProfileList />} />
+              <Route path="/profile" element={<MyProfile />} />
               <Route path="/undereview" element={<UnderReview />} />
               <Route path="/admin" element={<AdminDashboard />} />
               <Route path="/error" element={<UnauthorizedError />} />
