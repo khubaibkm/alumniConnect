@@ -42,7 +42,10 @@ function App() {
               />
               <Route path="/homebanner" element={<OnBoardingForm />} />
               <Route path="/profilelist" element={<ProfileList />} />
-              <Route path="/profile" element={<MyProfile />} />
+              <Route
+                path="/profile"
+                element={<Protected Component={MyProfile} />}
+              />
               <Route path="/undereview" element={<UnderReview />} />
               <Route path="/admin" element={<AdminDashboard />} />
               <Route path="/error" element={<UnauthorizedError />} />
