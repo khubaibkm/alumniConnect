@@ -56,7 +56,7 @@ const SliderComponent = () => {
     infinite: true,
     centerPadding: "60px",
     slidesToShow: 3,
-    speed: 500,
+    speed: 1000,
     dots: true,
     autoplay: true,
     autoplaySpeed: 2000,
