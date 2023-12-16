@@ -83,7 +83,7 @@ const ProfileList = () => {
   const majors = Array.from(new Set(profiles.map((profile) => profile.major)));
 
   return (
-    <div className="container mt-4">
+    <div className="container mt-4 mb-5">
       <h1 className="text-center">Profile List</h1>
       <div className="row mb-3">
         <div className="col-md-4">
