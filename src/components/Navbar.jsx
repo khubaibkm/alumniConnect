@@ -95,14 +95,14 @@ export const Navbar = () => {
                 </a>
               ) : (
                 <Link to="/signin" className="nav-link">
-                  SignIn
+                  Alumni Login
                 </Link>
               )}
             </li>
             <li className="nav-item">
               {isSignedIn ? null : (
                 <Link to="/signup" className="nav-link">
-                  SignUp
+                  Alumni Registration
                 </Link>
               )}
             </li>

@@ -85,8 +85,8 @@ const ProfileList = () => {
   return (
     <div className="container mt-4 mb-5">
       <h1 className="text-center">Profile List</h1>
-      <div className="row mb-3">
-        <div className="col-md-4">
+      <div className="row mt-4 mb-2">
+        <div className="col-md-4 mb-2">
           <input
             type="text"
             className="form-control"
@@ -95,7 +95,7 @@ const ProfileList = () => {
             onChange={(e) => setSearchText(e.target.value)}
           />
         </div>
-        <div className="col-md-2">
+        <div className="col-md-2 mb-2">
           <select
             className="form-select"
             value={companyFilter}
@@ -111,7 +111,7 @@ const ProfileList = () => {
             ))}
           </select>
         </div>
-        <div className="col-md-2">
+        <div className="col-md-2 mb-2">
           <select
             className="form-select"
             value={graduationYearFilter}
@@ -127,7 +127,7 @@ const ProfileList = () => {
             ))}
           </select>
         </div>
-        <div className="col-md-4">
+        <div className="col-md-4 mb-2">
           <select
             className="form-select"
             value={majorFilter}
@@ -144,7 +144,10 @@ const ProfileList = () => {
           </select>
         </div>
       </div>
-      <div  style={{marginBottom:"4rem"}} className="row row-cols-1 row-cols-md-2 row-cols-xl-3">
+      <div
+        style={{ marginBottom: "4rem" }}
+        className="row row-cols-1 row-cols-md-2 row-cols-xl-3"
+      >
         {filteredProfiles.map((profile) => (
           <div key={profile.id} className="col mb-3">
             <div className="card h-100">

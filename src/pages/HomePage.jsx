@@ -2,6 +2,7 @@ import React from "react";
 import { HomeBanner } from "../components/HomeBanner";
 import "../pages/HomePage.css";
 import Sliderr from "../components/Sliderr";
+import HowTo from "../components/HowTo";
 
 const HomePage = () => {
   return (
@@ -46,110 +47,8 @@ const HomePage = () => {
           </div>
         </div>
       </section>
-      <section
-        className="content-inner overflow-hidden position-relative mb-5 py-5 "
-        // style={{ minHeight: "100vh" }}
-      >
-        <div className="container ">
-          <div className="section-head text-center">
-            <h6
-              className="text wow fadeInUp"
-              data-wow-delay="0.6s"
-              style={{
-                visibility: "visible",
-                animationDelay: "0.6s",
-                animationName: "fadeInUp",
-              }}
-            >
-              Working Process - (for Alumni)
-            </h6>
-            <h2
-              className="title wow fadeInUp"
-              data-wow-delay="0.8s"
-              style={{
-                visibility: "visible",
-                animationDelay: "0.8s",
-                animationName: "fadeInUp",
-              }}
-            >
-              How It Work
-            </h2>
-          </div>
-          <div className="row justify-content-center">
-            <div className="col-lg-4 col-md-6 mb-3">
-              <div
-                className="icon-bx-wraper style-1 bg-clr-sky wow bounceInLeft"
-                data-wow-delay="1.2s"
-                style={{
-                  visibility: "visible",
-                  animationDelay: "1.2s",
-                  animationName: "bounceInLeft",
-                }}
-              >
-                <div className="icon-media">
-                  <img src="/vite.svg" alt="image" className="rounded" />
-                </div>
-                <div className="icon-content">
-                  <h4 className="title">Register Your Account</h4>
-                  <p className="text">
-                    Get tailored job recommendations based on your preferences
-                    and skills by signing up today
-                  </p>
-                </div>
-                <h3 className="count">01</h3>
-              </div>
-            </div>
-
-            <div className="col-lg-4 col-md-6 mb-3">
-              <div
-                className="icon-bx-wraper style-1 bg-clr-green wow bounceInRight"
-                data-wow-delay="1.2s"
-                style={{
-                  visibility: "visible",
-                  animationDelay: "1.2s",
-                  animationName: "bounceInRight",
-                }}
-              >
-                <div className="icon-media">
-                  <img src="/vite.svg" alt="image" className="rounded" />
-                </div>
-                <div className="icon-content">
-                  <h4 className="title">Fill up the OnBoadring Form</h4>
-                  <p className="text">
-                    Showcase your qualifications and expertise by uploading your
-                    resume.
-                  </p>
-                </div>
-                <h3 className="count">02</h3>
-              </div>
-            </div>
-            <div className="col-lg-4 col-md-6 mb-3">
-              <div
-                className="icon-bx-wraper style-1 bg-clr-pink wow bounceInUp"
-                data-wow-delay="1.0s"
-                style={{
-                  visibility: "visible",
-                  animationDelay: "1s",
-                  animationName: "bounceInUp",
-                }}
-              >
-                <div className="icon-media">
-                  <img src="/vite.svg" alt="image" className="rounded" />
-                </div>
-                <div className="icon-content ">
-                  <h4 className="title">Done, listed on the website!</h4>
-                  <p className="text">
-                    Take the first step towards pursuing your passion by
-                    applying for your dream job today.
-                  </p>
-                </div>
-                <h3 className="count">03</h3>
-              </div>
-            </div>
-          </div>
-        </div>
-      </section>
-      <Sliderr/>
+      <HowTo />
+      <Sliderr />
     </div>
   );
 };
