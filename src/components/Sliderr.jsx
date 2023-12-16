@@ -51,23 +51,28 @@ const SliderComponent = () => {
   };
 
   const settings = {
-    dots: true,
+    className: "center",
+    centerMode: true,
     infinite: true,
-    speed: 800,
-    slidesToShow: 4,
-    slidesToScroll: 1,
+    centerPadding: "60px",
+    slidesToShow: 3,
+    speed: 500,
+    dots: true,
+    autoplay: true,
+    autoplaySpeed: 2000,
+    pauseOnHover: true,
   };
 
   return (
     <div className="sliderr">
       <div id="category">
-        <h2 style={{color:"black"}}>Alumni Highlights</h2>
+        <h2 style={{ color: "black" }}>Alumni Highlights</h2>
         <h6 style={{ color: "grey", letterSpacing: "2px" }}>Take a glance</h6>
       </div>
       <div className="slider-container">
-        <Slider {...settings}>
+        <Slider {...settings} className="autoplay-slider">
           {profiles.map((profile) => (
-            <div key={profile.id} className="slider-card">
+            <div key={profile.id} className="slider-card center">
               {profile.profileImageUrl && (
                 <img
                   src={profile.profileImageUrl}
