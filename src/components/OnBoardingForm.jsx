@@ -4,6 +4,7 @@ import { collection, addDoc } from "firebase/firestore";
 import { ref, uploadBytes } from "firebase/storage"; // Import storage-related functions
 import { getDownloadURL } from "firebase/storage";
 import { useNavigate } from "react-router-dom";
+import "./OnBoardingForm.css";
 
 const OnBoardingForm = () => {
   const navigate = useNavigate();
@@ -91,127 +92,131 @@ const OnBoardingForm = () => {
     }
   };
   return (
-    <div className="container mt-5">
-      <h2 className="mb-4">Alumni Onboarding Form</h2>
-      <form onSubmit={handleSubmit}>
-        <div className="mb-3">
-          <label htmlFor="name" className="form-label">
-            Name
-          </label>
-          <input
-            type="text"
-            id="name"
-            name="name"
-            value={formData.name}
-            onChange={handleChange}
-            className="form-control"
-            required
-          />
+    <div className="container onboarding-container">
+      <div className="row align-items-center">
+        <div className="col-xl-8 col-md-10 mx-auto">
+          <h2 className="mb-4 text-center">Alumni Onboarding Form</h2>
+          <div className="card shadow">
+            <div className="card-body">
+              <form onSubmit={handleSubmit}>
+                <div className="mb-3">
+                  <label htmlFor="name" className="form-label form-label-onboard text-left">
+                    Name
+                  </label>
+                  <input
+                    type="text"
+                    id="name"
+                    name="name"
+                    value={formData.name}
+                    onChange={handleChange}
+                    className="form-control form-control-onboard"
+                    required
+                  />
+                </div>
+                <div className="mb-3">
+                  <label htmlFor="graduationYear" className="form-label form-label-onboard text-left">
+                    Graduation Year
+                  </label>
+                  <input
+                    type="text"
+                    id="graduationYear"
+                    name="graduationYear"
+                    value={formData.graduationYear}
+                    onChange={handleChange}
+                    className="form-control form-control-onboard"
+                    required
+                  />
+                </div>
+                <div className="mb-3">
+                  <label htmlFor="major" className="form-label form-label-onboard text-left">
+                    Major
+                  </label>
+                  <input
+                    type="text"
+                    id="major"
+                    name="major"
+                    value={formData.major}
+                    onChange={handleChange}
+                    className="form-control form-control-onboard"
+                    required
+                  />
+                </div>
+                <div className="mb-3">
+                  <label htmlFor="email" className="form-label form-label-onboard text-left">
+                    Email
+                  </label>
+                  <input
+                    type="email"
+                    id="email"
+                    name="email"
+                    value={formData.email}
+                    onChange={handleChange}
+                    className="form-control form-control-onboard"
+                    required
+                  />
+                </div>
+                <div className="mb-3">
+                  <label htmlFor="linkedin" className="form-label form-label-onboard text-left">
+                    LinkedIn Profile
+                  </label>
+                  <input
+                    type="text"
+                    id="linkedin"
+                    name="linkedin"
+                    value={formData.linkedin}
+                    onChange={handleChange}
+                    className="form-control form-control-onboard"
+                    required
+                  />
+                </div>
+                <div className="mb-3">
+                  <label htmlFor="currentCompany" className="form-label form-label-onboard text-left">
+                    Current Company
+                  </label>
+                  <input
+                    type="text"
+                    id="currentCompany"
+                    name="currentCompany"
+                    value={formData.currentCompany}
+                    onChange={handleChange}
+                    className="form-control form-control-onboard"
+                    required
+                  />
+                </div>
+                <div className="mb-3">
+                  <label htmlFor="bio" className="form-label form-label-onboard text-left">
+                    Bio
+                  </label>
+                  <textarea
+                    id="bio"
+                    name="bio"
+                    value={formData.bio}
+                    onChange={handleChange}
+                    className="form-control form-control-onboard"
+                    required
+                  ></textarea>
+                </div>
+                <div className="mb-3">
+                  <label htmlFor="profileImage" className="form-label form-label-onboard text-left">
+                    Profile Picture
+                  </label>
+                  <input
+                    type="file"
+                    id="profileImage"
+                    accept="image/*"
+                    onChange={handleImageChange}
+                    className="form-control form-control-onboard"
+                  />
+                </div>
+                <button type="submit" className="btn btn-primary btn-onboard btn-block">
+                  Submit
+                </button>
+              </form>
+            </div>
+          </div>
         </div>
-        <div className="mb-3">
-          <label htmlFor="graduationYear" className="form-label">
-            Graduation Year
-          </label>
-          <input
-            type="text"
-            id="graduationYear"
-            name="graduationYear"
-            value={formData.graduationYear}
-            onChange={handleChange}
-            className="form-control"
-            required
-          />
-        </div>
-        <div className="mb-3">
-          <label htmlFor="major" className="form-label">
-            Major
-          </label>
-          <input
-            type="text"
-            id="major"
-            name="major"
-            value={formData.major}
-            onChange={handleChange}
-            className="form-control"
-            required
-          />
-        </div>
-        <div className="mb-3">
-          <label htmlFor="email" className="form-label">
-            Email
-          </label>
-          <input
-            type="email"
-            id="email"
-            name="email"
-            value={formData.email}
-            onChange={handleChange}
-            className="form-control"
-            required
-          />
-        </div>
-        <div className="mb-3">
-          <label htmlFor="linkedin" className="form-label">
-            LinkedIn Profile
-          </label>
-          <input
-            type="text"
-            id="linkedin"
-            name="linkedin"
-            value={formData.linkedin}
-            onChange={handleChange}
-            className="form-control"
-            required
-          />
-        </div>
-        <div className="mb-3">
-          <label htmlFor="currentCompany" className="form-label">
-            Current Company
-          </label>
-          <input
-            type="text"
-            id="currentCompany"
-            name="currentCompany"
-            value={formData.currentCompany}
-            onChange={handleChange}
-            className="form-control"
-            required
-          />
-        </div>
-        <div className="mb-3">
-          <label htmlFor="bio" className="form-label">
-            Bio
-          </label>
-          <textarea
-            id="bio"
-            name="bio"
-            value={formData.bio}
-            onChange={handleChange}
-            className="form-control"
-            required
-          ></textarea>
-        </div>
-
-        {/* Image upload field */}
-        <div className="mb-3">
-          <label htmlFor="profileImage" className="form-label">
-            Profile Picture
-          </label>
-          <input
-            type="file"
-            id="profileImage"
-            accept="image/*"
-            onChange={handleImageChange}
-            className="form-control"
-          />
-        </div>
-
-        <button type="submit" className="btn btn-primary">
-          Submit
-        </button>
-      </form>
+      </div>
     </div>
   );
 };
-
 export default OnBoardingForm;
