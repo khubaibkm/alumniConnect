@@ -144,7 +144,7 @@ const ProfileList = () => {
           </select>
         </div>
       </div>
-      <div className="row row-cols-1 row-cols-md-2 row-cols-xl-3">
+      <div  style={{marginBottom:"4rem"}} className="row row-cols-1 row-cols-md-2 row-cols-xl-3">
         {filteredProfiles.map((profile) => (
           <div key={profile.id} className="col mb-3">
             <div className="card h-100">
