@@ -1,5 +1,3 @@
-// SliderComponent.jsx
-import "./Sliderr.css";
 import React, { useState, useEffect } from "react";
 import Slider from "react-slick";
 import "slick-carousel/slick/slick.css";
@@ -7,6 +5,7 @@ import "slick-carousel/slick/slick-theme.css";
 import { db } from "../config/firebase.js";
 import { collection, onSnapshot } from "firebase/firestore";
 import { ref, getDownloadURL } from "firebase/storage";
+import "./Sliderr.css";
 
 const SliderComponent = () => {
   const [profiles, setProfiles] = useState([]);
@@ -54,13 +53,53 @@ const SliderComponent = () => {
     className: "center",
     centerMode: true,
     infinite: true,
-    centerPadding: "60px",
-    slidesToShow: 3,
+    centerPadding: "10%",
+    slidesToShow: 4,
     speed: 1000,
     dots: true,
     autoplay: true,
     autoplaySpeed: 2000,
     pauseOnHover: true,
+    prevArrow: (
+      <button
+        type="button"
+        className="slick-prev"
+        style={{
+          color: "red",
+          fontSize: "24px",
+        }}
+      >
+        Previous
+      </button>
+    ),
+    nextArrow: (
+      <button
+        type="button"
+        className="slick-next"
+        style={{
+          color: "blue",
+          fontSize: "24px",
+        }}
+      >
+        Next
+      </button>
+    ),
+    responsive: [
+      {
+        breakpoint: 768,
+        settings: {
+          slidesToShow: 2,
+          centerPadding: "5%",
+        },
+      },
+      {
+        breakpoint: 480,
+        settings: {
+          slidesToShow: 1,
+          centerPadding: "0",
+        },
+      },
+    ],
   };
 
   return (
@@ -69,7 +108,7 @@ const SliderComponent = () => {
         <h2 style={{ color: "black" }}>Alumni Highlights</h2>
         <h6 style={{ color: "grey", letterSpacing: "2px" }}>Take a glance</h6>
       </div>
-      <div className="slider-container">
+      <div className="slider-container" style={{ margin: "0 30px" }}>
         <Slider {...settings} className="autoplay-slider">
           {profiles.map((profile) => (
             <div key={profile.id} className="slider-card center">
