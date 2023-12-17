@@ -1,5 +1,10 @@
-import React, { useState } from "react";
-import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
+import React from "react";
+import {
+  BrowserRouter as Router,
+  Route,
+  Routes,
+  Navigate,
+} from "react-router-dom";
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import "./App.css";
@@ -16,11 +21,11 @@ import MyProfile from "./pages/MyProfile";
 import UnderReview from "./pages/UnderReview";
 import AdminDashboard from "./pages/AdminDashboard";
 import UnauthorizedError from "./pages/UnauthorizedError";
+import Error from "./pages/Error"; // Import the Error component
 
 function App() {
   return (
     <>
-      {" "}
       <ScrollToTop
         className="scrollToTop"
         smooth
@@ -49,7 +54,11 @@ function App() {
               <Route path="/undereview" element={<UnderReview />} />
               <Route path="/admin" element={<AdminDashboard />} />
               <Route path="/error" element={<UnauthorizedError />} />
+
               {/* Add other routes for your pages */}
+
+              {/* Fallback route for any other paths */}
+              <Route path="*" element={<Error />} />
             </Routes>
             <Footer />
           </Router>
