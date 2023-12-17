@@ -1,0 +1,49 @@
+.page_404 {
+    padding: 5%;
+    background: #fff;
+    font-family: 'Arvo', serif;
+}
+
+.page_404 img {
+    width: 100%;
+}
+
+.four_zero_four_bg {
+    background-image: url('/error.gif');
+    height: 600px;
+    background-position: center;
+}
+
+.four_zero_four_bg h1 {
+    font-size: 90px;
+    margin-top: 3rem;
+}
+
+.four_zero_four_bg h3 {
+    font-size: 80px;
+}
+
+.link_404 {
+    color: #fff !important;
+    padding: 10px 20px;
+
+    margin: 20px 0;
+    display: inline-block;
+}
+
+.contant_box_404 {
+    margin-top: -180px;
+}
+
+/* Bootstrap Classes */
+.page_404.text-center {
+    text-align: center;
+}
+
+.contant_box_404 {
+    padding: 20px;
+}
+
+.link_404 {
+    margin-top: 20px;
+}
