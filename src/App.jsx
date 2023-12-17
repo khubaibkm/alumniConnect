@@ -22,6 +22,7 @@ import UnderReview from "./pages/UnderReview";
 import AdminDashboard from "./pages/AdminDashboard";
 import UnauthorizedError from "./pages/UnauthorizedError";
 import Error from "./pages/Error"; // Import the Error component
+import Team from "./pages/Team";
 
 function App() {
   return (
@@ -54,6 +55,7 @@ function App() {
               <Route path="/undereview" element={<UnderReview />} />
               <Route path="/admin" element={<AdminDashboard />} />
               <Route path="/error" element={<UnauthorizedError />} />
+              <Route path="/team" element={<Team />} />
 
               {/* Add other routes for your pages */}
 
