@@ -85,7 +85,7 @@ const ProfileList = () => {
   return (
     <div className="container mt-4 mb-5">
       <h1 className="text-center">Profile List</h1>
-      <div className="row mt-4 mb-2">
+      <div className="row mt-5 mb-2">
         <div className="col-md-4 mb-2">
           <input
             type="text"

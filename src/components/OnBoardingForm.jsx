@@ -1,10 +1,10 @@
 import React, { useState } from "react";
-import { db, storage, auth } from "../config/firebase.js"; // Import the storage reference
-import { collection, addDoc } from "firebase/firestore";
-import { ref, uploadBytes } from "firebase/storage"; // Import storage-related functions
-import { getDownloadURL } from "firebase/storage";
+import { db, storage, auth } from "../config/firebase.js";
+import { collection, addDoc, getDocs, query, where } from "firebase/firestore";
+import { ref, uploadBytes, getDownloadURL } from "firebase/storage";
 import { useNavigate } from "react-router-dom";
 import "./OnBoardingForm.css";
+import { toast } from "react-toastify";
 
 const OnBoardingForm = () => {
   const navigate = useNavigate();
@@ -18,7 +18,7 @@ const OnBoardingForm = () => {
     currentCompany: "",
     isVerified: false,
   });
-  const [image, setImage] = useState(null); // State for the selected image
+  const [image, setImage] = useState(null);
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -29,36 +29,47 @@ const OnBoardingForm = () => {
   };
 
   const handleImageChange = (e) => {
-    // Handle the selected image file
     const file = e.target.files[0];
     setImage(file);
+  };
+
+  const checkUserSubmission = async (uid) => {
+    const alumniCollection = collection(db, "alumni");
+    const querySnapshot = await getDocs(
+      query(alumniCollection, where("firebaseUID", "==", uid))
+    );
+    return !querySnapshot.empty;
   };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
 
     try {
-      // Retrieve the current authenticated user
       const currentUser = auth.currentUser;
-
-      // If the user is not authenticated, handle accordingly
       if (!currentUser) {
         console.error("User not authenticated");
         return;
       }
 
-      // Reference to the Firestore collection
+      const userSubmitted = await checkUserSubmission(currentUser.uid);
+
+      if (userSubmitted) {
+        toast.error(
+          "You have already submitted your profile! Wait for approval"
+        );
+        // You can display a message to the user or redirect them to another page
+        return;
+      }
+
       const alumniCollection = collection(db, "alumni");
 
-      // Upload the image to Firebase Storage
       let imageUrl = "";
       if (image) {
         const storageRef = ref(storage, `profile_images/${formData.email}`);
         const snapshot = await uploadBytes(storageRef, image);
-        imageUrl = await getDownloadURL(snapshot.ref); // Retrieve the download URL
+        imageUrl = await getDownloadURL(snapshot.ref);
       }
 
-      // Add a new document with the form data, image URL, and Firebase UID
       await addDoc(alumniCollection, {
         name: formData.name,
         graduationYear: formData.graduationYear,
@@ -69,10 +80,9 @@ const OnBoardingForm = () => {
         currentCompany: formData.currentCompany,
         profileImageUrl: imageUrl,
         isVerified: formData.isVerified,
-        firebaseUID: currentUser.uid, // Add the Firebase UID to the document
+        firebaseUID: currentUser.uid,
       });
 
-      // Reset form after successful submission
       setFormData({
         name: "",
         graduationYear: "",
@@ -84,13 +94,13 @@ const OnBoardingForm = () => {
       });
       setImage(null);
 
-      // Display a success message or redirect to another page
       console.log("Form submitted successfully!");
       navigate("/undereview");
     } catch (error) {
       console.error("Error adding document: ", error);
     }
   };
+
   return (
     <div className="container onboarding-container">
       <div className="row align-items-center">
@@ -100,7 +110,10 @@ const OnBoardingForm = () => {
             <div className="card-body">
               <form onSubmit={handleSubmit}>
                 <div className="mb-3">
-                  <label htmlFor="name" className="form-label form-label-onboard text-left">
+                  <label
+                    htmlFor="name"
+                    className="form-label form-label-onboard text-left"
+                  >
                     Name
                   </label>
                   <input
@@ -114,7 +127,10 @@ const OnBoardingForm = () => {
                   />
                 </div>
                 <div className="mb-3">
-                  <label htmlFor="graduationYear" className="form-label form-label-onboard text-left">
+                  <label
+                    htmlFor="graduationYear"
+                    className="form-label form-label-onboard text-left"
+                  >
                     Graduation Year
                   </label>
                   <input
@@ -128,7 +144,10 @@ const OnBoardingForm = () => {
                   />
                 </div>
                 <div className="mb-3">
-                  <label htmlFor="major" className="form-label form-label-onboard text-left">
+                  <label
+                    htmlFor="major"
+                    className="form-label form-label-onboard text-left"
+                  >
                     Major
                   </label>
                   <input
@@ -142,7 +161,10 @@ const OnBoardingForm = () => {
                   />
                 </div>
                 <div className="mb-3">
-                  <label htmlFor="email" className="form-label form-label-onboard text-left">
+                  <label
+                    htmlFor="email"
+                    className="form-label form-label-onboard text-left"
+                  >
                     Email
                   </label>
                   <input
@@ -156,7 +178,10 @@ const OnBoardingForm = () => {
                   />
                 </div>
                 <div className="mb-3">
-                  <label htmlFor="linkedin" className="form-label form-label-onboard text-left">
+                  <label
+                    htmlFor="linkedin"
+                    className="form-label form-label-onboard text-left"
+                  >
                     LinkedIn Profile
                   </label>
                   <input
@@ -170,7 +195,10 @@ const OnBoardingForm = () => {
                   />
                 </div>
                 <div className="mb-3">
-                  <label htmlFor="currentCompany" className="form-label form-label-onboard text-left">
+                  <label
+                    htmlFor="currentCompany"
+                    className="form-label form-label-onboard text-left"
+                  >
                     Current Company
                   </label>
                   <input
@@ -184,7 +212,10 @@ const OnBoardingForm = () => {
                   />
                 </div>
                 <div className="mb-3">
-                  <label htmlFor="bio" className="form-label form-label-onboard text-left">
+                  <label
+                    htmlFor="bio"
+                    className="form-label form-label-onboard text-left"
+                  >
                     Bio
                   </label>
                   <textarea
@@ -197,7 +228,10 @@ const OnBoardingForm = () => {
                   ></textarea>
                 </div>
                 <div className="mb-3">
-                  <label htmlFor="profileImage" className="form-label form-label-onboard text-left">
+                  <label
+                    htmlFor="profileImage"
+                    className="form-label form-label-onboard text-left"
+                  >
                     Profile Picture
                   </label>
                   <input
@@ -208,7 +242,10 @@ const OnBoardingForm = () => {
                     className="form-control form-control-onboard"
                   />
                 </div>
-                <button type="submit" className="btn btn-primary btn-onboard btn-block">
+                <button
+                  type="submit"
+                  className="btn btn-primary btn-onboard btn-block"
+                >
                   Submit
                 </button>
               </form>

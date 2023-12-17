@@ -117,21 +117,27 @@ export const Navbar = () => {
             <li className="nav-item">
               {isSignedIn ? (
                 <a
-                  className="nav-link bg-primary rounded text-white px-3 py-2 mx-2 "
+                  className="nav-link bg-primary rounded text-white px-3 py-2 mx-2 button-animated"
                   href="#"
                   onClick={handleSignOut}
                 >
                   Logout
                 </a>
               ) : (
-                <Link to="/signin" className="nav-link button-animated mx-2 ">
+                <Link
+                  to="/signin"
+                  className="nav-link bg-primary rounded text-white px-3 py-2 mx-2 button-animated"
+                >
                   Alumni Login
                 </Link>
               )}
             </li>
             <li className="nav-item">
               {isSignedIn ? null : (
-                <Link to="/signup" className="nav-link button-animated">
+                <Link
+                  to="/signup"
+                  className="nav-link bg-primary rounded text-white px-3 py-2 mx-2 button-animated"
+                >
                   Alumni Registration
                 </Link>
               )}
