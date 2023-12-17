@@ -22,9 +22,9 @@ function App() {
     <>
       {" "}
       <ScrollToTop
-        className=""
+        className="scrollToTop"
         smooth
-        style={{ paddingRight: "45px", borderRadius: "20px" }}
+        style={{ borderRadius: "50%", padding: "20px 42px 40px 16px" }}
       />
       <div className="App">
         <React.Fragment>

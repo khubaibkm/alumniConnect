@@ -60,8 +60,8 @@ export const Navbar = () => {
   return (
     <nav className="navbar navbar-expand-lg navbar-light bg-light fixed-top shadow">
       <div className="container-fluid">
-        <Link to="/" className="navbar-brand" style={{ color: "#4885ed" }}>
-          Alumni Connect
+        <Link to="/" className="navbar-brand">
+          <img style={{marginLeft:"0.1rem"}} width={"225px"} src="/logo.svg" alt="logo-alumniConnect" />
         </Link>
         <button
           className="navbar-toggler"
@@ -90,6 +90,21 @@ export const Navbar = () => {
               </Link>
             </li>
 
+
+            <li className="nav-item">
+              {isVerified && (
+                <Link to="/profile" className="nav-link">
+                  My Profile
+                </Link>
+              )}
+            </li>
+            <li className="nav-item">
+              {isSignedIn && (
+                <Link to="/On_boarding_form" className="nav-link">
+                  Onboard Form
+                </Link>
+              )}
+            </li>
             <li className="nav-item">
               {isSignedIn ? (
                 <a
@@ -109,21 +124,6 @@ export const Navbar = () => {
               {isSignedIn ? null : (
                 <Link to="/signup" className="nav-link button-animated">
                   Alumni Registration
-                </Link>
-              )}
-            </li>
-
-            <li className="nav-item">
-              {isVerified && (
-                <Link to="/profile" className="nav-link">
-                  My Profile
-                </Link>
-              )}
-            </li>
-            <li className="nav-item">
-              {isSignedIn && (
-                <Link to="/On_boarding_form" className="nav-link">
-                  Onboard Form
                 </Link>
               )}
             </li>
