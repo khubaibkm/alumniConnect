@@ -158,8 +158,10 @@ const SignUp = () => {
                         </a>
                       </div>
                       {/* <!-- Title --> */}
-                      <h1 className="mb-2 text-center">Welcome back</h1>
-                      <h3 className="text-center">Sign In</h3>
+                      <h2 className="mb-2 text-center">
+                        Welcome to Alumni Connect
+                      </h2>
+                      <h4 className="text-center">Get Started</h4>
                       <div className="mt-3 text-center">
                         {/* <input
                           className="cred"
