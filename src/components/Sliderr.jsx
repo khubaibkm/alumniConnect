@@ -104,9 +104,9 @@ const SliderComponent = () => {
 
   return (
     <div className="sliderr">
-      <div id="category">
-        <h2 style={{ color: "black" }}>Alumni Highlights</h2>
-        <h6 style={{ color: "grey", letterSpacing: "2px" }}>Take a glance</h6>
+      <div class="category ">
+        <h2 className="text-center">Alumni Highlights</h2>
+        <h6 className="text-center">Take a glance</h6>
       </div>
       <div className="slider-container" style={{ margin: "0 30px" }}>
         <Slider {...settings} className="autoplay-slider">

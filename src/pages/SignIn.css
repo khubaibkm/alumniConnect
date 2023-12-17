@@ -1,8 +1,8 @@
-.cred{
+.cred {
     display: block;
     margin: auto;
     margin-bottom: 1.2rem;
-    padding:0 0 3px 15px;
+    padding: 0 0 3px 15px;
     width: 16rem;
     height: 2.6rem;
     color: #8c8c8c;
@@ -11,15 +11,18 @@
     color: black;
 }
 
-.signin{
+.signin {
     position: relative;
     top: -1.5rem;
     width: 16rem;
+    padding: 1%;
+    border: 2px solid #8c8c8c;
+    margin: auto;
+
 }
 
 
-.signout{
+.signout {
     display: block;
     margin: auto;
 }
-

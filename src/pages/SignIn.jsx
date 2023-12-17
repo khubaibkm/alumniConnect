@@ -200,9 +200,9 @@ const SignIn = () => {
                         </a>
                       </div>
                       {/* <!-- Title --> */}
-                      <h1 className="mb-2 h2">Welcome back</h1>
-                      <a className="h3">SignIn</a>
-                      <div className="mt-3">
+                      <h1 className="mb-2 text-center">Welcome back</h1>
+                      <h3 className="text-center">Sign In</h3>
+                      <div className="mt-3 text-center">
                         {/* <input
                           className="cred"
                           type="email"

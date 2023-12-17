@@ -2,14 +2,14 @@ body {
     overflow-x: hidden;
 }
 
-#category {
-    margin-bottom: 4rem;
+.category {
+    margin-bottom: 2rem;
 }
 
 .sliderr {
-    margin-bottom: 5rem;
+    margin-bottom: 10rem;
     /* background-color: black; */
-    padding: 4rem 0 4rem 0;
+
 }
 
 .slider-card {
