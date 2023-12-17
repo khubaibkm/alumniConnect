@@ -1,0 +1,17 @@
+*::selection {
+    color: rgb(24, 86, 255);
+    background-color: #cee0ff;
+}
+
+body::-webkit-scrollbar {
+    display: block;
+    width: 12px;
+    background-color: white;
+
+}
+
+body::-webkit-scrollbar-thumb {
+    background-color: rgb(24, 86, 255);
+    border-radius: 10px;
+    border: 3px solid white;
+}
