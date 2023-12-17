@@ -1,5 +1,8 @@
 {
   "projects": {
-    "default": "alumniconnect-fd233"
-  }
+    "default": "alumniconnect-fd233",
+    "deploy": "alumniconnect-fd233"
+  },
+  "targets": {},
+  "etags": {}
 }
