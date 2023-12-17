@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { auth } from "../config/firebase.js";
 import { onAuthStateChanged, signOut } from "firebase/auth";
-import { Link, useNavigate } from "react-router-dom";
+import { Link, useNavigate, useLocation } from "react-router-dom";
 import { getDocs, collection, query, where } from "firebase/firestore";
 import { db } from "../config/firebase.js";
 import "./Navbar.css";
@@ -9,7 +9,9 @@ import "./Navbar.css";
 export const Navbar = () => {
   const [isSignedIn, setIsSignedIn] = useState(false);
   const [isVerified, setIsVerified] = useState(false);
+  const [isMyProfileVisible, setIsMyProfileVisible] = useState(false);
   const navigate = useNavigate();
+  const location = useLocation();
 
   useEffect(() => {
     const unsubscribe = onAuthStateChanged(auth, async (user) => {
@@ -29,14 +31,17 @@ export const Navbar = () => {
           if (querySnapshot.size > 0) {
             const userData = querySnapshot.docs[0].data();
             setIsVerified(userData.isVerified || false);
+            setIsMyProfileVisible(true);
           } else {
             setIsVerified(false);
+            setIsMyProfileVisible(false);
           }
         } catch (error) {
           console.error("Error fetching user document:", error);
         }
       } else {
         setIsVerified(false);
+        setIsMyProfileVisible(false);
       }
     });
 
@@ -54,6 +59,7 @@ export const Navbar = () => {
       // Update the state only after the operation is complete
       setIsSignedIn(false);
       setIsVerified(false);
+      setIsMyProfileVisible(false);
     }
   };
 
@@ -61,7 +67,12 @@ export const Navbar = () => {
     <nav className="navbar navbar-expand-lg navbar-light bg-light fixed-top shadow">
       <div className="container-fluid">
         <Link to="/" className="navbar-brand">
-          <img style={{marginLeft:"0.1rem"}} width={"225px"} src="/logo.svg" alt="logo-alumniConnect" />
+          <img
+            style={{ marginLeft: "0.1rem" }}
+            width={"225px"}
+            src="/logo.svg"
+            alt="logo-alumniConnect"
+          />
         </Link>
         <button
           className="navbar-toggler"
@@ -89,17 +100,15 @@ export const Navbar = () => {
                 View Profiles
               </Link>
             </li>
-
-
             <li className="nav-item">
-              {isVerified && (
+              {isMyProfileVisible && (
                 <Link to="/profile" className="nav-link">
                   My Profile
                 </Link>
               )}
             </li>
             <li className="nav-item">
-              {isSignedIn && (
+              {isSignedIn && !isMyProfileVisible && (
                 <Link to="/On_boarding_form" className="nav-link">
                   Onboard Form
                 </Link>

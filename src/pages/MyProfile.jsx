@@ -132,161 +132,172 @@ const MyProfile = () => {
     <div class="container mt-5 p-5">
       <div class="card p-4">
         <h2 class="mb-4 text-center">My Profile</h2>
+
         {userData ? (
-          <div>
-            <p class="mb-2">
-              <strong>Name:</strong>{" "}
-              {editingField === "name" ? (
-                <input
-                  type="text"
-                  name="name"
-                  value={updatedFormData.name}
-                  onChange={handleChange}
-                  class="form-control"
-                />
-              ) : (
-                <span>
-                  {userData.name}{" "}
-                  <FaPencilAlt onClick={() => handleEditClick("name")} />
-                </span>
-              )}
-            </p>
-
-            <p class="mb-2">
-              <strong>Graduation Year:</strong>{" "}
-              {editingField === "graduationYear" ? (
-                <input
-                  type="text"
-                  name="graduationYear"
-                  value={updatedFormData.graduationYear}
-                  onChange={handleChange}
-                  class="form-control"
-                />
-              ) : (
-                <span>
-                  {userData.graduationYear}{" "}
-                  <FaPencilAlt
-                    onClick={() => handleEditClick("graduationYear")}
-                  />
-                </span>
-              )}
-            </p>
-
-            <p class="mb-2">
-              <strong>Major:</strong>{" "}
-              {editingField === "major" ? (
-                <input
-                  type="text"
-                  name="major"
-                  value={updatedFormData.major}
-                  onChange={handleChange}
-                  class="form-control"
-                />
-              ) : (
-                <span>
-                  {userData.major}{" "}
-                  <FaPencilAlt onClick={() => handleEditClick("major")} />
-                </span>
-              )}
-            </p>
-
-            <p class="mb-2">
-              <strong>Email:</strong> {userData.email}
-            </p>
-
-            <p class="mb-2">
-              <strong>LinkedIn:</strong>{" "}
-              {editingField === "linkedin" ? (
-                <input
-                  type="text"
-                  name="linkedin"
-                  value={updatedFormData.linkedin}
-                  onChange={handleChange}
-                  class="form-control"
-                />
-              ) : (
-                <span>
-                  {userData.linkedin}{" "}
-                  <FaPencilAlt onClick={() => handleEditClick("linkedin")} />
-                </span>
-              )}
-            </p>
-            <p class="mb-2">
-              <strong>Profile Picture:</strong>{" "}
-              {editingField === "profileImageUrl" ? (
-                <div>
-                  <input
-                    type="file"
-                    onChange={handleImageChange}
-                    class="form-control"
-                  />
-                  {image && (
-                    <img
-                      src={URL.createObjectURL(image)}
-                      alt="Preview"
-                      class="mt-2 img-fluid"
-                    />
-                  )}
-                </div>
-              ) : (
-                <span>
-                  {userData.profileImageUrl && (
-                    <img
-                      src={userData.profileImageUrl}
-                      alt="Profile"
-                      class="mt-2 img-fluid"
-                    />
-                  )}
+          <div class="row">
+            <div class="col-md-4 mb-3">
+              <p class="mb-2">
+                <strong>
+                  Profile Picture:{" "}
                   <FaPencilAlt
                     onClick={() => handleEditClick("profileImageUrl")}
                   />
-                </span>
-              )}
-            </p>
+                </strong>{" "}
+                {editingField === "profileImageUrl" ? (
+                  <div>
+                    <input
+                      type="file"
+                      onChange={handleImageChange}
+                      class="form-control"
+                    />
+                    {image && (
+                      <img
+                        src={URL.createObjectURL(image)}
+                        alt="Preview"
+                        class="mt-2 img-fluid"
+                      />
+                    )}
+                  </div>
+                ) : (
+                  <span>
+                    {userData.profileImageUrl && (
+                      <img
+                        src={userData.profileImageUrl}
+                        alt="Profile"
+                        class="mt-2 img-fluid"
+                      />
+                    )}
+                  </span>
+                )}
+              </p>
+            </div>
 
-            <p class="mb-2">
-              <strong>Current Company:</strong>{" "}
-              {editingField === "currentCompany" ? (
-                <input
-                  type="text"
-                  name="currentCompany"
-                  value={updatedFormData.currentCompany}
-                  onChange={handleChange}
-                  class="form-control"
-                />
-              ) : (
-                <span>
-                  {userData.currentCompany}{" "}
-                  <FaPencilAlt
-                    onClick={() => handleEditClick("currentCompany")}
+            <div class="col-md-8 ">
+              <p class="mb-3 mt-4">
+                <strong>Name:</strong>{" "}
+                {editingField === "name" ? (
+                  <input
+                    type="text"
+                    name="name"
+                    value={updatedFormData.name}
+                    onChange={handleChange}
+                    class="form-control"
                   />
-                </span>
-              )}
-            </p>
+                ) : (
+                  <span>
+                    {userData.name}{" "}
+                    <FaPencilAlt onClick={() => handleEditClick("name")} />
+                  </span>
+                )}
+              </p>
 
-            <p class="mb-2">
-              <strong>Bio:</strong>{" "}
-              {editingField === "bio" ? (
-                <textarea
-                  name="bio"
-                  value={updatedFormData.bio}
-                  onChange={handleChange}
-                  class="form-control"
-                />
-              ) : (
-                <span>
-                  {userData.bio}{" "}
-                  <FaPencilAlt onClick={() => handleEditClick("bio")} />
-                </span>
-              )}
-            </p>
+              <p class="mb-3">
+                <strong>Graduation Year:</strong>{" "}
+                {editingField === "graduationYear" ? (
+                  <input
+                    type="text"
+                    name="graduationYear"
+                    value={updatedFormData.graduationYear}
+                    onChange={handleChange}
+                    class="form-control"
+                  />
+                ) : (
+                  <span>
+                    {userData.graduationYear}{" "}
+                    <FaPencilAlt
+                      onClick={() => handleEditClick("graduationYear")}
+                    />
+                  </span>
+                )}
+              </p>
 
-            <button class="btn btn-primary mt-2" onClick={handleUpdate}>
-              Save Changes
-            </button>
-            <button class="btn btn-secondary ms-2" onClick={handleCancelEdit}>
-              Cancel
-            </button>
+              <p class="mb-3">
+                <strong>Major:</strong>{" "}
+                {editingField === "major" ? (
+                  <input
+                    type="text"
+                    name="major"
+                    value={updatedFormData.major}
+                    onChange={handleChange}
+                    class="form-control"
+                  />
+                ) : (
+                  <span>
+                    {userData.major}{" "}
+                    <FaPencilAlt onClick={() => handleEditClick("major")} />
+                  </span>
+                )}
+              </p>
+
+              <p class="mb-3">
+                <strong>Email:</strong> {userData.email}
+              </p>
+
+              <p class="mb-3">
+                <strong>LinkedIn:</strong>{" "}
+                {editingField === "linkedin" ? (
+                  <input
+                    type="text"
+                    name="linkedin"
+                    value={updatedFormData.linkedin}
+                    onChange={handleChange}
+                    class="form-control"
+                  />
+                ) : (
+                  <span>
+                    {userData.linkedin}{" "}
+                    <FaPencilAlt onClick={() => handleEditClick("linkedin")} />
+                  </span>
+                )}
+              </p>
+
+              <p class="mb-3">
+                <strong>Current Company:</strong>{" "}
+                {editingField === "currentCompany" ? (
+                  <input
+                    type="text"
+                    name="currentCompany"
+                    value={updatedFormData.currentCompany}
+                    onChange={handleChange}
+                    class="form-control"
+                  />
+                ) : (
+                  <span>
+                    {userData.currentCompany}{" "}
+                    <FaPencilAlt
+                      onClick={() => handleEditClick("currentCompany")}
+                    />
+                  </span>
+                )}
+              </p>
+
+              <p class="mb-3">
+                <strong>Bio:</strong>{" "}
+                {editingField === "bio" ? (
+                  <textarea
+                    name="bio"
+                    value={updatedFormData.bio}
+                    onChange={handleChange}
+                    class="form-control"
+                  />
+                ) : (
+                  <span>
+                    {userData.bio}{" "}
+                    <FaPencilAlt onClick={() => handleEditClick("bio")} />
+                  </span>
+                )}
+              </p>
+
+              <button class="btn btn-primary mt-2" onClick={handleUpdate}>
+                Save Changes
+              </button>
+              <button
+                class="btn btn-secondary mt-2 mx-2"
+                onClick={handleCancelEdit}
+              >
+                Cancel
+              </button>
+            </div>
           </div>
         ) : (
           <p>Loading...</p>
