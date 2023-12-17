@@ -5,7 +5,12 @@ import {
   fetchSignInMethodsForEmail,
   signInWithPopup,
 } from "firebase/auth";
-import { auth, googleProvider, db } from "../config/firebase.js";
+import {
+  auth,
+  googleProvider,
+  db,
+  githubProvider,
+} from "../config/firebase.js";
 import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { useNavigate } from "react-router-dom";
@@ -66,6 +71,54 @@ const SignIn = () => {
   //     console.error(error);
   //   }
   // };
+  const signInWithGitHub = async () => {
+    try {
+      const auth = getAuth();
+
+      // Sign in with GitHub
+      const result = await signInWithPopup(auth, githubProvider);
+
+      // Check if the user's email already exists
+      const user = result.user;
+      const signInMethods = await fetchSignInMethodsForEmail(auth, user.email);
+
+      if (signInMethods.length === 0) {
+        // Email does not exist, sign out the user and prompt to sign up
+        await auth.signOut();
+        toast.error("You don't have an account yet. Please sign up first.");
+        return;
+      }
+
+      // Email exists, check Firestore collection for user document
+      const alumniCollection = collection(db, "alumni");
+      const querySnapshot = await getDocs(alumniCollection);
+
+      // Loop through each document
+      querySnapshot.forEach(async (doc) => {
+        // Check if the firebaseUID matches the current user's UID
+        if (doc.data().firebaseUID === user.uid) {
+          // If the user document is found, check the isVerified field
+          const isVerified = doc.data().isVerified;
+
+          if (!isVerified) {
+            // User is not verified, navigate to under review page
+            navigate("/undereview");
+          } else {
+            // User is verified, proceed with navigation
+            navigate("/");
+          }
+
+          // Exit the loop once the user document is found
+          return;
+        }
+      });
+
+      toast.success("Signed in successfully!");
+    } catch (error) {
+      console.log(error);
+      toast.error("Error signing in");
+    }
+  };
 
   const SignInWithGoogle = async () => {
     try {
@@ -177,6 +230,18 @@ const SignIn = () => {
                             style={{ marginRight: "5px" }}
                           ></img>
                           Continue with Google
+                        </button>
+                        <br /> <br />
+                        <button
+                          className="signin bg-secondary"
+                          onClick={signInWithGitHub}
+                        >
+                          <img
+                            src="/github.svg"
+                            width={30}
+                            style={{ marginRight: "5px" }}
+                          ></img>
+                          Continue with GitHub
                         </button>
                       </div>
                     </div>

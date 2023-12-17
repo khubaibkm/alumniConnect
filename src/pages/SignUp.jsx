@@ -5,7 +5,7 @@ import {
   fetchSignInMethodsForEmail,
   onAuthStateChanged,
 } from "firebase/auth";
-import { auth, googleProvider } from "../config/firebase.js";
+import { auth, googleProvider, githubProvider } from "../config/firebase.js";
 import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { useNavigate } from "react-router-dom";
@@ -104,6 +104,29 @@ const SignUp = () => {
     }
   };
 
+  const SignUpWithGitHub = async () => {
+    try {
+      const result = await signInWithPopup(auth, githubProvider);
+      const user = result.user;
+
+      const userSignInMethods = await fetchSignInMethodsForEmail(
+        auth,
+        user.email
+      );
+
+      if (userSignInMethods.length > 0) {
+        toast.error("Email is already registered");
+        navigate("/");
+      } else {
+        navigate("/On_boarding_form");
+        toast.success("User signed in successfully!");
+      }
+    } catch (error) {
+      console.error(error);
+      toast.error("Error signing up with GitHub");
+    }
+  };
+
   return (
     <div className="container mt-5 p-5">
       <section className="vh-xxl-100 pt-5">
@@ -164,7 +187,19 @@ const SignUp = () => {
                             width={30}
                             style={{ marginRight: "5px" }}
                           ></img>
-                          Continue with Google
+                          SignUp with Google
+                        </button>
+                        <br /> <br />
+                        <button
+                          className="signup bg-secondary"
+                          onClick={SignUpWithGitHub}
+                        >
+                          <img
+                            src="/github.svg"
+                            width={30}
+                            style={{ marginRight: "5px" }}
+                          ></img>
+                          SignUp with GitHub
                         </button>
                       </div>
                     </div>
