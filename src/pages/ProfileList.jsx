@@ -50,7 +50,6 @@ const ProfileList = () => {
   };
 
   const filteredProfiles = profiles.filter((profile) => {
-    console.log("Profile:", profile); // Log the profile object to inspect its contents
     const nameMatches = profile.name
       .toLowerCase()
       .includes(searchText.toLowerCase());
