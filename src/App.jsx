@@ -9,7 +9,7 @@ import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import "./App.css";
 import SignUp from "./pages/SignUp";
-import HomePage from "./pages/homePage";
+import HomePage from "./pages/HomePage";
 import SignIn from "./pages/SignIn";
 import OnBoardingForm from "./components/OnBoardingForm";
 import { Navbar } from "./components/Navbar";
