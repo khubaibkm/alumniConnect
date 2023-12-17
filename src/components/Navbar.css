@@ -1,0 +1,52 @@
+.button-animated {
+    border: none;
+    border-radius: 3px;
+    padding: 5px 20px;
+    background: #006aff;
+    position: relative;
+    overflow: hidden;
+    color: white;
+    margin-bottom: 5px;
+}
+
+.button-animated:before {
+    content: '';
+    position: absolute;
+    width: 100px;
+    height: 100%;
+    background-image: linear-gradient(120deg,
+            rgba(255, 255, 255, 0) 30%,
+            rgba(255, 255, 255, .8),
+            rgba(255, 255, 255, 0) 70%);
+    top: 0;
+    left: -100px;
+}
+
+@keyframes shine {
+    0% {
+        left: -100px
+    }
+
+    20% {
+        left: 100%
+    }
+
+    100% {
+        left: 100%
+    }
+}
+
+.button-animated:before {
+    content: '';
+    position: absolute;
+    width: 100px;
+    height: 100%;
+    background-image: linear-gradient(120deg,
+            rgba(255, 255, 255, 0) 30%,
+            rgba(255, 255, 255, .8),
+            rgba(255, 255, 255, 0) 70%);
+    top: 0;
+    left: -100px;
+    animation: shine 3s infinite linear;
+    /* Animation */
+}

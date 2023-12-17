@@ -4,6 +4,7 @@ import { onAuthStateChanged, signOut } from "firebase/auth";
 import { Link, useNavigate } from "react-router-dom";
 import { getDocs, collection, query, where } from "firebase/firestore";
 import { db } from "../config/firebase.js";
+import "./Navbar.css";
 
 export const Navbar = () => {
   const [isSignedIn, setIsSignedIn] = useState(false);
@@ -57,7 +58,7 @@ export const Navbar = () => {
   };
 
   return (
-    <nav className="navbar navbar-expand-lg navbar-light bg-light fixed-top">
+    <nav className="navbar navbar-expand-lg navbar-light bg-light fixed-top shadow">
       <div className="container-fluid">
         <Link to="/" className="navbar-brand" style={{ color: "#4885ed" }}>
           Alumni Connect
@@ -88,24 +89,30 @@ export const Navbar = () => {
                 View Profiles
               </Link>
             </li>
+
             <li className="nav-item">
               {isSignedIn ? (
-                <a className="nav-link" href="#" onClick={handleSignOut}>
+                <a
+                  className="nav-link bg-primary rounded text-white px-3 py-2 mx-2 "
+                  href="#"
+                  onClick={handleSignOut}
+                >
                   Logout
                 </a>
               ) : (
-                <Link to="/signin" className="nav-link">
+                <Link to="/signin" className="nav-link button-animated mx-2 ">
                   Alumni Login
                 </Link>
               )}
             </li>
             <li className="nav-item">
               {isSignedIn ? null : (
-                <Link to="/signup" className="nav-link">
+                <Link to="/signup" className="nav-link button-animated">
                   Alumni Registration
                 </Link>
               )}
             </li>
+
             <li className="nav-item">
               {isVerified && (
                 <Link to="/profile" className="nav-link">
