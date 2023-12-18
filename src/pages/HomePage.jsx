@@ -21,11 +21,11 @@ const HomePage = () => {
             </div>
             <div className="col-lg-6 py-4">
               <div className="section-head text-start">
-                <h3>About Us</h3>
-                <h2 className="title">
+                <h2>About Us</h2>
+                <h4 className="title">
                   Welcome to Alumni Connect! - Where connections shape your
                   future.
-                </h2>
+                </h4>
               </div>
               <p className="text-start">
                 At Alumni Connect, we understand the power of connections. We

@@ -8,8 +8,8 @@ const HowTo = () => {
         // style={{ minHeight: "100vh" }}
       >
         <div className="container">
-          <div className="section-head text-center">
-            <h6
+          <div className="section-head text-center mb-4">
+            <h2
               className="text wow fadeInUp"
               data-wow-delay="0.6s"
               style={{
@@ -19,8 +19,8 @@ const HowTo = () => {
               }}
             >
               Registration Process - (for Alumni)
-            </h6>
-            <h2
+            </h2>
+            <h4
               className="title wow fadeInUp"
               data-wow-delay="0.8s"
               style={{
@@ -30,7 +30,7 @@ const HowTo = () => {
               }}
             >
               How It Works
-            </h2>
+            </h4>
           </div>
           <div className="row justify-content-center">
             <div className="col-lg-3 col-md-6 mb-3">

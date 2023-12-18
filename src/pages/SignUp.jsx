@@ -128,7 +128,7 @@ const SignUp = () => {
   };
 
   return (
-    <div className="container mt-5 p-5">
+    <div className="container mt-5 py-5">
       <section className="vh-xxl-100 pt-5">
         <div className="container h-100 d-flex px-0 px-sm-4">
           <div className="row justify-content-center align-items-center m-auto">
@@ -181,7 +181,7 @@ const SignUp = () => {
                         </button> */}
                         <br /> <br />
                         <button
-                          className="signup google"
+                          className="signup bg-white google"
                           onClick={SignUpWithGoogle}
                         >
                           <img
@@ -193,7 +193,7 @@ const SignUp = () => {
                         </button>
                         <br /> <br />
                         <button
-                          className="signup bg-secondary"
+                          className="signup bg-white"
                           onClick={SignUpWithGitHub}
                         >
                           <img
