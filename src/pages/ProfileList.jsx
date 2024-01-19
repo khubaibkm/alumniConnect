@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import { db } from "../config/firebase.js";
 import { collection, onSnapshot } from "firebase/firestore";
 import { ref, getDownloadURL } from "firebase/storage";
+import { storage } from "../config/firebase.js";
 
 const ProfileList = () => {
   const [profiles, setProfiles] = useState([]);
@@ -9,6 +10,8 @@ const ProfileList = () => {
   const [companyFilter, setCompanyFilter] = useState("");
   const [graduationYearFilter, setGraduationYearFilter] = useState("");
   const [majorFilter, setMajorFilter] = useState("");
+  const [currentPage, setCurrentPage] = useState(1);
+  const [profilesPerPage] = useState(6);
 
   useEffect(() => {
     const profilesCollection = collection(db, "alumni");
@@ -24,32 +27,46 @@ const ProfileList = () => {
     return () => unsubscribe();
   }, []);
 
-  const fetchProfileImageUrls = async () => {
-    const updatedProfiles = await Promise.all(
-      profiles.map(async (profile) => {
-        if (profile.profileImageUrl) {
-          try {
-            const storageRef = ref(db.storage, profile.profileImageUrl);
-            const downloadURL = await getDownloadURL(storageRef);
+  useEffect(() => {
+    const fetchImages = async () => {
+      const updatedProfiles = await Promise.all(
+        profiles.map(async (profile) => {
+          if (profile.profileImageUrl) {
+            try {
+              // Use the storage instance
+              const storageRef = ref(storage, profile.profileImageUrl);
+              const downloadURL = await getDownloadURL(storageRef);
 
-            return {
-              ...profile,
-              profileImageUrl: downloadURL,
-            };
-          } catch (error) {
-            console.error("Error fetching image URL:", error);
+              return {
+                ...profile,
+                profileImageUrl: downloadURL,
+              };
+            } catch (error) {
+              console.error("Error fetching image URL:", error);
+              return profile;
+            }
+          } else {
             return profile;
           }
-        } else {
-          return profile;
-        }
-      })
-    );
+        })
+      );
 
-    setProfiles(updatedProfiles);
-  };
+      setProfiles(updatedProfiles);
+    };
 
-  const filteredProfiles = profiles.filter((profile) => {
+    fetchImages();
+  }, [profiles]);
+
+  const paginate = (pageNumber) => setCurrentPage(pageNumber);
+
+  const indexOfLastProfile = currentPage * profilesPerPage;
+  const indexOfFirstProfile = indexOfLastProfile - profilesPerPage;
+  const currentProfiles = profiles.slice(
+    indexOfFirstProfile,
+    indexOfLastProfile
+  );
+
+  const filteredProfiles = currentProfiles.filter((profile) => {
     const nameMatches = profile.name
       .toLowerCase()
       .includes(searchText.toLowerCase());
@@ -158,22 +175,69 @@ const ProfileList = () => {
                   style={{ height: "350px" }}
                 />
               )}
+              <h1>
+                <span
+                  className="badge badge bg-primary m-1 text-light position-absolute left-0 top-0"
+                  style={{ fontSize: "1.2rem" }}
+                >
+                  {profile.graduationYear}
+                </span>
+              </h1>
+
               <div className="card-body">
-                <h2 className="card-title">{profile.name}</h2>
+                <h2 className="card-title text-center">{profile.name}</h2>
+                <div class="d-flex justify-content-center">
+                  <a
+                    href={profile.linkedin}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="text-primary "
+                  >
+                    <i class="fa fa-linkedin fa-lg me-3"></i>
+                  </a>
+
+                  <a href={`mailto:${profile.email}`}>
+                    <i class="fa fa-envelope fa-lg"></i>
+                  </a>
+                </div>
+
                 <p className="card-text">
-                  Graduation Year: {profile.graduationYear}
+                  Major: <span className="text-success">{profile.major}</span>
                 </p>
-                <p className="card-text">Major: {profile.major}</p>
-                <p className="card-text">Email: {profile.email}</p>
-                <p className="card-text">LinkedIn: {profile.linkedin}</p>
-                <p className="card-text">Bio: {profile.bio}</p>
                 <p className="card-text">
-                  Current Company: {profile.currentCompany}
+                  Current Company:{" "}
+                  <span className="text-warning">{profile.currentCompany}</span>
+                </p>
+
+                <p className="card-text">
+                  Bio: <span className="text-muted">{profile.bio}</span>
                 </p>
               </div>
             </div>
           </div>
         ))}
+      </div>
+      <div className="d-flex justify-content-center">
+        <ul className="pagination" onClick={() => window.scrollTo(0, 0)}>
+          {Array.from(
+            { length: Math.ceil(profiles.length / profilesPerPage) },
+            (_, index) => (
+              <li
+                key={index}
+                className={`page-item ${
+                  currentPage === index + 1 ? "active" : ""
+                }`}
+              >
+                <button
+                  className="page-link"
+                  onClick={() => paginate(index + 1)}
+                >
+                  {index + 1}
+                </button>
+              </li>
+            )
+          )}
+        </ul>
       </div>
     </div>
   );

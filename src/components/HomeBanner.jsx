@@ -1,9 +1,31 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import "./HomeBanner.css";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { gsap } from "gsap";
+import { auth } from "../config/firebase.js";
 
 export const HomeBanner = () => {
+  const navigate = useNavigate();
+  const [isLoggedIn, setIsLoggedIn] = useState(false);
+
+  const checkAuthStatus = () => {
+    auth.onAuthStateChanged((user) => {
+      if (user) {
+        setIsLoggedIn(true);
+      } else {
+        setIsLoggedIn(false);
+      }
+    });
+  };
+
+  const redirect = () => {
+    if (isLoggedIn) {
+      navigate("/profilelist");
+    } else {
+      navigate("/signin");
+    }
+  };
+
   useEffect(() => {
     const ease = "power3.out";
 
@@ -36,6 +58,8 @@ export const HomeBanner = () => {
       .querySelector(".btn")
       .addEventListener("mouseleave", unhoverEffect);
 
+    checkAuthStatus(); // Call checkAuthStatus to set initial authentication status
+
     return () => {
       window.removeEventListener("load", startAnimation);
       document
@@ -45,7 +69,7 @@ export const HomeBanner = () => {
         .querySelector(".btn")
         .removeEventListener("mouseleave", unhoverEffect);
     };
-  }, []);
+  }, [isLoggedIn, navigate]);
 
   return (
     <section className="mt-5 p-5">
@@ -60,9 +84,9 @@ export const HomeBanner = () => {
                 Welcome to <span className="textstyle">AlumniConnect</span>
               </h1>
               <p className="lead">Where connections shape your future.</p>
-              <Link to="./signup" className="btn btn-primary btn-lg">
+              <button className="btn btn-primary btn-lg" onClick={redirect}>
                 Get Started
-              </Link>
+              </button>
             </div>
           </div>
         </div>

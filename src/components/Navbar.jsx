@@ -14,6 +14,10 @@ export const Navbar = () => {
   const location = useLocation();
 
   useEffect(() => {
+    window.scrollTo(0, 0);
+  }, []);
+
+  useEffect(() => {
     const unsubscribe = onAuthStateChanged(auth, async (user) => {
       setIsSignedIn(!!user);
 
@@ -63,8 +67,19 @@ export const Navbar = () => {
     }
   };
 
+  // Function to close the navbar menu on mobile screens
+  const closeNavbar = () => {
+    const navbarToggler = document.getElementById("navbarToggler");
+    if (navbarToggler.classList.contains("show")) {
+      navbarToggler.click();
+    }
+  };
+
   return (
-    <nav className="navbar navbar-expand-lg navbar-light bg-light fixed-top shadow">
+    <nav
+      className="navbar navbar-expand-lg navbar-light bg-light fixed-top shadow"
+      onClick={() => window.scrollTo(0, 0)}
+    >
       <div className="container-fluid">
         <Link to="/" className="navbar-brand">
           <img
@@ -82,6 +97,7 @@ export const Navbar = () => {
           aria-controls="navbarSupportedContent"
           aria-expanded="false"
           aria-label="Toggle navigation"
+          id="navbarToggler"
         >
           <span className="navbar-toggler-icon"></span>
         </button>
@@ -91,29 +107,39 @@ export const Navbar = () => {
         >
           <ul className="navbar-nav">
             <li className="nav-item">
-              <Link to="/" className="nav-link" aria-current="page">
+              <Link
+                to="/"
+                className="nav-link"
+                aria-current="page"
+                onClick={() => {
+                  window.scrollTo(0, 0);
+                  closeNavbar();
+                }}
+              >
                 Home
               </Link>
             </li>
             <li className="nav-item">
-              <Link to="/profilelist" className="nav-link">
+              <Link
+                to="/profilelist"
+                className="nav-link"
+                onClick={() => closeNavbar()}
+              >
                 View Profiles
               </Link>
             </li>
             <li className="nav-item">
               {isMyProfileVisible && (
-                <Link to="/profile" className="nav-link">
+                <Link
+                  to="/profile"
+                  className="nav-link"
+                  onClick={() => closeNavbar()}
+                >
                   My Profile
                 </Link>
               )}
             </li>
-            <li className="nav-item">
-              {isSignedIn && !isMyProfileVisible && (
-                <Link to="/On_boarding_form" className="nav-link">
-                  Onboard Form
-                </Link>
-              )}
-            </li>
+            {/* Add similar onClick handlers for other navigation links */}
             <li className="nav-item">
               {isSignedIn ? (
                 <a
@@ -127,6 +153,7 @@ export const Navbar = () => {
                 <Link
                   to="/signin"
                   className="nav-link bg-primary rounded text-white px-3 py-2 mx-2 button-animated"
+                  onClick={() => closeNavbar()}
                 >
                   Alumni Login
                 </Link>
@@ -137,6 +164,7 @@ export const Navbar = () => {
                 <Link
                   to="/signup"
                   className="nav-link bg-primary rounded text-white px-3 py-2 mx-2 button-animated"
+                  onClick={() => closeNavbar()}
                 >
                   Alumni Registration
                 </Link>
