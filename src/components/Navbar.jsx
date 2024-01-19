@@ -10,6 +10,7 @@ export const Navbar = () => {
   const [isSignedIn, setIsSignedIn] = useState(false);
   const [isVerified, setIsVerified] = useState(false);
   const [isMyProfileVisible, setIsMyProfileVisible] = useState(false);
+  const [isNavbarOpen, setIsNavbarOpen] = useState(false);
   const navigate = useNavigate();
   const location = useLocation();
 
@@ -23,15 +24,11 @@ export const Navbar = () => {
 
       if (user) {
         try {
-          // Reference to the Firestore collection
           const alumniCollection = collection(db, "alumni");
-
-          // Get the user document from Firestore
           const querySnapshot = await getDocs(
             query(alumniCollection, where("firebaseUID", "==", user.uid))
           );
 
-          // Check if the user document exists
           if (querySnapshot.size > 0) {
             const userData = querySnapshot.docs[0].data();
             setIsVerified(userData.isVerified || false);
@@ -55,29 +52,30 @@ export const Navbar = () => {
   const handleSignOut = async () => {
     try {
       await signOut(auth);
-      // Redirect to the SignIn page after sign-out
       navigate("/signin");
     } catch (err) {
       console.log(err);
     } finally {
-      // Update the state only after the operation is complete
       setIsSignedIn(false);
       setIsVerified(false);
       setIsMyProfileVisible(false);
+      setIsNavbarOpen(false); // Close the navbar after sign-out
     }
   };
 
-  // Function to close the navbar menu on mobile screens
+  const toggleNavbar = () => {
+    setIsNavbarOpen(!isNavbarOpen);
+  };
+
   const closeNavbar = () => {
-    const navbarToggler = document.getElementById("navbarToggler");
-    if (navbarToggler.classList.contains("show")) {
-      navbarToggler.click();
-    }
+    setIsNavbarOpen(false);
   };
 
   return (
     <nav
-      className="navbar navbar-expand-lg navbar-light bg-light fixed-top shadow"
+      className={`navbar navbar-expand-lg navbar-light bg-light fixed-top shadow ${
+        isNavbarOpen ? "navbar-open" : ""
+      }`}
       onClick={() => window.scrollTo(0, 0)}
     >
       <div className="container-fluid">
@@ -90,7 +88,7 @@ export const Navbar = () => {
           />
         </Link>
         <button
-          className="navbar-toggler"
+          className={`navbar-toggler ${isNavbarOpen ? "collapsed" : ""}`}
           type="button"
           data-bs-toggle="collapse"
           data-bs-target="#navbarSupportedContent"
@@ -98,11 +96,14 @@ export const Navbar = () => {
           aria-expanded="false"
           aria-label="Toggle navigation"
           id="navbarToggler"
+          onClick={toggleNavbar}
         >
           <span className="navbar-toggler-icon"></span>
         </button>
         <div
-          className="collapse navbar-collapse justify-content-end"
+          className={`collapse navbar-collapse justify-content-end ${
+            isNavbarOpen ? "show" : ""
+          }`}
           id="navbarSupportedContent"
         >
           <ul className="navbar-nav">
@@ -139,7 +140,6 @@ export const Navbar = () => {
                 </Link>
               )}
             </li>
-            {/* Add similar onClick handlers for other navigation links */}
             <li className="nav-item">
               {isSignedIn ? (
                 <a
