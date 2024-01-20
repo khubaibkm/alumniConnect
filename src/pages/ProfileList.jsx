@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import { db } from "../config/firebase.js";
 import { collection, onSnapshot } from "firebase/firestore";
 import { ref, getDownloadURL } from "firebase/storage";
+import { Card } from "react-bootstrap";
 import { storage } from "../config/firebase.js";
 import PlaceHolder from "../components/PlaceHolder.jsx";
 
@@ -29,35 +30,36 @@ const ProfileList = () => {
     return () => unsubscribe();
   }, []);
 
-  useEffect(() => {
-    const fetchImages = async () => {
-      const updatedProfiles = await Promise.all(
-        profiles.map(async (profile) => {
-          if (profile.profileImageUrl) {
-            try {
-              // Use the storage instance
-              const storageRef = ref(storage, profile.profileImageUrl);
-              const downloadURL = await getDownloadURL(storageRef);
+  const fetchImages = async () => {
+    const updatedProfiles = await Promise.all(
+      profiles.map(async (profile) => {
+        if (profile.profileImageUrl) {
+          try {
+            // Use the storage instance
+            const storageRef = ref(storage, profile.profileImageUrl);
+            const downloadURL = await getDownloadURL(storageRef);
 
-              return {
-                ...profile,
-                profileImageUrl: downloadURL,
-              };
-            } catch (error) {
-              console.error("Error fetching image URL:", error);
-              return profile;
-            }
-          } else {
+            return {
+              ...profile,
+              profileImageUrl: downloadURL,
+            };
+          } catch (error) {
+            console.error("Error fetching image URL:", error);
             return profile;
           }
-        })
-      );
+        } else {
+          return profile;
+        }
+      })
+    );
 
-      setProfiles(updatedProfiles);
-    };
+    setProfiles(updatedProfiles);
+    setLoading(false);
+  };
 
+  useEffect(() => {
     fetchImages();
-  }, [profiles]);
+  }, []);
 
   const paginate = (pageNumber) => setCurrentPage(pageNumber);
 
@@ -114,7 +116,7 @@ const ProfileList = () => {
                 <PlaceHolder />
               </div>
             ))
-          : filteredProfiles.map((profile) => (
+          : filteredProfiles?.map((profile) => (
               <div key={profile.id} className="col mb-3">
                 <Card className="h-100">
                   {profile.profileImageUrl && (
