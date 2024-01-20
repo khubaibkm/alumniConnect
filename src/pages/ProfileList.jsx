@@ -104,8 +104,65 @@ const ProfileList = () => {
 
   return (
     <div className="container mt-4 mb-5">
-      <h1 className="text-center">Profile List</h1>
-      <div className="row mt-5 mb-2">{/* Your search and filter inputs */}</div>
+      <div className="row mb-2" style={{ marginTop: "5rem" }}>
+        <div className="col-md-4 mb-2">
+          <input
+            type="text"
+            className="form-control"
+            placeholder="Search by name"
+            value={searchText}
+            onChange={(e) => setSearchText(e.target.value)}
+          />
+        </div>
+        <div className="col-md-2 mb-2">
+          <select
+            className="form-select"
+            value={companyFilter}
+            onChange={(e) => setCompanyFilter(e.target.value)}
+          >
+            <option key="all" value="">
+              Filter by Company
+            </option>
+            {companies.map((company) => (
+              <option key={company} value={company}>
+                {company}
+              </option>
+            ))}
+          </select>
+        </div>
+        <div className="col-md-2 mb-2">
+          <select
+            className="form-select"
+            value={graduationYearFilter}
+            onChange={(e) => setGraduationYearFilter(e.target.value)}
+          >
+            <option key="all" value="">
+              Filter by Graduation Year
+            </option>
+            {graduationYears.map((year) => (
+              <option key={year} value={year}>
+                {year}
+              </option>
+            ))}
+          </select>
+        </div>
+        <div className="col-md-4 mb-2">
+          <select
+            className="form-select"
+            value={majorFilter}
+            onChange={(e) => setMajorFilter(e.target.value)}
+          >
+            <option key="all" value="">
+              Filter by Major
+            </option>
+            {majors.map((major) => (
+              <option key={major} value={major}>
+                {major}
+              </option>
+            ))}
+          </select>
+        </div>
+      </div>
       <div
         style={{ marginBottom: "4rem" }}
         className="row row-cols-1 row-cols-md-2 row-cols-xl-3"
