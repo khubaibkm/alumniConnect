@@ -23,6 +23,7 @@ import AdminDashboard from "./pages/AdminDashboard";
 import UnauthorizedError from "./pages/UnauthorizedError";
 import Error from "./pages/Error"; // Import the Error component
 import Team from "./pages/Team";
+import Test from "./pages/Test";
 
 function App() {
   return (
@@ -46,7 +47,7 @@ function App() {
                 path="/On_boarding_form"
                 element={<Protected Component={OnBoardingForm} />}
               />
-              <Route path="/homebanner" element={<OnBoardingForm />} />
+
               <Route path="/profilelist" element={<ProfileList />} />
               <Route
                 path="/profile"
@@ -56,6 +57,7 @@ function App() {
               <Route path="/admin" element={<AdminDashboard />} />
               <Route path="/error" element={<UnauthorizedError />} />
               <Route path="/team" element={<Team />} />
+              <Route path="/test" element={<Test />} />
 
               {/* Add other routes for your pages */}
 

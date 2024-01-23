@@ -170,6 +170,17 @@ export const Navbar = () => {
                 </Link>
               )}
             </li>
+            <li className="nav-item">
+              {isSignedIn ? (
+                <Link
+                  to="/on_boarding_form"
+                  className="nav-link bg-primary rounded text-white px-3 py-2 mx-2 button-animated"
+                  onClick={() => closeNavbar()}
+                >
+                  onboarding form
+                </Link>
+              ) : null}
+            </li>
           </ul>
         </div>
       </div>
