@@ -5,6 +5,7 @@ import { ref, getDownloadURL } from "firebase/storage";
 import { Card } from "react-bootstrap";
 import { storage } from "../config/firebase.js";
 import PlaceHolder from "../components/PlaceHolder.jsx";
+import defaultImage from "/profile.png";
 import "./ProfileList.css";
 
 const ProfileList = () => {
@@ -106,7 +107,7 @@ const ProfileList = () => {
   return (
     <div className="container mt-4 mb-5">
       <div className="row mb-2" style={{ marginTop: "5rem" }}>
-      <div className="col-md-4 mb-2">
+        <div className="col-md-4 mb-2">
           <input
             type="text"
             className="form-control"
@@ -178,18 +179,16 @@ const ProfileList = () => {
           filteredProfiles?.map((profile) => (
             <div key={profile.id} className="col mb-3">
               <Card className="h-100">
-                {profile.profileImageUrl && (
-                  // Circular profile image
-                  <div className="profile-image-container">
-                    <img
-                      className="profile-image"
-                      src={profile.profileImageUrl}
-                      alt={`Profile of ${profile.name}`}
-                    />
-                  </div>
-                )}
+                {/* Conditional rendering of profile image */}
+                <div className="profile-image-container">
+                  <img
+                    className="profile-image"
+                    src={profile.profileImageUrl || defaultImage} // Use default image if profile image doesn't exist
+                    alt={`Profile of ${profile.name}`}
+                  />
+                </div>
                 <Card.Body>
-                  <Card.Title>
+                <Card.Title>
                     <span className="badge badge bg-primary m-1 text-light position-absolute left-0 top-0">
                       {profile.graduationYear}
                     </span>
