@@ -5,6 +5,7 @@ import { ref, getDownloadURL } from "firebase/storage";
 import { Card } from "react-bootstrap";
 import { storage } from "../config/firebase.js";
 import PlaceHolder from "../components/PlaceHolder.jsx";
+import "./ProfileList.css";
 
 const ProfileList = () => {
   const [profiles, setProfiles] = useState([]);
@@ -14,7 +15,7 @@ const ProfileList = () => {
   const [majorFilter, setMajorFilter] = useState("");
   const [currentPage, setCurrentPage] = useState(1);
   const [profilesPerPage] = useState(6);
-  const [loading, setLoading] = useState(true); // Define loading state
+  const [loading, setLoading] = useState(true);
 
   useEffect(() => {
     const profilesCollection = collection(db, "alumni");
@@ -105,7 +106,7 @@ const ProfileList = () => {
   return (
     <div className="container mt-4 mb-5">
       <div className="row mb-2" style={{ marginTop: "5rem" }}>
-        <div className="col-md-4 mb-2">
+      <div className="col-md-4 mb-2">
           <input
             type="text"
             className="form-control"
@@ -167,65 +168,67 @@ const ProfileList = () => {
         style={{ marginBottom: "4rem" }}
         className="row row-cols-1 row-cols-md-2 row-cols-xl-3"
       >
-        {loading
-          ? Array.from({ length: profilesPerPage }).map((_, index) => (
-              <div key={index} className="col mb-3">
-                <PlaceHolder />
-              </div>
-            ))
-          : filteredProfiles?.map((profile) => (
-              <div key={profile.id} className="col mb-3">
-                <Card className="h-100">
-                  {profile.profileImageUrl && (
-                    <Card.Img
-                      variant="top"
+        {loading ? (
+          Array.from({ length: profilesPerPage }).map((_, index) => (
+            <div key={index} className="col mb-3">
+              <PlaceHolder />
+            </div>
+          ))
+        ) : (
+          filteredProfiles?.map((profile) => (
+            <div key={profile.id} className="col mb-3">
+              <Card className="h-100">
+                {profile.profileImageUrl && (
+                  // Circular profile image
+                  <div className="profile-image-container">
+                    <img
+                      className="profile-image"
                       src={profile.profileImageUrl}
                       alt={`Profile of ${profile.name}`}
-                      style={{ height: "350px" }}
                     />
-                  )}
-                  <Card.Body>
-                    <Card.Title>
-                      <span
-                        className="badge badge bg-primary m-1 text-light position-absolute left-0 top-0"
-                        style={{ fontSize: "1.2rem" }}
+                  </div>
+                )}
+                <Card.Body>
+                  <Card.Title>
+                    <span className="badge badge bg-primary m-1 text-light position-absolute left-0 top-0">
+                      {profile.graduationYear}
+                    </span>
+                  </Card.Title>
+                  <div className="card-body">
+                    <h2 className="card-title text-center">{profile.name}</h2>
+                    {/* Contact links */}
+                    <div className="d-flex justify-content-center">
+                      <a
+                        href={profile.linkedin}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="text-primary "
                       >
-                        {profile.graduationYear}
-                      </span>
-                    </Card.Title>
-                    <div className="card-body">
-                      <h2 className="card-title text-center">{profile.name}</h2>
-                      <div className="d-flex justify-content-center">
-                        <a
-                          href={profile.linkedin}
-                          target="_blank"
-                          rel="noopener noreferrer"
-                          className="text-primary "
-                        >
-                          <i className="fa fa-linkedin fa-lg me-3"></i>
-                        </a>
-                        <a href={`mailto:${profile.email}`}>
-                          <i className="fa fa-envelope fa-lg"></i>
-                        </a>
-                      </div>
-                      <p className="card-text">
-                        Major:{" "}
-                        <span className="text-success">{profile.major}</span>
-                      </p>
-                      <p className="card-text">
-                        Current Company:{" "}
-                        <span className="text-warning">
-                          {profile.currentCompany}
-                        </span>
-                      </p>
-                      <p className="card-text">
-                        Bio: <span className="text-muted">{profile.bio}</span>
-                      </p>
+                        <i className="fa fa-linkedin fa-lg me-3"></i>
+                      </a>
+                      <a href={`mailto:${profile.email}`}>
+                        <i className="fa fa-envelope fa-lg"></i>
+                      </a>
                     </div>
-                  </Card.Body>
-                </Card>
-              </div>
-            ))}
+                    <p className="card-text">
+                      Major:{" "}
+                      <span className="text-success">{profile.major}</span>
+                    </p>
+                    <p className="card-text">
+                      Current Company:{" "}
+                      <span className="text-warning">
+                        {profile.currentCompany}
+                      </span>
+                    </p>
+                    <p className="card-text">
+                      Bio: <span className="text-muted">{profile.bio}</span>
+                    </p>
+                  </div>
+                </Card.Body>
+              </Card>
+            </div>
+          ))
+        )}
       </div>
       <div className="d-flex justify-content-center">
         <ul className="pagination" onClick={() => window.scrollTo(0, 0)}>
