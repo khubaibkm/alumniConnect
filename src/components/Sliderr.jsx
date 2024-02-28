@@ -6,6 +6,7 @@ import { db } from "../config/firebase.js";
 import { collection, onSnapshot } from "firebase/firestore";
 import { ref, getDownloadURL } from "firebase/storage";
 import "./Sliderr.css";
+import defaultImage from "/profile.png";
 
 const SliderComponent = () => {
   const [profiles, setProfiles] = useState([]);
@@ -16,7 +17,12 @@ const SliderComponent = () => {
     const unsubscribe = onSnapshot(profilesCollection, (snapshot) => {
       const profileData = [];
       snapshot.forEach((doc) => {
-        profileData.push({ id: doc.id, ...doc.data() });
+        const profile = { id: doc.id, ...doc.data() };
+
+        // Only include profiles where isVerified is true
+        if (profile.isVerified) {
+          profileData.push(profile);
+        }
       });
       setProfiles(profileData);
     });
@@ -48,25 +54,27 @@ const SliderComponent = () => {
 
     setProfiles(updatedProfiles);
   };
-
   const settings = {
     className: "center",
-    centerMode: true,
+    centerMode: false,
     infinite: true,
     centerPadding: "10%",
-    slidesToShow: 4,
-    speed: 1000,
+    slidesToShow: 4.2,
+    speed: 2000,
     dots: true,
     autoplay: true,
     autoplaySpeed: 2000,
     pauseOnHover: true,
+    draggable: true, // Allow mouse dragging
+    swipeToSlide: true, // Allow swiping to slide
+    focusOnSelect: true, // Focus on a slide when selected
     prevArrow: (
       <button
         type="button"
         className="slick-prev"
         style={{
           color: "red",
-          fontSize: "24px",
+          fontSize: "100px",
         }}
       >
         Previous
@@ -101,20 +109,25 @@ const SliderComponent = () => {
       },
     ],
   };
-
   return (
     <div className="sliderr">
       <div class="category ">
         <h2 className="text-center">Alumni Highlights</h2>
         <h6 className="text-center">Take a glance</h6>
       </div>
-      <div className="slider-container" style={{ margin: "0 30px" }}>
+      <div className="slider-container" style={{ margin: "0 0px" }}>
         <Slider {...settings} className="autoplay-slider">
           {profiles.map((profile) => (
             <div key={profile.id} className="slider-card center">
-              {profile.profileImageUrl && (
+              {profile.profileImageUrl ? (
                 <img
                   src={profile.profileImageUrl}
+                  alt={`Profile of ${profile.name}`}
+                  className="slider-image"
+                />
+              ) : (
+                <img
+                  src={defaultImage}
                   alt={`Profile of ${profile.name}`}
                   className="slider-image"
                 />
@@ -127,5 +140,4 @@ const SliderComponent = () => {
     </div>
   );
 };
-
 export default SliderComponent;
