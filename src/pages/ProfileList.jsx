@@ -17,14 +17,18 @@ const ProfileList = () => {
   const [currentPage, setCurrentPage] = useState(1);
   const [profilesPerPage] = useState(6);
   const [loading, setLoading] = useState(true);
-
   useEffect(() => {
     const profilesCollection = collection(db, "alumni");
 
     const unsubscribe = onSnapshot(profilesCollection, (snapshot) => {
       const profileData = [];
       snapshot.forEach((doc) => {
-        profileData.push({ id: doc.id, ...doc.data() });
+        const profile = { id: doc.id, ...doc.data() };
+
+        // Only include profiles where isVerified is true
+        if (profile.isVerified) {
+          profileData.push(profile);
+        }
       });
       setProfiles(profileData);
     });
@@ -115,7 +119,7 @@ const ProfileList = () => {
   return (
     <div className="container mt-4 mb-5">
       <div className="row mb-2 " style={{ marginTop: "5rem" }}>
-        <div className="col-md-4 mb-2">
+        <div className="col-md-4 mb-2 ">
           <input
             type="text"
             className="form-control"

@@ -57,11 +57,31 @@ const OnBoardingForm = () => {
         toast.error(
           "You have already submitted your profile! Wait for approval"
         );
-        // You can display a message to the user or redirect them to another page
         return;
       }
 
       const alumniCollection = collection(db, "alumni");
+
+      // Validation checks
+      if (formData.bio.length > 200) {
+        toast.error("Bio should not exceed 200 words");
+        return;
+      }
+
+      if (image) {
+        const fileSizeInMB = image.size / (1024 * 1024);
+        const allowedImageTypes = ["image/jpeg", "image/png", "image/gif"];
+
+        if (fileSizeInMB > 1) {
+          toast.error("File size should not exceed 1MB");
+          return;
+        }
+
+        if (!allowedImageTypes.includes(image.type)) {
+          toast.error("Invalid image format. Please use JPEG, PNG, or GIF");
+          return;
+        }
+      }
 
       let imageUrl = "";
       if (image) {
@@ -114,7 +134,7 @@ const OnBoardingForm = () => {
                     htmlFor="name"
                     className="form-label form-label-onboard text-left"
                   >
-                    Name
+                    Name<span style={{ color: "red" }}>*</span>
                   </label>
                   <input
                     type="text"
@@ -131,7 +151,7 @@ const OnBoardingForm = () => {
                     htmlFor="graduationYear"
                     className="form-label form-label-onboard text-left"
                   >
-                    Graduation Year
+                    Graduation Year<span style={{ color: "red" }}>*</span>
                   </label>
                   <input
                     type="text"
@@ -148,7 +168,7 @@ const OnBoardingForm = () => {
                     htmlFor="major"
                     className="form-label form-label-onboard text-left"
                   >
-                    Major
+                    Major<span style={{ color: "red" }}>*</span>
                   </label>
                   <input
                     type="text"
@@ -165,7 +185,7 @@ const OnBoardingForm = () => {
                     htmlFor="email"
                     className="form-label form-label-onboard text-left"
                   >
-                    Email
+                    Email<span style={{ color: "red" }}>*</span>
                   </label>
                   <input
                     type="email"
@@ -182,7 +202,7 @@ const OnBoardingForm = () => {
                     htmlFor="linkedin"
                     className="form-label form-label-onboard text-left"
                   >
-                    LinkedIn Profile
+                    LinkedIn Profile<span style={{ color: "red" }}>*</span>
                   </label>
                   <input
                     type="text"
@@ -199,7 +219,7 @@ const OnBoardingForm = () => {
                     htmlFor="currentCompany"
                     className="form-label form-label-onboard text-left"
                   >
-                    Current Company
+                    Current Company<span style={{ color: "red" }}>*</span>
                   </label>
                   <input
                     type="text"
@@ -216,7 +236,7 @@ const OnBoardingForm = () => {
                     htmlFor="bio"
                     className="form-label form-label-onboard text-left"
                   >
-                    Bio
+                    Bio<span style={{ color: "red" }}>*</span>
                   </label>
                   <textarea
                     id="bio"
@@ -256,4 +276,5 @@ const OnBoardingForm = () => {
     </div>
   );
 };
+
 export default OnBoardingForm;
