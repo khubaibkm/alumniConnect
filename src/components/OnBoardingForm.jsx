@@ -5,6 +5,7 @@ import { ref, uploadBytes, getDownloadURL } from "firebase/storage";
 import { useNavigate } from "react-router-dom";
 import "./OnBoardingForm.css";
 import { toast } from "react-toastify";
+import major from "../data/major.json";
 
 const OnBoardingForm = () => {
   const navigate = useNavigate();
@@ -170,15 +171,23 @@ const OnBoardingForm = () => {
                   >
                     Major<span style={{ color: "red" }}>*</span>
                   </label>
-                  <input
-                    type="text"
+                  <select
                     id="major"
                     name="major"
                     value={formData.major}
                     onChange={handleChange}
                     className="form-control form-control-onboard"
                     required
-                  />
+                  >
+                    <option value="" disabled>
+                      Select a major
+                    </option>
+                    {major.programs.map((program, index) => (
+                      <option key={index} value={program}>
+                        {program}
+                      </option>
+                    ))}
+                  </select>
                 </div>
                 <div className="mb-3">
                   <label
@@ -202,17 +211,23 @@ const OnBoardingForm = () => {
                     htmlFor="linkedin"
                     className="form-label form-label-onboard text-left"
                   >
-                    LinkedIn Profile<span style={{ color: "red" }}>*</span>
+                    LinkedIn Username<span style={{ color: "red" }}>*</span>
                   </label>
-                  <input
-                    type="text"
-                    id="linkedin"
-                    name="linkedin"
-                    value={formData.linkedin}
-                    onChange={handleChange}
-                    className="form-control form-control-onboard"
-                    required
-                  />
+                  <div className="input-group">
+                    <span className="input-group-text">
+                      https://linkedin.com/in/
+                    </span>
+                    <input
+                      type="text"
+                      id="linkedin"
+                      name="linkedin"
+                      value={formData.linkedin}
+                      onChange={handleChange}
+                      className="form-control form-control-onboard"
+                      placeholder="Enter your LinkedIn username"
+                      required
+                    />
+                  </div>
                 </div>
                 <div className="mb-3">
                   <label
