@@ -14,6 +14,8 @@ export const Navbar = () => {
   const navigate = useNavigate();
   const location = useLocation();
 
+  const hasFilledOutForm = isSignedIn && isVerified;
+
   useEffect(() => {
     window.scrollTo(0, 0);
   }, []);
@@ -171,7 +173,7 @@ export const Navbar = () => {
               )}
             </li>
             <li className="nav-item">
-              {isSignedIn ? (
+              {isSignedIn && !hasFilledOutForm && (
                 <Link
                   to="/on_boarding_form"
                   className="nav-link bg-primary rounded text-white px-3 py-2 mx-2 button-animated"
@@ -179,7 +181,7 @@ export const Navbar = () => {
                 >
                   onboarding form
                 </Link>
-              ) : null}
+              )}
             </li>
           </ul>
         </div>

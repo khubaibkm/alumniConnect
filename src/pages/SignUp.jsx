@@ -91,7 +91,7 @@ const SignUp = () => {
 
       if (userSignInMethods.length > 0) {
         // Email is already registered, show an error message
-        toast.error("Email is already registered");
+        toast.success("User signed in successfully!");
         navigate("/");
       } else {
         // If email is not registered, proceed with your logic
