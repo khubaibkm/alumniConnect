@@ -28,9 +28,9 @@
 
 @media (max-width: 768px) {
   .banner {
-    background-size: 100%;
+    background-size: 59vh;
     background-repeat: no-repeat;
-    min-height: 100vh;
+    min-height: 90vh;
     min-width: 80vw;
 
 
