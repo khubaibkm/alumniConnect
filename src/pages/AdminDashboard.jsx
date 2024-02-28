@@ -146,6 +146,7 @@ const AdminDashboard = () => {
             <th>Major</th>
             <th>Current Company</th>
             <th>LinkedIn ID</th>
+            <th>PFP</th>
             <th>Actions</th>
           </tr>
         </thead>
@@ -158,6 +159,9 @@ const AdminDashboard = () => {
               <td>{user.major}</td>
               <td>{user.currentCompany}</td>
               <td>{user.linkedin}</td>
+              <td>
+                <img src={user.profileImageUrl} />
+              </td>
               <td>
                 <button
                   className="btn btn-success me-2"
