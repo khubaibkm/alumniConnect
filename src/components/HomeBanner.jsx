@@ -72,7 +72,7 @@ export const HomeBanner = () => {
   }, [isLoggedIn, navigate]);
 
   return (
-    <section className="">
+    <section className="mt-2">
       <div className="banner">
         <div className="container">
           <div className="row ">
