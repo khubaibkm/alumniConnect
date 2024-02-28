@@ -73,7 +73,7 @@ export const Navbar = () => {
 
   return (
     <nav
-      className={`navbar navbar-expand-lg navbar-light bg-light fixed-top shadow ${
+      className={`navbar navbar-expand-lg navbar-light bg-light fixed-top shadow-sm${
         isNavbarOpen ? "navbar-open" : ""
       }`}
       onClick={() => window.scrollTo(0, 0)}

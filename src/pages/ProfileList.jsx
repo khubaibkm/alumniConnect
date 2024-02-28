@@ -33,46 +33,47 @@ const ProfileList = () => {
   }, []);
 
   const fetchImages = async () => {
-    const updatedProfiles = await Promise.all(
-      profiles.map(async (profile) => {
-        if (profile.profileImageUrl) {
-          try {
-            // Use the storage instance
-            const storageRef = ref(storage, profile.profileImageUrl);
-            const downloadURL = await getDownloadURL(storageRef);
+    try {
+      const updatedProfiles = await Promise.all(
+        profiles.map(async (profile) => {
+          if (profile.profileImageUrl) {
+            try {
+              const storageRef = ref(storage, profile.profileImageUrl);
+              const downloadURL = await getDownloadURL(storageRef);
 
-            return {
-              ...profile,
-              profileImageUrl: downloadURL,
-            };
-          } catch (error) {
-            console.error("Error fetching image URL:", error);
+              return {
+                ...profile,
+                profileImageUrl: downloadURL,
+              };
+            } catch (error) {
+              console.error("Error fetching image URL:", error);
+              return profile;
+            }
+          } else {
             return profile;
           }
-        } else {
-          return profile;
-        }
-      })
-    );
+        })
+      );
 
-    setProfiles(updatedProfiles);
-    setLoading(false);
+      setProfiles(updatedProfiles);
+    } catch (error) {
+      console.error("Error fetching images:", error);
+    } finally {
+      setLoading(false);
+    }
   };
 
   useEffect(() => {
-    fetchImages();
+    const loadData = async () => {
+      await fetchImages();
+    };
+
+    loadData();
   }, []);
 
   const paginate = (pageNumber) => setCurrentPage(pageNumber);
 
-  const indexOfLastProfile = currentPage * profilesPerPage;
-  const indexOfFirstProfile = indexOfLastProfile - profilesPerPage;
-  const currentProfiles = profiles.slice(
-    indexOfFirstProfile,
-    indexOfLastProfile
-  );
-
-  const filteredProfiles = currentProfiles.filter((profile) => {
+  const filteredProfiles = profiles.filter((profile) => {
     const nameMatches = profile.name
       .toLowerCase()
       .includes(searchText.toLowerCase());
@@ -96,6 +97,13 @@ const ProfileList = () => {
     );
   });
 
+  const indexOfLastProfile = currentPage * profilesPerPage;
+  const indexOfFirstProfile = indexOfLastProfile - profilesPerPage;
+  const currentProfiles = filteredProfiles.slice(
+    indexOfFirstProfile,
+    indexOfLastProfile
+  );
+
   const companies = Array.from(
     new Set(profiles.map((profile) => profile.currentCompany))
   );
@@ -106,7 +114,7 @@ const ProfileList = () => {
 
   return (
     <div className="container mt-4 mb-5">
-      <div className="row mb-2" style={{ marginTop: "5rem" }}>
+      <div className="row mb-2 " style={{ marginTop: "5rem" }}>
         <div className="col-md-4 mb-2">
           <input
             type="text"
@@ -169,70 +177,75 @@ const ProfileList = () => {
         style={{ marginBottom: "4rem" }}
         className="row row-cols-1 row-cols-md-2 row-cols-xl-3"
       >
-        {loading ? (
-          Array.from({ length: profilesPerPage }).map((_, index) => (
-            <div key={index} className="col mb-3">
-              <PlaceHolder />
-            </div>
-          ))
-        ) : (
-          filteredProfiles?.map((profile) => (
-            <div key={profile.id} className="col mb-3">
-              <Card className="h-100">
-                {/* Conditional rendering of profile image */}
-                <div className="profile-image-container">
-                  <img
-                    className="profile-image"
-                    src={profile.profileImageUrl || defaultImage} // Use default image if profile image doesn't exist
-                    alt={`Profile of ${profile.name}`}
-                  />
-                </div>
-                <Card.Body>
-                <Card.Title>
-                    <span className="badge badge bg-primary m-1 text-light position-absolute left-0 top-0">
-                      {profile.graduationYear}
-                    </span>
-                  </Card.Title>
-                  <div className="card-body">
-                    <h2 className="card-title text-center">{profile.name}</h2>
-                    {/* Contact links */}
-                    <div className="d-flex justify-content-center">
-                      <a
-                        href={profile.linkedin}
-                        target="_blank"
-                        rel="noopener noreferrer"
-                        className="text-primary "
-                      >
-                        <i className="fa fa-linkedin fa-lg me-3"></i>
-                      </a>
-                      <a href={`mailto:${profile.email}`}>
-                        <i className="fa fa-envelope fa-lg"></i>
-                      </a>
-                    </div>
-                    <p className="card-text">
-                      Major:{" "}
-                      <span className="text-success">{profile.major}</span>
-                    </p>
-                    <p className="card-text">
-                      Current Company:{" "}
-                      <span className="text-warning">
-                        {profile.currentCompany}
-                      </span>
-                    </p>
-                    <p className="card-text">
-                      Bio: <span className="text-muted">{profile.bio}</span>
-                    </p>
+        {loading
+          ? Array.from({ length: profilesPerPage }).map((_, index) => (
+              <div key={index} className="col mb-3">
+                <PlaceHolder />
+              </div>
+            ))
+          : currentProfiles?.map((profile) => (
+              <div key={profile.id} className="col mb-3">
+                <Card className="h-100  border-primary">
+                  <div className="profile-image-container  ">
+                    <img
+                      className="profile-image"
+                      src={profile.profileImageUrl || defaultImage}
+                      alt={`Profile of ${profile.name}`}
+                    />
                   </div>
-                </Card.Body>
-              </Card>
-            </div>
-          ))
-        )}
+                  <Card.Body className="bg-light">
+                    <Card.Title>
+                      <span className="badge badge bg-primary m-1 text-light position-absolute left-0 top-0">
+                        {profile.graduationYear}
+                      </span>
+                    </Card.Title>
+                    <div className="card-body">
+                      <h2 className="card-title text-center">{profile.name}</h2>
+                      <div className="d-flex justify-content-center">
+                        <a
+                          href={profile.linkedin}
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          className="text-primary "
+                        >
+                          <i className="fa fa-linkedin fa-lg me-3"></i>
+                        </a>
+                        <a href={`mailto:${profile.email}`}>
+                          <i className="fa fa-envelope fa-lg"></i>
+                        </a>
+                      </div>
+                      <div className="mt-3">
+                        <p className="card-text">
+                          Major:{" "}
+                          <span className="text-primary">{profile.major}</span>
+                        </p>
+                        <p className="card-text ">
+                          Current Company:{" "}
+                          <span className="text-primary">
+                            {profile.currentCompany?.length > 15
+                              ? profile.currentCompany.slice(0, 15) + "..."
+                              : profile.currentCompany}
+                          </span>
+                        </p>
+                        <p className="card-text">
+                          Bio:{" "}
+                          <span className="text-primary ">
+                            {profile.bio?.length > 200
+                              ? profile.bio.slice(0, 200) + "..."
+                              : profile.bio}
+                          </span>
+                        </p>
+                      </div>
+                    </div>
+                  </Card.Body>
+                </Card>
+              </div>
+            ))}
       </div>
       <div className="d-flex justify-content-center">
         <ul className="pagination" onClick={() => window.scrollTo(0, 0)}>
           {Array.from(
-            { length: Math.ceil(profiles.length / profilesPerPage) },
+            { length: Math.ceil(filteredProfiles.length / profilesPerPage) },
             (_, index) => (
               <li
                 key={index}
