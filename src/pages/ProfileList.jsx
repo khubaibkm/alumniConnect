@@ -17,6 +17,7 @@ const ProfileList = () => {
   const [currentPage, setCurrentPage] = useState(1);
   const [profilesPerPage] = useState(6);
   const [loading, setLoading] = useState(true);
+
   useEffect(() => {
     const profilesCollection = collection(db, "alumni");
 

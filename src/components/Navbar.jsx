@@ -17,10 +17,6 @@ export const Navbar = () => {
   const hasFilledOutForm = isSignedIn && isVerified;
 
   useEffect(() => {
-    window.scrollTo(0, 0);
-  }, []);
-
-  useEffect(() => {
     const unsubscribe = onAuthStateChanged(auth, async (user) => {
       setIsSignedIn(!!user);
 
@@ -72,13 +68,12 @@ export const Navbar = () => {
   const closeNavbar = () => {
     setIsNavbarOpen(false);
   };
-
+  window.scrollTo(0, 0);
   return (
     <nav
       className={`navbar navbar-expand-lg navbar-light bg-light fixed-top shadow-sm${
         isNavbarOpen ? "navbar-open" : ""
       }`}
-      onClick={() => window.scrollTo(0, 0)}
     >
       <div className="container-fluid">
         <Link to="/" className="navbar-brand">
@@ -115,8 +110,7 @@ export const Navbar = () => {
                 className="nav-link"
                 aria-current="page"
                 onClick={() => {
-                  window.scrollTo(0, 0);
-                  closeNavbar();
+                  () => window.scrollTo(0, 0);
                 }}
               >
                 Home
