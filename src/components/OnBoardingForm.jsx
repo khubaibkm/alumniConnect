@@ -20,6 +20,7 @@ const OnBoardingForm = () => {
     isVerified: false,
   });
   const [image, setImage] = useState(null);
+  const [loading, setLoading] = useState(false); // New state for loading
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -46,9 +47,12 @@ const OnBoardingForm = () => {
     e.preventDefault();
 
     try {
+      setLoading(true); // Set loading to true when submitting
+
       const currentUser = auth.currentUser;
       if (!currentUser) {
         console.error("User not authenticated");
+        setLoading(false); // Set loading to false in case of an error
         return;
       }
 
@@ -58,6 +62,7 @@ const OnBoardingForm = () => {
         toast.error(
           "You have already submitted your profile! Wait for approval"
         );
+        setLoading(false); // Set loading to false in case of an error
         return;
       }
 
@@ -66,6 +71,7 @@ const OnBoardingForm = () => {
       // Validation checks
       if (formData.bio.length > 200) {
         toast.error("Bio should not exceed 200 words");
+        setLoading(false); // Set loading to false in case of an error
         return;
       }
 
@@ -75,11 +81,13 @@ const OnBoardingForm = () => {
 
         if (fileSizeInMB > 1) {
           toast.error("File size should not exceed 1MB");
+          setLoading(false); // Set loading to false in case of an error
           return;
         }
 
         if (!allowedImageTypes.includes(image.type)) {
           toast.error("Invalid image format. Please use JPEG, PNG, or GIF");
+          setLoading(false); // Set loading to false in case of an error
           return;
         }
       }
@@ -119,6 +127,7 @@ const OnBoardingForm = () => {
       navigate("/undereview");
     } catch (error) {
       console.error("Error adding document: ", error);
+      setLoading(false); // Set loading to false in case of an error
     }
   };
 
@@ -280,8 +289,9 @@ const OnBoardingForm = () => {
                 <button
                   type="submit"
                   className="btn btn-primary btn-onboard btn-block"
+                  disabled={loading}
                 >
-                  Submit
+                  {loading ? "Submitting..." : "Submit"}
                 </button>
               </form>
             </div>
