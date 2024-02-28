@@ -1,14 +1,21 @@
 .banner {
-  background-image: url("/homebanner.png");
+  background-image: url("/banner2.png");
   background-position: bottom right;
-  background-size: 38%;
+  background-size: 53%;
   background-repeat: no-repeat;
-  min-height: 85vh;
+  min-height: 100vh;
   min-width: 80vw;
   display: flex;
   align-items: center;
 
+
+
 }
+
+
+
+
+
 
 .lead {
   color: #4885ed;
@@ -21,7 +28,12 @@
 
 @media (max-width: 768px) {
   .banner {
-    background-image: none;
+    background-size: 100%;
+    background-repeat: no-repeat;
+    min-height: 65vh;
+    min-width: 80vw;
+
+
   }
 
 }

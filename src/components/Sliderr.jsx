@@ -115,7 +115,10 @@ const SliderComponent = () => {
         <h2 className="text-center">Alumni Highlights</h2>
         <h6 className="text-center">Take a glance</h6>
       </div>
-      <div className="slider-container" style={{ margin: "0 0px" }}>
+      <div
+        className="slider-container"
+        style={{ margin: "0 30px", overflowX: "none" }}
+      >
         <Slider {...settings} className="autoplay-slider">
           {profiles.map((profile) => (
             <div key={profile.id} className="slider-card center">
