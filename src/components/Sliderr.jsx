@@ -68,30 +68,7 @@ const SliderComponent = () => {
     draggable: true, // Allow mouse dragging
     swipeToSlide: true, // Allow swiping to slide
     focusOnSelect: true, // Focus on a slide when selected
-    prevArrow: (
-      <button
-        type="button"
-        className="slick-prev"
-        style={{
-          color: "red",
-          fontSize: "100px",
-        }}
-      >
-        Previous
-      </button>
-    ),
-    nextArrow: (
-      <button
-        type="button"
-        className="slick-next"
-        style={{
-          color: "blue",
-          fontSize: "24px",
-        }}
-      >
-        Next
-      </button>
-    ),
+
     responsive: [
       {
           breakpoint: 1400,
@@ -142,7 +119,7 @@ const SliderComponent = () => {
         style={{ margin: "40px 40px", overflowX: "none" }}
       >
         <Slider {...settings} className="autoplay-slider">
-          {profiles.map((profile) => (
+          {profiles.slice(0, 10).map((profile) => (
             <div key={profile.id} className="slider-card center">
               {profile.profileImageUrl ? (
                 <img
@@ -157,7 +134,11 @@ const SliderComponent = () => {
                   className="slider-image"
                 />
               )}
-              <p className="slider-name">{profile.name}</p>
+              <p className="slider-name ">
+                {profile.name?.length > 20
+                  ? profile.name.slice(0, 14) + "..."
+                  : profile.name}
+              </p>
             </div>
           ))}
         </Slider>
