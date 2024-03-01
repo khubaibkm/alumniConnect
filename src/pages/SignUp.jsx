@@ -16,67 +16,6 @@ const SignUp = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
 
-  // const handleSignUp = async () => {
-  //   if (email === "" || password === "") {
-  //     toast.error("Please fill all the fields");
-  //     return;
-  //   }
-
-  //   try {
-  //     // Check if the email is already registered
-  //     const signInMethods = await fetchSignInMethodsForEmail(auth, email);
-
-  //     if (signInMethods.length > 0) {
-  //       // Email is already registered, show an error message
-  //       toast.error("Email is already registered. Please sign in.");
-  //       return;
-  //     }
-
-  //     // If not registered, proceed with user creation
-  //     await createUserWithEmailAndPassword(auth, email, password);
-  //     navigate("/On_boarding_form");
-  //     toast.success("User registered successfully!");
-  //   } catch (error) {
-  //     toast.error("Error signing up");
-  //     console.error(error);
-  //   }
-  // };
-
-  // useEffect(() => {
-  //   const checkGoogleSignIn = async () => {
-  //     try {
-  //       const user = await new Promise((resolve, reject) => {
-  //         const unsubscribe = onAuthStateChanged(auth, (user) => {
-  //           resolve(user);
-  //           unsubscribe();
-  //         });
-  //       });
-
-  //       if (user) {
-  //         if (user.email) {
-  //           const userSignInMethods = await fetchSignInMethodsForEmail(
-  //             auth,
-  //             user.email
-  //           );
-  //           if (userSignInMethods.length > 0) {
-  //             // Email is already registered, show an error message
-  //             toast.error("Email is already registered. Please sign in.");
-  //           } else {
-  //             // User is not registered, you can enable the button here if needed
-  //           }
-  //         } else {
-  //           toast.error("User email is not available.");
-  //         }
-  //       }
-  //     } catch (error) {
-  //       console.error(error);
-  //       toast.error("Error checking email registration");
-  //     }
-  //   };
-
-  //   checkGoogleSignIn();
-  // }, []); // Empty dependency array ensures that this runs only once when the component mounts
-
   const SignUpWithGoogle = async () => {
     try {
       // Proceed with Google sign-in using popup

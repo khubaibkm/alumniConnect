@@ -1,24 +1,24 @@
-.cred {
-    display: block;
-    margin: auto;
-    margin-bottom: 1.2rem;
-    padding: 0 0 3px 15px;
-    width: 16rem;
-    height: 2.6rem;
-    color: #8c8c8c;
-    border-width: 1px;
-    border-radius: 5px;
-    color: black;
-}
+ .cred {
+     display: block;
+     margin: auto;
+     margin-bottom: 1.2rem;
+     padding: 0 0 3px 15px;
+     width: 16rem;
+     height: 2.6rem;
+     color: #8c8c8c;
+     border-width: 1px;
+     border-radius: 5px;
+     color: black;
+ }
 
-.signup {
-    position: relative;
-    top: -1.5rem;
-    width: 16rem;
-    padding: 1%;
-    border: 2px solid #8c8c8c;
-}
+ .signup {
+     position: relative;
+     top: -1.5rem;
+     width: 16rem;
+     padding: 1%;
+     border: 2px solid #8c8c8c;
+ }
 
-.container {
-    margin-top: 0rem !important;
-}
+ .container {
+     margin-top: 0rem !important;
+ }
