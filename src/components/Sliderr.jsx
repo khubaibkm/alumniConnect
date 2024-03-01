@@ -120,7 +120,7 @@ const SliderComponent = () => {
         style={{ margin: "0 30px", overflowX: "none" }}
       >
         <Slider {...settings} className="autoplay-slider">
-          {profiles.map((profile) => (
+          {profiles.slice(0, 10).map((profile) => (
             <div key={profile.id} className="slider-card center">
               {profile.profileImageUrl ? (
                 <img
