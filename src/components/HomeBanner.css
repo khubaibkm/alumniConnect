@@ -52,3 +52,15 @@
     min-height: 160vh;
   }
 }
+
+@media (max-width: 450px) {
+  .banner {
+    background-position: 0rem 30rem;
+  }
+}
+
+@media (max-width: 350px) {
+  .banner {
+    background-position: 0rem 22rem;
+  }
+}
