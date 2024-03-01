@@ -88,6 +88,19 @@ const MyProfile = () => {
   const handleUpdate = async () => {
     try {
       if (image) {
+        const fileSizeInMB = image.size / (1024 * 1024);
+        const allowedImageTypes = ["image/jpeg", "image/png", "image/gif"];
+
+        if (fileSizeInMB > 1) {
+          console.error("File size should not exceed 1MB");
+          return;
+        }
+
+        if (!allowedImageTypes.includes(image.type)) {
+          console.error("Invalid image format. Please use JPEG, PNG, or GIF");
+          return;
+        }
+
         const storageRef = ref(storage, `profile_images/${userData.email}`);
         const snapshot = await uploadBytes(storageRef, image);
         const imageUrl = await getDownloadURL(snapshot.ref);

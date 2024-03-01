@@ -14,9 +14,7 @@ export const Navbar = () => {
   const navigate = useNavigate();
   const location = useLocation();
 
-  useEffect(() => {
-    window.scrollTo(0, 0);
-  }, []);
+  const hasFilledOutForm = isSignedIn && isVerified;
 
   useEffect(() => {
     const unsubscribe = onAuthStateChanged(auth, async (user) => {
@@ -70,13 +68,12 @@ export const Navbar = () => {
   const closeNavbar = () => {
     setIsNavbarOpen(false);
   };
-
+  window.scrollTo(0, 0);
   return (
     <nav
-      className={`navbar navbar-expand-lg navbar-light bg-light fixed-top shadow ${
+      className={`navbar navbar-expand-lg navbar-light bg-light fixed-top shadow-sm${
         isNavbarOpen ? "navbar-open" : ""
       }`}
-      onClick={() => window.scrollTo(0, 0)}
     >
       <div className="container-fluid">
         <Link to="/" className="navbar-brand">
@@ -113,8 +110,7 @@ export const Navbar = () => {
                 className="nav-link"
                 aria-current="page"
                 onClick={() => {
-                  window.scrollTo(0, 0);
-                  closeNavbar();
+                  () => window.scrollTo(0, 0);
                 }}
               >
                 Home
@@ -171,7 +167,7 @@ export const Navbar = () => {
               )}
             </li>
             <li className="nav-item">
-              {isSignedIn ? (
+              {isSignedIn && !hasFilledOutForm && (
                 <Link
                   to="/on_boarding_form"
                   className="nav-link bg-primary rounded text-white px-3 py-2 mx-2 button-animated"
@@ -179,7 +175,7 @@ export const Navbar = () => {
                 >
                   onboarding form
                 </Link>
-              ) : null}
+              )}
             </li>
           </ul>
         </div>

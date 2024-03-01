@@ -7,7 +7,12 @@ import {
   doc,
   deleteDoc,
 } from "firebase/firestore";
-import { getAuth, signInWithEmailAndPassword, signOut } from "firebase/auth";
+import {
+  getAuth,
+  signInWithEmailAndPassword,
+  signOut,
+  sendPasswordResetEmail,
+} from "firebase/auth";
 import { useNavigate } from "react-router";
 
 const AdminDashboard = () => {
@@ -54,7 +59,7 @@ const AdminDashboard = () => {
     }
   };
 
-  const handleApprove = async (userId) => {
+  const handleApprove = async (userId, userEmail) => {
     try {
       // Add logic to update user data and set isVerified to true
       const userDocRef = doc(db, "alumni", userId);
@@ -62,6 +67,13 @@ const AdminDashboard = () => {
 
       // Fetch updated unverified users
       fetchUnverifiedUsers();
+
+      // Reset password and send email
+      const auth = getAuth(); // Ensure auth is correctly initialized
+      await sendPasswordResetEmail(auth, userEmail); // Use sendPasswordResetEmail directly
+
+      // Optionally, you can sign out the admin after approving the user
+      handleSignOut();
     } catch (error) {
       console.error("Error approving user:", error);
     }
@@ -146,6 +158,7 @@ const AdminDashboard = () => {
             <th>Major</th>
             <th>Current Company</th>
             <th>LinkedIn ID</th>
+            <th>PFP</th>
             <th>Actions</th>
           </tr>
         </thead>
@@ -157,11 +170,17 @@ const AdminDashboard = () => {
               <td>{user.graduationYear}</td>
               <td>{user.major}</td>
               <td>{user.currentCompany}</td>
-              <td>{user.linkedin}</td>
+              <td>https://linkedin.com/in/{user.linkedin}</td>
               <td>
+                <img
+                  src={user.profileImageUrl}
+                  style={{ height: "150px", width: "150px" }}
+                />
+              </td>
+              <td className="d-flex">
                 <button
                   className="btn btn-success me-2"
-                  onClick={() => handleApprove(user.id)}
+                  onClick={() => handleApprove(user.id, user.email)}
                 >
                   Approve
                 </button>

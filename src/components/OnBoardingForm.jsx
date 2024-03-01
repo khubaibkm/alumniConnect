@@ -5,6 +5,7 @@ import { ref, uploadBytes, getDownloadURL } from "firebase/storage";
 import { useNavigate } from "react-router-dom";
 import "./OnBoardingForm.css";
 import { toast } from "react-toastify";
+import major from "../data/major.json";
 
 const OnBoardingForm = () => {
   const navigate = useNavigate();
@@ -19,6 +20,7 @@ const OnBoardingForm = () => {
     isVerified: false,
   });
   const [image, setImage] = useState(null);
+  const [loading, setLoading] = useState(false); // New state for loading
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -45,9 +47,12 @@ const OnBoardingForm = () => {
     e.preventDefault();
 
     try {
+      setLoading(true); // Set loading to true when submitting
+
       const currentUser = auth.currentUser;
       if (!currentUser) {
         console.error("User not authenticated");
+        setLoading(false); // Set loading to false in case of an error
         return;
       }
 
@@ -57,11 +62,35 @@ const OnBoardingForm = () => {
         toast.error(
           "You have already submitted your profile! Wait for approval"
         );
-        // You can display a message to the user or redirect them to another page
+        setLoading(false); // Set loading to false in case of an error
         return;
       }
 
       const alumniCollection = collection(db, "alumni");
+
+      // Validation checks
+      if (formData.bio.length > 200) {
+        toast.error("Bio should not exceed 200 words");
+        setLoading(false); // Set loading to false in case of an error
+        return;
+      }
+
+      if (image) {
+        const fileSizeInMB = image.size / (1024 * 1024);
+        const allowedImageTypes = ["image/jpeg", "image/png", "image/gif"];
+
+        if (fileSizeInMB > 1) {
+          toast.error("File size should not exceed 1MB");
+          setLoading(false); // Set loading to false in case of an error
+          return;
+        }
+
+        if (!allowedImageTypes.includes(image.type)) {
+          toast.error("Invalid image format. Please use JPEG, PNG, or GIF");
+          setLoading(false); // Set loading to false in case of an error
+          return;
+        }
+      }
 
       let imageUrl = "";
       if (image) {
@@ -98,6 +127,7 @@ const OnBoardingForm = () => {
       navigate("/undereview");
     } catch (error) {
       console.error("Error adding document: ", error);
+      setLoading(false); // Set loading to false in case of an error
     }
   };
 
@@ -114,7 +144,7 @@ const OnBoardingForm = () => {
                     htmlFor="name"
                     className="form-label form-label-onboard text-left"
                   >
-                    Name
+                    Name<span style={{ color: "red" }}>*</span>
                   </label>
                   <input
                     type="text"
@@ -131,7 +161,7 @@ const OnBoardingForm = () => {
                     htmlFor="graduationYear"
                     className="form-label form-label-onboard text-left"
                   >
-                    Graduation Year
+                    Graduation Year<span style={{ color: "red" }}>*</span>
                   </label>
                   <input
                     type="text"
@@ -148,24 +178,32 @@ const OnBoardingForm = () => {
                     htmlFor="major"
                     className="form-label form-label-onboard text-left"
                   >
-                    Major
+                    Major<span style={{ color: "red" }}>*</span>
                   </label>
-                  <input
-                    type="text"
+                  <select
                     id="major"
                     name="major"
                     value={formData.major}
                     onChange={handleChange}
                     className="form-control form-control-onboard"
                     required
-                  />
+                  >
+                    <option value="" disabled>
+                      Select a major
+                    </option>
+                    {major.programs.map((program, index) => (
+                      <option key={index} value={program}>
+                        {program}
+                      </option>
+                    ))}
+                  </select>
                 </div>
                 <div className="mb-3">
                   <label
                     htmlFor="email"
                     className="form-label form-label-onboard text-left"
                   >
-                    Email
+                    Email<span style={{ color: "red" }}>*</span>
                   </label>
                   <input
                     type="email"
@@ -182,24 +220,30 @@ const OnBoardingForm = () => {
                     htmlFor="linkedin"
                     className="form-label form-label-onboard text-left"
                   >
-                    LinkedIn Profile
+                    LinkedIn Username<span style={{ color: "red" }}>*</span>
                   </label>
-                  <input
-                    type="text"
-                    id="linkedin"
-                    name="linkedin"
-                    value={formData.linkedin}
-                    onChange={handleChange}
-                    className="form-control form-control-onboard"
-                    required
-                  />
+                  <div className="input-group">
+                    <span className="input-group-text">
+                      https://linkedin.com/in/
+                    </span>
+                    <input
+                      type="text"
+                      id="linkedin"
+                      name="linkedin"
+                      value={formData.linkedin}
+                      onChange={handleChange}
+                      className="form-control form-control-onboard"
+                      placeholder="Enter your LinkedIn username"
+                      required
+                    />
+                  </div>
                 </div>
                 <div className="mb-3">
                   <label
                     htmlFor="currentCompany"
                     className="form-label form-label-onboard text-left"
                   >
-                    Current Company
+                    Current Company<span style={{ color: "red" }}>*</span>
                   </label>
                   <input
                     type="text"
@@ -216,7 +260,7 @@ const OnBoardingForm = () => {
                     htmlFor="bio"
                     className="form-label form-label-onboard text-left"
                   >
-                    Bio
+                    Bio<span style={{ color: "red" }}>*</span>
                   </label>
                   <textarea
                     id="bio"
@@ -245,8 +289,9 @@ const OnBoardingForm = () => {
                 <button
                   type="submit"
                   className="btn btn-primary btn-onboard btn-block"
+                  disabled={loading}
                 >
-                  Submit
+                  {loading ? "Submitting..." : "Submit"}
                 </button>
               </form>
             </div>
@@ -256,4 +301,5 @@ const OnBoardingForm = () => {
     </div>
   );
 };
+
 export default OnBoardingForm;

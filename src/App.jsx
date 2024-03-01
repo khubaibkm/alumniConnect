@@ -1,29 +1,27 @@
-import React, { useEffect } from "react";
-import {
-  BrowserRouter as Router,
-  Route,
-  Routes,
-  Navigate,
-} from "react-router-dom";
+import React, { useEffect, lazy, Suspense } from "react";
+import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import "./App.css";
-import SignUp from "./pages/SignUp";
-import HomePage from "./pages/HomePage";
-import SignIn from "./pages/SignIn";
-import OnBoardingForm from "./components/OnBoardingForm";
+import ScrollToTop from "react-scroll-to-top";
 import { Navbar } from "./components/Navbar";
 import Protected from "./components/services/Protected";
 import Footer from "./components/Footer";
-import ScrollToTop from "react-scroll-to-top";
-import ProfileList from "./pages/ProfileList";
-import MyProfile from "./pages/MyProfile";
-import UnderReview from "./pages/UnderReview";
-import AdminDashboard from "./pages/AdminDashboard";
-import UnauthorizedError from "./pages/UnauthorizedError";
 import Error from "./pages/Error"; // Import the Error component
-import Team from "./pages/Team";
-import Test from "./pages/Test";
+import { Placeholder } from "react-bootstrap";
+
+// Lazy load other components
+const SignUp = lazy(() => import("./pages/SignUp"));
+const HomePage = lazy(() => import("./pages/HomePage"));
+const SignIn = lazy(() => import("./pages/SignIn"));
+const OnBoardingForm = lazy(() => import("./components/OnBoardingForm"));
+const ProfileList = lazy(() => import("./pages/ProfileList"));
+const MyProfile = lazy(() => import("./pages/MyProfile"));
+const UnderReview = lazy(() => import("./pages/UnderReview"));
+const AdminDashboard = lazy(() => import("./pages/AdminDashboard"));
+const UnauthorizedError = lazy(() => import("./pages/UnauthorizedError"));
+const Team = lazy(() => import("./pages/Team"));
+const Test = lazy(() => import("./pages/Test"));
 
 function App() {
   return (
@@ -39,31 +37,32 @@ function App() {
 
           <Router>
             <Navbar />
-            <Routes>
-              <Route path="/" element={<HomePage />} />
-              <Route path="/signup" element={<SignUp />} />
-              <Route path="/signin" element={<SignIn />} />
-              <Route
-                path="/On_boarding_form"
-                element={<Protected Component={OnBoardingForm} />}
-              />
+            <Suspense fallback={<Placeholder />}>
+              <Routes>
+                <Route path="/" element={<HomePage />} />
+                <Route path="/signup" element={<SignUp />} />
+                <Route path="/signin" element={<SignIn />} />
+                <Route
+                  path="/On_boarding_form"
+                  element={<Protected Component={OnBoardingForm} />}
+                />
+                <Route path="/profilelist" element={<ProfileList />} />
+                <Route
+                  path="/profile"
+                  element={<Protected Component={MyProfile} />}
+                />
+                <Route path="/undereview" element={<UnderReview />} />
+                <Route path="/admin" element={<AdminDashboard />} />
+                <Route path="/error" element={<UnauthorizedError />} />
+                <Route path="/team" element={<Team />} />
+                <Route path="/test" element={<Test />} />
 
-              <Route path="/profilelist" element={<ProfileList />} />
-              <Route
-                path="/profile"
-                element={<Protected Component={MyProfile} />}
-              />
-              <Route path="/undereview" element={<UnderReview />} />
-              <Route path="/admin" element={<AdminDashboard />} />
-              <Route path="/error" element={<UnauthorizedError />} />
-              <Route path="/team" element={<Team />} />
-              <Route path="/test" element={<Test />} />
+                {/* Add other routes for your pages */}
 
-              {/* Add other routes for your pages */}
-
-              {/* Fallback route for any other paths */}
-              <Route path="*" element={<Error />} />
-            </Routes>
+                {/* Fallback route for any other paths */}
+                <Route path="*" element={<Error />} />
+              </Routes>
+            </Suspense>
             <Footer />
           </Router>
         </React.Fragment>
