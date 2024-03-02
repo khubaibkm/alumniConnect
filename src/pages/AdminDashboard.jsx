@@ -23,7 +23,7 @@ const AdminDashboard = () => {
   const navigate = useNavigate();
 
   // Admin UID
-  const adminUID = "AqQRH8DareOsa7FefRRw71oOqx03";
+  const adminUID = import.meta.env.VITE_ADMIN_UID;
 
   const fetchUnverifiedUsers = async () => {
     const alumniCollection = collection(db, "alumni");
