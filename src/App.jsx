@@ -64,7 +64,10 @@ const App = () => {
               path="/profile"
               element={<Protected Component={MyProfile} />}
             />
-            <Route path="/undereview" element={<UnderReview />} />
+            <Route
+              path="/undereview"
+              element={<Protected Component={UnderReview} />}
+            />
             <Route path="/admin" element={<AdminDashboard />} />
             <Route path="/error" element={<UnauthorizedError />} />
             <Route path="/team" element={<Team />} />

@@ -71,42 +71,41 @@ const SliderComponent = () => {
 
     responsive: [
       {
-          breakpoint: 1400,
-          settings: {
-              slidesToShow: 4,
-              centerPadding: "5%",
-          },
+        breakpoint: 1400,
+        settings: {
+          slidesToShow: 4,
+          centerPadding: "5%",
+        },
       },
       {
-          breakpoint: 1300,
-          settings: {
-              slidesToShow: 3,
-              centerPadding: "0%",
-          },
+        breakpoint: 1300,
+        settings: {
+          slidesToShow: 3,
+          centerPadding: "0%",
+        },
       },
       {
-          breakpoint: 1000,
-          settings: {
-              slidesToShow: 2,
-              centerPadding: "10%",
-          },
+        breakpoint: 1000,
+        settings: {
+          slidesToShow: 2,
+          centerPadding: "10%",
+        },
       },
       {
-          breakpoint: 700,
-          settings: {
-              slidesToShow: 1.5,
-              centerPadding: "0",
-          },
+        breakpoint: 700,
+        settings: {
+          slidesToShow: 1.5,
+          centerPadding: "0",
+        },
       },
       {
-          breakpoint: 580,
-          settings: {
-              slidesToShow: 1,
-              centerPadding: "0",
-          },
+        breakpoint: 580,
+        settings: {
+          slidesToShow: 1,
+          centerPadding: "0",
+        },
       },
-  ],
-  
+    ],
   };
   return (
     <div className="sliderr">
@@ -119,7 +118,7 @@ const SliderComponent = () => {
         style={{ margin: "40px 40px", overflowX: "none" }}
       >
         <Slider {...settings} className="autoplay-slider">
-          {profiles.slice(0, 10).map((profile) => (
+          {profiles.slice(0, 9).map((profile) => (
             <div key={profile.id} className="slider-card center">
               {profile.profileImageUrl ? (
                 <img

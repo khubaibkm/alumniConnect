@@ -190,14 +190,8 @@ const SignIn = () => {
                   <div className="col-lg-6 order-1">
                     <div className="p-4 p-sm-7">
                       {/* <!-- Logo --> */}
-                      <div className="row">
-                        <a>
-                          <img
-                            className="h-50px mb-4 d-flex p-2"
-                            src="/vite.svg"
-                            alt="logo"
-                          />
-                        </a>
+                      <div className="row mb-5">
+                        <a></a>
                       </div>
                       {/* <!-- Title --> */}
                       <h2 className="mb-2 text-center">Welcome back</h2>

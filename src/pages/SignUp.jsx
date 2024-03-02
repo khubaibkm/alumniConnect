@@ -30,8 +30,8 @@ const SignUp = () => {
 
       if (userSignInMethods.length > 0) {
         // Email is already registered, show an error message
-        toast.success("User signed in successfully!");
-        navigate("/");
+        toast.success("User signed in successfully! fill-up the form");
+        navigate("/On_boarding_form");
       } else {
         // If email is not registered, proceed with your logic
         navigate("/On_boarding_form");
@@ -87,14 +87,8 @@ const SignUp = () => {
                   <div className="col-lg-6 order-1">
                     <div className="p-4 p-sm-7">
                       {/* <!-- Logo --> */}
-                      <div className="row">
-                        <a>
-                          <img
-                            className="h-50px mb-4 d-flex p-2"
-                            src="/vite.svg"
-                            alt="logo"
-                          />
-                        </a>
+                      <div className="row mb-5">
+                        <a></a>
                       </div>
                       {/* <!-- Title --> */}
                       <h2 className="mb-2 text-center">

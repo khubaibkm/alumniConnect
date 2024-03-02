@@ -139,7 +139,7 @@ export const Navbar = () => {
             <li className="nav-item">
               {isSignedIn ? (
                 <a
-                  className="nav-link bg-primary rounded text-white px-3 py-2 mx-2 button-animated"
+                  className="nav-link bg-secondary rounded text-white px-3 py-2 mx-2 "
                   href="#"
                   onClick={handleSignOut}
                 >
