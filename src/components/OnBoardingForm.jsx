@@ -157,12 +157,12 @@ const OnBoardingForm = () => {
   };
 
   return (
-    <div className="container onboarding-container">
+    <div className="container onboarding-container mt-5">
       <div className="row align-items-center">
         <div className="col-xl-8 col-md-10 mx-auto">
-          <h2 className="mb-4 text-center">Alumni Onboarding Form</h2>
           <div className="card shadow">
             <div className="card-body">
+              <h2 className="mb-4 text-center ">Alumni Onboarding Form</h2>
               <form onSubmit={handleSubmit}>
                 <div className="mb-3">
                   <label

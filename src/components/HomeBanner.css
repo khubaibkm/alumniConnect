@@ -1,4 +1,6 @@
+/* Base Styles */
 .banner {
+  position: relative;
   background-image: url("/banner2.png");
   background-position: bottom right;
   background-size: 54%;
@@ -7,60 +9,61 @@
   min-width: 80vw;
   display: flex;
   align-items: center;
+  overflow: hidden;
 }
-
-
-
 
 
 
 .lead {
   color: #4885ed;
+  margin-bottom: 1rem;
 }
 
 .btn {
   background-color: #4885ed;
+  color: white;
 }
 
+/* Responsive Styles */
+@media (max-width: 1200px) {
+  .banner {
+    background-size: 70%;
+  }
+}
+
+@media (max-width: 991px) {
+  .banner {
+    background-size: 80%;
+  }
+}
 
 @media (max-width: 768px) {
   .banner {
     background-size: 100%;
-    background-repeat: no-repeat;
-    min-height: 100vh;
-    min-width: 80vw;
-
-
+    min-width: 100vw;
   }
 
-}
-
-@media (min-width: 1550px) {
   .banner {
-    min-height: 100vh;
+    min-height: 80vh;
   }
-}
 
-@media (min-width: 2100px) {
-  .banner {
-    min-height: 140vh;
+  .lead {
+    margin-bottom: 0.5rem;
   }
-}
 
-@media (min-width: 2500px) {
-  .banner {
-    min-height: 160vh;
+  .btn {
+    font-size: 14px;
   }
 }
 
 @media (max-width: 450px) {
   .banner {
-    background-position: 0rem 30rem;
+    background-position: center bottom;
   }
 }
 
 @media (max-width: 350px) {
   .banner {
-    background-position: 0rem 22rem;
+    background-position: center bottom;
   }
 }
