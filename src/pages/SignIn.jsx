@@ -102,7 +102,9 @@ const SignIn = () => {
             return;
           }
           if (isVerified) {
+            toast.success("Signed in successfully!");
             navigate("/");
+
             return;
           } else {
             navigate("/On_boarding_form");

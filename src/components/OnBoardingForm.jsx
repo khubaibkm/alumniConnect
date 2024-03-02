@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { db, storage, auth } from "../config/firebase.js";
 import { collection, addDoc, getDocs, query, where } from "firebase/firestore";
 import { ref, uploadBytes, getDownloadURL } from "firebase/storage";
@@ -9,6 +9,31 @@ import major from "../data/major.json";
 
 const OnBoardingForm = () => {
   const navigate = useNavigate();
+  const [companies, setCompanies] = useState([]); // State to store the list of companies
+
+  const fetchCompanies = async () => {
+    try {
+      const alumniCollection = collection(db, "alumni");
+      const querySnapshot = await getDocs(alumniCollection);
+      const companyList = [];
+
+      querySnapshot.forEach((doc) => {
+        const currentCompany = doc.data().currentCompany;
+        if (currentCompany && !companyList.includes(currentCompany)) {
+          companyList.push(currentCompany);
+        }
+      });
+
+      setCompanies(companyList);
+    } catch (error) {
+      console.error("Error fetching companies: ", error);
+    }
+  };
+
+  useEffect(() => {
+    fetchCompanies();
+  }, []); // Run only once when the component mounts
+
   const [formData, setFormData] = useState({
     name: "",
     graduationYear: "",
@@ -245,7 +270,8 @@ const OnBoardingForm = () => {
                   >
                     Current Company<span style={{ color: "red" }}>*</span>
                   </label>
-                  <span className="text-muted small ">'NA' if unemployed</span>
+                  <span className="text-muted small">'NA' if unemployed</span>
+                  {/* Use a searchable/selectable input for the company field */}
                   <input
                     type="text"
                     id="currentCompany"
@@ -254,7 +280,14 @@ const OnBoardingForm = () => {
                     onChange={handleChange}
                     className="form-control form-control-onboard"
                     required
+                    list="companyList" // Connect the input to the datalist
                   />
+                  <datalist id="companyList">
+                    {/* Display the list of companies as options */}
+                    {companies.map((company, index) => (
+                      <option key={index} value={company} />
+                    ))}
+                  </datalist>
                 </div>
                 <div className="mb-3">
                   <label
