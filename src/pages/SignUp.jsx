@@ -1,9 +1,9 @@
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import {
   createUserWithEmailAndPassword,
   signInWithPopup,
   fetchSignInMethodsForEmail,
-  onAuthStateChanged,
+  signOut,
 } from "firebase/auth";
 import { auth, googleProvider, githubProvider } from "../config/firebase.js";
 import { toast } from "react-toastify";
@@ -16,54 +16,41 @@ const SignUp = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
 
-  const SignUpWithGoogle = async () => {
+  const handleSignUp = async (provider) => {
     try {
-      // Proceed with Google sign-in using popup
-      const result = await signInWithPopup(auth, googleProvider);
+      // Proceed with Google or GitHub sign-in using popup
+      const result = await signInWithPopup(auth, provider);
       const user = result.user;
 
-      // Check if the email associated with Google account is already registered
+      // Check if the email associated with the account is already registered
       const userSignInMethods = await fetchSignInMethodsForEmail(
         auth,
         user.email
       );
 
-      if (userSignInMethods.length > 0) {
-        // Email is already registered, show an error message
-        toast.success("User signed in successfully! fill-up the form");
+      // If email is not registered, show a success message, navigate to the form, and exit the function
+      if (userSignInMethods.length === 0) {
+        toast.success("User signed in successfully! Fill up the form");
         navigate("/On_boarding_form");
-      } else {
-        // If email is not registered, proceed with your logic
-        navigate("/On_boarding_form");
-        toast.success("User signed in successfully!");
+        return;
       }
+
+      // If email is already registered, inform the user
+      toast.error("This email is already registered. Please sign in");
+      await signOut(auth);
+      navigate("/signin");
     } catch (error) {
       console.error(error);
       toast.error("Error signing up");
     }
   };
 
+  const SignUpWithGoogle = async () => {
+    handleSignUp(googleProvider);
+  };
+
   const SignUpWithGitHub = async () => {
-    try {
-      const result = await signInWithPopup(auth, githubProvider);
-      const user = result.user;
-
-      const userSignInMethods = await fetchSignInMethodsForEmail(
-        auth,
-        user.email
-      );
-
-      if (userSignInMethods.length > 0) {
-        toast.error("Email is already registered");
-        navigate("/");
-      } else {
-        navigate("/On_boarding_form");
-        toast.success("User signed in successfully!");
-      }
-    } catch (error) {
-      console.error(error);
-      toast.error("Error signing up with GitHub");
-    }
+    handleSignUp(githubProvider);
   };
 
   return (
@@ -74,44 +61,22 @@ const SignUp = () => {
             <div className="col-12">
               <div className="bg-mode shadow rounded-3 overflow-hidden">
                 <div className="row g-0">
-                  {/* <!-- Vector Image --> */}
                   <div className="col-lg-6 d-flex align-items-center order-2 order-lg-1">
                     <div className="p-3 p-lg-5">
                       <img className="img-fluid" src="/signin.svg" alt="" />
                     </div>
-                    {/* <!-- Divider --> */}
                     <div className="vr opacity-1 d-none d-lg-block"></div>
                   </div>
-
-                  {/* <!-- Information --> */}
                   <div className="col-lg-6 order-1">
                     <div className="p-4 p-sm-7">
-                      {/* <!-- Logo --> */}
                       <div className="row mb-5">
                         <a></a>
                       </div>
-                      {/* <!-- Title --> */}
                       <h2 className="mb-2 text-center">
                         Welcome to Alumni Connect
                       </h2>
                       <h4 className="text-center">Get Started</h4>
                       <div className="mt-3 text-center">
-                        {/* <input
-                          className="cred"
-                          type="email"
-                          placeholder="email"
-                          onChange={(e) => setEmail(e.target.value)}
-                        />
-                        <input
-                          className="cred"
-                          type="password"
-                          placeholder="password"
-                          onChange={(e) => setPassword(e.target.value)}
-                        />
-                        <br />
-                        <button className="signup" onClick={handleSignUp}>
-                          SignUp
-                        </button> */}
                         <br /> <br />
                         <button
                           className="signup bg-white google"
@@ -122,7 +87,7 @@ const SignUp = () => {
                             width={30}
                             style={{ marginRight: "5px" }}
                           ></img>
-                          SignUp with Google
+                          Sign Up with Google
                         </button>
                         <br /> <br />
                         <button
@@ -134,7 +99,7 @@ const SignUp = () => {
                             width={30}
                             style={{ marginRight: "5px" }}
                           ></img>
-                          SignUp with GitHub
+                          Sign Up with GitHub
                         </button>
                       </div>
                     </div>
