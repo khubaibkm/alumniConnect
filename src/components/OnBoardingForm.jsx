@@ -245,6 +245,7 @@ const OnBoardingForm = () => {
                   >
                     Current Company<span style={{ color: "red" }}>*</span>
                   </label>
+                  <span className="text-muted small ">'NA' if unemployed</span>
                   <input
                     type="text"
                     id="currentCompany"

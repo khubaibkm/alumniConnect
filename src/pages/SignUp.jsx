@@ -16,29 +16,28 @@ const SignUp = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
 
-  const handleSignUp = async (provider) => {
+  const handleEmailSignUp = async () => {
     try {
-      // Proceed with Google or GitHub sign-in using popup
+      const result = await createUserWithEmailAndPassword(
+        auth,
+        email,
+        password
+      );
+      const user = result.user;
+      toast.success("User signed up successfully! Fill up the form");
+      navigate("/On_boarding_form");
+    } catch (error) {
+      console.error(error);
+      toast.error("Error signing up");
+    }
+  };
+
+  const handleSocialSignUp = async (provider) => {
+    try {
       const result = await signInWithPopup(auth, provider);
       const user = result.user;
-
-      // Check if the email associated with the account is already registered
-      const userSignInMethods = await fetchSignInMethodsForEmail(
-        auth,
-        user.email
-      );
-
-      // If email is not registered, show a success message, navigate to the form, and exit the function
-      if (userSignInMethods.length === 0) {
-        toast.success("User signed in successfully! Fill up the form");
-        navigate("/On_boarding_form");
-        return;
-      }
-
-      // If email is already registered, inform the user
-      toast.error("This email is already registered. Please sign in");
-      await signOut(auth);
-      navigate("/signin");
+      toast.success("User signed in successfully! Fill up the form");
+      navigate("/On_boarding_form");
     } catch (error) {
       console.error(error);
       toast.error("Error signing up");
@@ -46,11 +45,11 @@ const SignUp = () => {
   };
 
   const SignUpWithGoogle = async () => {
-    handleSignUp(googleProvider);
+    handleSocialSignUp(googleProvider);
   };
 
   const SignUpWithGitHub = async () => {
-    handleSignUp(githubProvider);
+    handleSocialSignUp(githubProvider);
   };
 
   return (
