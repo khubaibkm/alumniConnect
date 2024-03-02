@@ -208,7 +208,7 @@ const ProfileList = () => {
                       <h2 className="card-title text-center">{profile.name}</h2>
                       <div className="d-flex justify-content-center">
                         <a
-                          href={profile.linkedin}
+                          href={`https://linkedin.com/in/${profile.linkedin}`}
                           target="_blank"
                           rel="noopener noreferrer"
                           className="text-primary "
