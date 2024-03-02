@@ -15,15 +15,10 @@ const SliderComponent = () => {
     const profilesCollection = collection(db, "alumni");
 
     const unsubscribe = onSnapshot(profilesCollection, (snapshot) => {
-      const profileData = [];
-      snapshot.forEach((doc) => {
-        const profile = { id: doc.id, ...doc.data() };
+      const profileData = snapshot.docs
+        .filter((doc) => doc.data().isVerified)
+        .map((doc) => ({ id: doc.id, ...doc.data() }));
 
-        // Only include profiles where isVerified is true
-        if (profile.isVerified) {
-          profileData.push(profile);
-        }
-      });
       setProfiles(profileData);
     });
 
@@ -54,6 +49,7 @@ const SliderComponent = () => {
 
     setProfiles(updatedProfiles);
   };
+
   const settings = {
     className: "center",
     centerMode: false,
@@ -65,9 +61,9 @@ const SliderComponent = () => {
     autoplay: true,
     autoplaySpeed: 2000,
     pauseOnHover: true,
-    draggable: true, // Allow mouse dragging
-    swipeToSlide: true, // Allow swiping to slide
-    focusOnSelect: true, // Focus on a slide when selected
+    draggable: true,
+    swipeToSlide: true,
+    focusOnSelect: true,
 
     responsive: [
       {
@@ -107,35 +103,28 @@ const SliderComponent = () => {
       },
     ],
   };
+
   return (
     <div className="sliderr">
-      <div class="category ">
+      <div className="category">
         <h2 className="text-center">Alumni Highlights</h2>
         <h6 className="text-center">Take a glance</h6>
       </div>
       <div
         className="slider-container"
-        style={{ margin: "40px 40px", overflowX: "none" }}
+        style={{ margin: "40px 40px", overflowX: "hidden" }}
       >
         <Slider {...settings} className="autoplay-slider">
           {profiles.slice(0, 9).map((profile) => (
             <div key={profile.id} className="slider-card center">
-              {profile.profileImageUrl ? (
-                <img
-                  src={profile.profileImageUrl}
-                  alt={`Profile of ${profile.name}`}
-                  className="slider-image"
-                />
-              ) : (
-                <img
-                  src={defaultImage}
-                  alt={`Profile of ${profile.name}`}
-                  className="slider-image"
-                />
-              )}
-              <p className="slider-name ">
+              <img
+                src={profile.profileImageUrl || defaultImage}
+                alt={`Profile of ${profile.name}`}
+                className="slider-image"
+              />
+              <p className="slider-name">
                 {profile.name?.length > 20
-                  ? profile.name.slice(0, 14) + "..."
+                  ? `${profile.name.slice(0, 14)}...`
                   : profile.name}
               </p>
             </div>
@@ -145,4 +134,5 @@ const SliderComponent = () => {
     </div>
   );
 };
+
 export default SliderComponent;
