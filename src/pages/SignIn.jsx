@@ -74,48 +74,50 @@ const SignIn = () => {
   const signInWithGitHub = async () => {
     try {
       const auth = getAuth();
-
-      // Sign in with GitHub
       const result = await signInWithPopup(auth, githubProvider);
 
-      // Check if the user's email already exists
       const user = result.user;
       const signInMethods = await fetchSignInMethodsForEmail(auth, user.email);
 
       if (signInMethods.length === 0) {
-        // Email does not exist, sign out the user and prompt to sign up
         await auth.signOut();
         toast.error("You don't have an account yet. Please sign up first.");
         return;
       }
 
-      // Email exists, check Firestore collection for user document
       const alumniCollection = collection(db, "alumni");
       const querySnapshot = await getDocs(alumniCollection);
 
-      // Loop through each document
-      querySnapshot.forEach(async (doc) => {
-        // Check if the firebaseUID matches the current user's UID
+      let userFound = false;
+
+      for (const doc of querySnapshot.docs) {
         if (doc.data().firebaseUID === user.uid) {
-          // If the user document is found, check the isVerified field
+          userFound = true;
+
           const isVerified = doc.data().isVerified;
+          const onboardingData = doc.data().onboardingData;
 
           if (!isVerified) {
-            // User is not verified, navigate to under review page
             navigate("/undereview");
-          } else {
-            // User is verified, proceed with navigation
-            navigate("/");
+            return;
           }
-
-          // Exit the loop once the user document is found
-          return;
+          if (isVerified) {
+            navigate("/");
+            return;
+          } else {
+            navigate("/On_boarding_form");
+          }
+          break;
         }
-      });
+      }
+
+      if (!userFound) {
+        navigate("/On_boarding_form");
+      }
 
       toast.success("Signed in successfully!");
     } catch (error) {
-      console.log(error);
+      console.error(error);
       toast.error("Error signing in");
     }
   };
@@ -123,48 +125,53 @@ const SignIn = () => {
   const SignInWithGoogle = async () => {
     try {
       const auth = getAuth();
-
-      // Sign in with Google
       const result = await signInWithPopup(auth, googleProvider);
 
-      // Check if the user's email already exists
       const user = result.user;
       const signInMethods = await fetchSignInMethodsForEmail(auth, user.email);
 
       if (signInMethods.length === 0) {
-        // Email does not exist, sign out the user and prompt to sign up
         await auth.signOut();
         toast.error("You don't have an account yet. Please sign up first.");
         return;
       }
 
-      // Email exists, check Firestore collection for user document
       const alumniCollection = collection(db, "alumni");
       const querySnapshot = await getDocs(alumniCollection);
 
-      // Loop through each document
-      querySnapshot.forEach(async (doc) => {
-        // Check if the firebaseUID matches the current user's UID
+      let userFound = false;
+
+      for (const doc of querySnapshot.docs) {
         if (doc.data().firebaseUID === user.uid) {
-          // If the user document is found, check the isVerified field
+          userFound = true;
+
           const isVerified = doc.data().isVerified;
+          const onboardingData = doc.data().onboardingData;
 
           if (!isVerified) {
-            // User is not verified, navigate to under review page
             navigate("/undereview");
-          } else {
-            // User is verified, proceed with navigation
+            return;
+          }
+          if (isVerified) {
             navigate("/");
+            return;
+          } else {
+            navigate("/On_boarding_form");
           }
 
-          // Exit the loop once the user document is found
-          return;
+          break; // Exit the loop once the user document is found
         }
-      });
+      }
+
+      if (!userFound) {
+        console.log(userFound);
+        // User document not found, navigate to onboarding form
+        navigate("/On_boarding_form");
+      }
 
       toast.success("Signed in successfully!");
     } catch (error) {
-      console.log(error);
+      console.error(error);
       toast.error("Error signing in");
     }
   };
