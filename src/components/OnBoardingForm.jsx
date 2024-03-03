@@ -155,6 +155,19 @@ const OnBoardingForm = () => {
       setLoading(false); // Set loading to false in case of an error
     }
   };
+  useEffect(() => {
+    const unsubscribe = auth.onAuthStateChanged((user) => {
+      if (user) {
+        setFormData((prevData) => ({
+          ...prevData,
+          email: user.email,
+        }));
+      }
+    });
+
+    // Cleanup the subscription when the component unmounts
+    return () => unsubscribe();
+  }, []);
 
   return (
     <div className="container onboarding-container mt-5">
@@ -237,6 +250,7 @@ const OnBoardingForm = () => {
                     value={formData.email}
                     onChange={handleChange}
                     className="form-control form-control-onboard"
+                    disabled
                     required
                   />
                 </div>
