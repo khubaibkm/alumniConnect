@@ -62,11 +62,18 @@
 
 @media (max-width: 450px) {
   .banner {
-    background-position: 0rem 32rem;
+    background-position: 0rem 30rem;
   }
 }
 
-@media (max-width: 350px) {
+@media (max-width: 390px) {
+  .banner {
+    background-position: 0rem 28rem;
+
+  }
+}
+
+@media (max-width: 370px) {
   .banner {
     background-position: 0rem 22rem;
 
