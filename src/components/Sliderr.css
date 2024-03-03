@@ -7,7 +7,7 @@ body {
 }
 
 .sliderr {
-    margin-bottom: 10rem;
+    margin-bottom: 8rem;
     /* background-color: black; */
 
 }
@@ -75,6 +75,12 @@ body {
 }
 
 
+@media (max-width: 3050px) {
+    .slick-slide div {
+        margin: auto;
+    }
+}
+
 @media (max-width: 1450px) {
     .slick-dots {
         position: relative;
@@ -82,16 +88,17 @@ body {
     }
 }
 
-@media (max-width: 400px) {
+@media (max-width: 500px) {
     .slick-slide div {
         width: 270px;
         height: 340px;
+
     }
 }
 
 @media (max-width: 370px) {
     .slick-slide div {
-        width: 240px;
-        height: 320px;
+        width: 260px;
+        height: 330px;
     }
 }

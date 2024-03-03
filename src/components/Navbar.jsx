@@ -148,7 +148,7 @@ export const Navbar = () => {
               ) : (
                 <Link
                   to="/signin"
-                  className="nav-link bg-primary rounded text-white px-3 py-2 mx-2 button-animated"
+                  className="signn nav-link bg-primary rounded text-white px-3 py-2 mx-2 button-animated"
                   onClick={() => closeNavbar()}
                 >
                   Alumni Login
@@ -159,7 +159,7 @@ export const Navbar = () => {
               {isSignedIn ? null : (
                 <Link
                   to="/signup"
-                  className="nav-link bg-primary rounded text-white px-3 py-2 mx-2 button-animated"
+                  className="signn  nav-link bg-primary rounded text-white px-3 py-2 mx-2 button-animated"
                   onClick={() => closeNavbar()}
                 >
                   Alumni Registration

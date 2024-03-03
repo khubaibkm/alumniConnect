@@ -27,6 +27,12 @@ const Test = lazy(() => import("./pages/Test"));
 
 const App = () => {
   return (
+    <>
+    <ScrollToTop
+        className="scrollToTop"
+        smooth
+        style={{ borderRadius: "50%", padding: "20px 42px 40px 16px" }}
+      />
     <div className="App">
       <ToastContainer />
 
@@ -47,7 +53,7 @@ const App = () => {
                 position: "fixed",
                 top: 0,
                 left: 0,
-                right: 0,
+                right: -120,
                 bottom: 0,
                 background: "rgba(255, 255, 255)",
               }}
@@ -86,6 +92,7 @@ const App = () => {
         <Footer />
       </Router>
     </div>
+    </>
   );
 };
 
