@@ -72,7 +72,7 @@ export const Navbar = () => {
   return (
     <nav
       className={`navbar navbar-expand-lg navbar-light bg-light fixed-top shadow-sm${
-        isNavbarOpen ? "navbar-open" : ""
+        isNavbarOpen ? " navbar-open" : ""
       }`}
     >
       <div className="container-fluid">
@@ -139,7 +139,15 @@ export const Navbar = () => {
             <li className="nav-item">
               {isSignedIn ? (
                 <a
-                  className="nav-link bg-secondary rounded text-white px-3 py-2 mx-2 "
+                  style={{
+                    display: "inline-block",
+                    padding: "0.5rem",
+                    marginLeft: "0", // Adjust margin as needed
+                    borderRadius: "5px",
+                    backgroundColor: "#6c757d",
+                    textDecoration: "none",
+                    color: "white",
+                  }}
                   href="#"
                   onClick={handleSignOut}
                 >
@@ -148,7 +156,7 @@ export const Navbar = () => {
               ) : (
                 <Link
                   to="/signin"
-                  className="signn nav-link bg-primary rounded text-white px-3 py-2 mx-2 button-animated"
+                  className={`signn nav-link bg-primary rounded text-white px-3 py-2 mx-2 button-animated d-lg-inline-block`}
                   onClick={() => closeNavbar()}
                 >
                   Alumni Login
@@ -159,7 +167,7 @@ export const Navbar = () => {
               {isSignedIn ? null : (
                 <Link
                   to="/signup"
-                  className="signn  nav-link bg-primary rounded text-white px-3 py-2 mx-2 button-animated"
+                  className={`signn nav-link bg-primary rounded text-white px-3 py-2 mx-2 button-animated d-lg-inline-block`}
                   onClick={() => closeNavbar()}
                 >
                   Alumni Registration
@@ -170,10 +178,10 @@ export const Navbar = () => {
               {isSignedIn && !hasFilledOutForm && (
                 <Link
                   to="/on_boarding_form"
-                  className="nav-link bg-primary rounded text-white px-3 py-2 mx-2 button-animated"
+                  className={`nav-link bg-primary rounded text-white px-3 py-2 mx-2 button-animated d-lg-inline-block`}
                   onClick={() => closeNavbar()}
                 >
-                  onboarding form
+                  Onboarding Form
                 </Link>
               )}
             </li>
