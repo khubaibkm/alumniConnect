@@ -15,3 +15,10 @@ body::-webkit-scrollbar-thumb {
     border-radius: 10px;
     border: 3px solid white;
 }
+
+@media (max-width: 500px) {
+    .scrollToTop {
+        padding: 13px 35px 33px 8px !important;
+        margin-right: -1.5rem;
+    }
+}

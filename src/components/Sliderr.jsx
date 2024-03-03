@@ -90,7 +90,7 @@ const SliderComponent = () => {
       {
         breakpoint: 700,
         settings: {
-          slidesToShow: 1.5,
+          slidesToShow: 1,
           centerPadding: "0",
         },
       },
@@ -112,7 +112,7 @@ const SliderComponent = () => {
       </div>
       <div
         className="slider-container"
-        style={{ margin: "40px 40px", overflowX: "hidden" }}
+        style={{margin: "40px 0px" }}
       >
         <Slider {...settings} className="autoplay-slider">
           {profiles.slice(0, 9).map((profile) => (
@@ -131,7 +131,7 @@ const SliderComponent = () => {
           ))}
         </Slider>
       </div>
-    </div>
+    </div> 
   );
 };
 

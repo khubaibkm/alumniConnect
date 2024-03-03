@@ -50,3 +50,10 @@
     animation: shine 3s infinite linear;
     /* Animation */
 }
+
+@media (max-width: 800px) {
+    .signn {
+        margin-left: 0rem !important;
+        width: 13rem;
+    }
+}

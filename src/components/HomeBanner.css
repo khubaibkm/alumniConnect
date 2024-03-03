@@ -44,11 +44,15 @@
   }
 
   .banner {
-    min-height: 80vh;
+    min-height: 100vh;
+  }
+
+  .col-md-12 {
+    margin-left: .8rem;
   }
 
   .lead {
-    margin-bottom: 0.5rem;
+    margin-bottom: 2rem;
   }
 
   .btn {
@@ -58,12 +62,13 @@
 
 @media (max-width: 450px) {
   .banner {
-    background-position: center bottom;
+    background-position: 0rem 32rem;
   }
 }
 
 @media (max-width: 350px) {
   .banner {
-    background-position: center bottom;
+    background-position: 0rem 22rem;
+
   }
 }
