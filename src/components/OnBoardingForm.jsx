@@ -104,7 +104,7 @@ const OnBoardingForm = () => {
         const fileSizeInMB = image.size / (1024 * 1024);
         const allowedImageTypes = ["image/jpeg", "image/png", "image/gif"];
 
-        if (fileSizeInMB > 1) {
+        if (fileSizeInMB > 10) {
           toast.error("File size should not exceed 1MB");
           setLoading(false); // Set loading to false in case of an error
           return;
