@@ -14,7 +14,7 @@ import {
 import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { useNavigate } from "react-router-dom";
-import { collection, getDocs, doc } from "firebase/firestore";
+import { collection, getDocs, doc, getDoc } from "firebase/firestore";
 import "./SignIn.css";
 // Declare the variables here
 let email, password;
@@ -71,6 +71,18 @@ const SignIn = () => {
   //     console.error(error);
   //   }
   // };
+
+  const checkUserExistence = async (email) => {
+    try {
+      const userEmailDocRef = doc(collection(db, "userEmails"), email);
+      const userEmailDoc = await getDoc(userEmailDocRef);
+
+      return userEmailDoc.exists();
+    } catch (error) {
+      console.error("Error checking user existence:", error);
+      return true; // Assume existence to prevent unintentional sign-up
+    }
+  };
   const signInWithGitHub = async () => {
     try {
       const auth = getAuth();
@@ -130,11 +142,12 @@ const SignIn = () => {
       const result = await signInWithPopup(auth, googleProvider);
 
       const user = result.user;
-      const signInMethods = await fetchSignInMethodsForEmail(auth, user.email);
+      const userExists = await checkUserExistence(user.email);
 
-      if (signInMethods.length === 0) {
+      if (!userExists) {
         await auth.signOut();
-        toast.error("You don't have an account yet. Please sign up first.");
+        toast.info("You don't have an account yet. Please sign up first.");
+        navigate("/signup");
         return;
       }
 
