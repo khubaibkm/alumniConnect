@@ -1,34 +1,32 @@
 import React, { useState } from "react";
 import {
-  createUserWithEmailAndPassword,
   signInWithPopup,
-  fetchSignInMethodsForEmail,
-  signOut,
+  getAuth,
+  GoogleAuthProvider,
+  GithubAuthProvider,
 } from "firebase/auth";
-import { auth, googleProvider, githubProvider } from "../config/firebase.js";
 import { toast } from "react-toastify";
-import "react-toastify/dist/ReactToastify.css";
 import { useNavigate } from "react-router-dom";
+import { collection, doc, getDoc, setDoc } from "firebase/firestore";
+import {
+  auth,
+  db,
+  googleProvider,
+  githubProvider,
+} from "../config/firebase.js";
 import "./SignUp.css";
-
 const SignUp = () => {
   const navigate = useNavigate();
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
 
-  const handleEmailSignUp = async () => {
+  const checkUserExistence = async (email) => {
     try {
-      const result = await createUserWithEmailAndPassword(
-        auth,
-        email,
-        password
-      );
-      const user = result.user;
-      toast.success("User signed up successfully! Fill up the form");
-      navigate("/On_boarding_form");
+      const userEmailDocRef = doc(collection(db, "userEmails"), email);
+      const userEmailDoc = await getDoc(userEmailDocRef);
+
+      return userEmailDoc.exists();
     } catch (error) {
-      console.error(error);
-      toast.error("Error signing up");
+      console.error("Error checking user existence:", error);
+      return true; // Assume existence to prevent unintentional sign-up
     }
   };
 
@@ -36,10 +34,30 @@ const SignUp = () => {
     try {
       const result = await signInWithPopup(auth, provider);
       const user = result.user;
-      toast.success("User signed in successfully! Fill up the form");
-      navigate("/On_boarding_form");
+
+      // Check if the user's email exists
+      const userExists = await checkUserExistence(user.email);
+
+      if (!userExists) {
+        // Add the email to "userEmails" collection
+        await setDoc(doc(collection(db, "userEmails"), user.email), {
+          exists: true,
+        });
+
+        // Proceed with sign up
+        toast.success("User signed in successfully! Fill up the form");
+        navigate("/On_boarding_form");
+      } else {
+        // User already exists, display a message and sign out
+        toast.info(
+          "User with this email already exists. You may want to sign in."
+        );
+
+        // Sign out the user
+        await auth.signOut();
+      }
     } catch (error) {
-      console.error(error);
+      console.error("Error signing up:", error);
       toast.error("Error signing up");
     }
   };
