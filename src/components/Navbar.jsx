@@ -72,7 +72,7 @@ export const Navbar = () => {
   return (
     <nav
       className={`navbar navbar-expand-lg navbar-light bg-light fixed-top shadow-sm${
-        isNavbarOpen ? " navbar-open" : ""
+        isNavbarOpen ? "navbar-open" : ""
       }`}
     >
       <div className="container-fluid">
@@ -167,7 +167,7 @@ export const Navbar = () => {
               {isSignedIn ? null : (
                 <Link
                   to="/signup"
-                  className={`signn nav-link bg-primary rounded text-white px-3 py-2 mx-2 button-animated d-lg-inline-block`}
+                  className="signn  nav-link bg-primary rounded text-white px-3 py-2 mx-2 button-animated"
                   onClick={() => closeNavbar()}
                 >
                   Alumni Registration
@@ -178,10 +178,10 @@ export const Navbar = () => {
               {isSignedIn && !hasFilledOutForm && (
                 <Link
                   to="/on_boarding_form"
-                  className={`nav-link bg-primary rounded text-white px-3 py-2 mx-2 button-animated d-lg-inline-block`}
+                  className="nav-link bg-primary rounded text-white px-3 py-2 mx-2 button-animated"
                   onClick={() => closeNavbar()}
                 >
-                  Onboarding Form
+                  onboarding form
                 </Link>
               )}
             </li>
