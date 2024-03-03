@@ -112,7 +112,7 @@ const SliderComponent = () => {
       </div>
       <div
         className="slider-container"
-        style={{margin: "40px 0px" }}
+        style={{margin: "40px 0px", overflow: "hidden"}}
       >
         <Slider {...settings} className="autoplay-slider">
           {profiles.slice(0, 9).map((profile) => (
