@@ -89,11 +89,12 @@ const SignIn = () => {
       const result = await signInWithPopup(auth, githubProvider);
 
       const user = result.user;
-      const signInMethods = await fetchSignInMethodsForEmail(auth, user.email);
+      const userExists = await checkUserExistence(user.email);
 
-      if (signInMethods.length === 0) {
+      if (!userExists) {
         await auth.signOut();
-        toast.error("You don't have an account yet. Please sign up first.");
+        toast.info("You don't have an account yet. Please sign up first.");
+        navigate("/signup");
         return;
       }
 
