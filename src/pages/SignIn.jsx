@@ -1,10 +1,5 @@
 import React, { useState } from "react";
-import {
-  getAuth,
-  signInWithEmailAndPassword,
-  fetchSignInMethodsForEmail,
-  signInWithPopup,
-} from "firebase/auth";
+import { getAuth, signInWithPopup } from "firebase/auth";
 import {
   auth,
   googleProvider,
@@ -16,61 +11,11 @@ import "react-toastify/dist/ReactToastify.css";
 import { useNavigate } from "react-router-dom";
 import { collection, getDocs, doc, getDoc } from "firebase/firestore";
 import "./SignIn.css";
-// Declare the variables here
-let email, password;
 
 const SignIn = () => {
   const navigate = useNavigate();
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-
-  // const handleSignIn = async () => {
-  //   if (email === "" || password === "") {
-  //     toast.error("Please fill in all the fields");
-  //     return;
-  //   }
-
-  //   const auth = getAuth();
-
-  //   try {
-  //     // Sign in the user with email and password
-  //     await signInWithEmailAndPassword(auth, email, password);
-
-  //     // Get the user's UID
-  //     const user = auth.currentUser;
-
-  //     // Reference to the Firestore collection
-  //     const alumniCollection = collection(db, "alumni");
-
-  //     // Get all documents in the "alumni" collection
-  //     const querySnapshot = await getDocs(alumniCollection);
-
-  //     // Loop through each document
-  //     querySnapshot.forEach(async (doc) => {
-  //       // Check if the firebaseUID matches the current user's UID
-  //       if (doc.data().firebaseUID === user.uid) {
-  //         // If the user document is found, check the isVerified field
-  //         const isVerified = doc.data().isVerified;
-
-  //         if (!isVerified) {
-  //           // User is not verified, navigate to under review page
-  //           navigate("/undereview");
-  //         } else {
-  //           // User is verified, proceed with navigation
-  //           navigate("/");
-  //         }
-
-  //         // Exit the loop once the user document is found
-  //         return;
-  //       }
-  //     });
-
-  //     toast.success("Signed in successfully!");
-  //   } catch (error) {
-  //     toast.error("Error signing in");
-  //     console.error(error);
-  //   }
-  // };
 
   const checkUserExistence = async (email) => {
     try {
@@ -83,6 +28,7 @@ const SignIn = () => {
       return true; // Assume existence to prevent unintentional sign-up
     }
   };
+
   const signInWithGitHub = async () => {
     try {
       const auth = getAuth();
@@ -104,25 +50,19 @@ const SignIn = () => {
       let userFound = false;
 
       for (const doc of querySnapshot.docs) {
-        if (doc.data().firebaseUID === user.uid) {
+        if (doc.data().email === user.email) {
           userFound = true;
 
           const isVerified = doc.data().isVerified;
-          const onboardingData = doc.data().onboardingData;
 
           if (!isVerified) {
             navigate("/undereview");
             return;
           }
-          if (isVerified) {
-            toast.success("Signed in successfully!");
-            navigate("/");
 
-            return;
-          } else {
-            navigate("/On_boarding_form");
-          }
-          break;
+          navigate("/");
+          toast.success("Signed in successfully!");
+          return;
         }
       }
 
@@ -158,30 +98,23 @@ const SignIn = () => {
       let userFound = false;
 
       for (const doc of querySnapshot.docs) {
-        if (doc.data().firebaseUID === user.uid) {
+        if (doc.data().email === user.email) {
           userFound = true;
 
           const isVerified = doc.data().isVerified;
-          const onboardingData = doc.data().onboardingData;
 
           if (!isVerified) {
             navigate("/undereview");
             return;
           }
-          if (isVerified) {
-            navigate("/");
-            return;
-          } else {
-            navigate("/On_boarding_form");
-          }
 
-          break; // Exit the loop once the user document is found
+          navigate("/");
+          toast.success("Signed in successfully!");
+          return;
         }
       }
 
       if (!userFound) {
-        console.log(userFound);
-        // User document not found, navigate to onboarding form
         navigate("/On_boarding_form");
       }
 
@@ -200,42 +133,26 @@ const SignIn = () => {
             <div className="col-12">
               <div className="bg-mode shadow rounded-3 overflow-hidden">
                 <div className="row g-0">
-                  {/* <!-- Vector Image --> */}
+                  {/* Vector Image */}
                   <div className="col-lg-6 d-flex align-items-center order-2 order-lg-1">
                     <div className="p-3 p-lg-5">
                       <img className="img-fluid" src="/signin.svg" alt="" />
                     </div>
-                    {/* <!-- Divider --> */}
+                    {/* Divider */}
                     <div className="vr opacity-1 d-none d-lg-block"></div>
                   </div>
 
-                  {/* <!-- Information --> */}
+                  {/* Information */}
                   <div className="col-lg-6 order-1">
                     <div className="p-4 p-sm-7">
-                      {/* <!-- Logo --> */}
+                      {/* Logo */}
                       <div className="row mb-5">
                         <a></a>
                       </div>
-                      {/* <!-- Title --> */}
+                      {/* Title */}
                       <h2 className="mb-2 text-center">Welcome back</h2>
                       <h4 className="text-center">Sign In</h4>
                       <div className="mt-3 text-center">
-                        {/* <input
-                          className="cred"
-                          type="email"
-                          placeholder="email"
-                          onChange={(e) => setEmail(e.target.value)}
-                        />
-                        <input
-                          className="cred"
-                          type="password"
-                          placeholder="password"
-                          onChange={(e) => setPassword(e.target.value)}
-                        />
-                        <br />
-                        <button className="signin" onClick={handleSignIn}>
-                          SignIn
-                        </button> */}
                         <br /> <br />
                         <button
                           className="signin bg-white google"
