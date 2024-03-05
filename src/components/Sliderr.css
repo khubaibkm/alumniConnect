@@ -14,32 +14,54 @@ body {
 
 
 .slick-arrow {
-    background-color: black;
+    background-color: #006aff;
     border-radius: 100%;
 }
 
 .slick-arrow:hover {
-    background-color: black;
+    background-color: #93bffc;
+    transition: 0.1s;
 }
 
 .slick-dots {
     position: relative;
     top: 3rem;
+    color: #006aff;
 }
+
+.slick-dots li button:before {
+    color: #006aff;
+}
+
+.slick-dots li.slick-active button:before {
+    color: #006aff;
+}
+
+
 
 .slider-card {
     text-align: center;
     padding: 20px;
-    background-color: rgb(247, 247, 247);
+    background-color: #598eea;
     border-radius: 10px;
+    cursor: pointer;
 }
+
+
 
 
 .slider-name {
     font-size: 22px;
     font-weight: 500;
-    color: #333;
+    color: #ffffff;
 
+}
+
+.slider-batch {
+    margin-top: -0.5rem !important;
+    color: #f7f4f4 !important;
+    font-size: 14px !important;
+    font-weight: 50 !important;
 }
 
 

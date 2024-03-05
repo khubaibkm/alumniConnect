@@ -74,6 +74,14 @@ const ProfileList = () => {
     };
 
     loadData();
+  }, [profiles]);
+
+  useEffect(() => {
+    const loadData = async () => {
+      await fetchImages();
+    };
+
+    loadData();
   }, []);
 
   const paginate = (pageNumber) => setCurrentPage(pageNumber);

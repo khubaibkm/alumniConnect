@@ -14,15 +14,15 @@ const HomePage = () => {
           <div className="row align-items-center">
             <div className="col-lg-6">
               <img
-                src="/alumni.jpg"
+                src="/about.png"
                 alt="Job"
                 className="img-fluid"
                 style={{ backgroundBlendMode: "cover" }}
               />
             </div>
-            <div className="col-lg-6 py-4">
+            <div className="col-lg-6 py-0 ">
               <div className="section-head text-start">
-                <h2 className="text-primary">About Us</h2>
+                <h1 className="text-primary">About Us</h1>
                 <h4 className="title">
                   Welcome to Alumni Connect! - Your central hub for connecting
                   with Integral University alumni.

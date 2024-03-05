@@ -1,11 +1,12 @@
 import React from "react";
+import "./Footer.css";
 
 const Footer = () => {
   const getYear = () => {
     return new Date().getFullYear();
   };
   return (
-    <div className="px-5 bg-light">
+    <div className="px-5  footerr">
       <footer className="py-5">
         <div className="row">
           <div className="col-12 col-md-6 mb-3 d-flex flex-column align-items-start">

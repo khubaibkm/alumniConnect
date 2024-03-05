@@ -9,7 +9,10 @@ const HowTo = () => {
             <h2 className="text wow fadeInUp" data-wow-delay="0.6s">
               Registration Process - (for Alumni)
             </h2>
-            <h4 className="title wow fadeInUp" data-wow-delay="0.8s">
+            <h4
+              className="title wow fadeInUp text-primary"
+              data-wow-delay="0.8s"
+            >
               How It Works
             </h4>
           </div>
@@ -45,7 +48,12 @@ const HowTo = () => {
               >
                 <div className={`icon-bx-wraper style-1 ${item.bgColor}`}>
                   <div className="icon-media">
-                    <img src="/favicon-removebg-preview.png" width={"60px"} alt="image" className="rounded" />
+                    <img
+                      src="/favicon-removebg-preview.png"
+                      width={"60px"}
+                      alt="image"
+                      className="rounded"
+                    />
                   </div>
                   <div
                     className="icon-content mt-5"

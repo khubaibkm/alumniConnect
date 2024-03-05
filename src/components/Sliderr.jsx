@@ -115,15 +115,12 @@ const SliderComponent = () => {
     <div className="sliderr">
       <div className="category">
         <h2 className="text-center">Alumni Highlights</h2>
-        <h6 className="text-center">Take a glance</h6>
+        <h4 className="text-center text-primary">Take a glance</h4>
       </div>
-      <div
-        className="slider-container"
-        style={{margin: "40px 40px"}}
-      >
-        <Slider {...settings} className="autoplay-slider">
-          {profiles.slice(0, 9).map((profile) => (
-            <div key={profile.id} className="slider-card center">
+      <div className="slider-container" style={{ margin: "40px 40px" }}>
+        <Slider {...settings} className="autoplay-slider ">
+          {profiles.slice(0, 9).map((profile, index) => (
+            <div key={profile.id} className="slider-card center ">
               <img
                 src={profile.profileImageUrl || defaultImage}
                 alt={`Profile of ${profile.name}`}
@@ -134,11 +131,12 @@ const SliderComponent = () => {
                   ? `${profile.name.slice(0, 14)}...`
                   : profile.name}
               </p>
+              <p className="slider-batch ">{profile.currentCompany}</p>
             </div>
           ))}
         </Slider>
       </div>
-    </div> 
+    </div>
   );
 };
 

@@ -71,7 +71,7 @@ export const Navbar = () => {
   window.scrollTo(0, 0);
   return (
     <nav
-      className={`navbar navbar-expand-lg navbar-light bg-light fixed-top shadow-sm${
+      className={`navbar navbar-expand-lg  fixed-top shadow-sm${
         isNavbarOpen ? "navbar-open" : ""
       }`}
     >
@@ -140,7 +140,6 @@ export const Navbar = () => {
             <li signn className="nav-item">
               {isSignedIn ? (
                 <a
-
                   className="signt nav-link bg-secondary rounded text-white px-3 py-2 mx-2 "
                   style={{
                     display: "inline-block",

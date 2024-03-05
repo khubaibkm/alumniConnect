@@ -2,6 +2,10 @@
     position: relative;
 }
 
+.about-section {
+    background-color: #74B24E;
+}
+
 .icon-bx-wraper p:last-child {
     margin: 0;
 }
