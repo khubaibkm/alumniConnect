@@ -6,8 +6,8 @@ const UnderReview = () => {
       <div className="row justify-content-center mx-2 my-5">
         <div className="col-md-8">
           <div className="card ">
-            <div className="card-header bg-primary text-white">
-              <h2>Profile Under Review</h2>
+            <div className="card-header bg-primary ">
+              <h2 className="text-white">Profile Under Review</h2>
             </div>
             <div className="card-body">
               <p>
