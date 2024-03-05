@@ -39,6 +39,14 @@ h2 {
     cursor: pointer;
 }
 
+.resizable-textarea {
+    resize: vertical;
+    /* or 'both' for both horizontal and vertical resizing */
+    min-height: 100px;
+    /* Set a minimum height to avoid collapsing completely */
+}
+
+
 @media (max-width: 768px) {
     .card {
         margin-top: 1rem;

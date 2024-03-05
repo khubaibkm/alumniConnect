@@ -327,10 +327,11 @@ const OnBoardingForm = () => {
                     name="bio"
                     value={formData.bio}
                     onChange={handleChange}
-                    className="form-control form-control-onboard"
+                    className="form-control form-control-onboard resizable-textarea"
                     required
                   ></textarea>
                 </div>
+
                 <div className="mb-3">
                   <label
                     htmlFor="profileImage"
