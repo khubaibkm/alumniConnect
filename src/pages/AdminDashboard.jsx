@@ -61,18 +61,14 @@ const AdminDashboard = () => {
 
   const handleApprove = async (userId, userEmail) => {
     try {
-      // Add logic to update user data and set isVerified to true
       const userDocRef = doc(db, "alumni", userId);
       await updateDoc(userDocRef, { isVerified: true });
 
-      // Fetch updated unverified users
       fetchUnverifiedUsers();
 
-      // Reset password and send email
-      const auth = getAuth(); // Ensure auth is correctly initialized
-      await sendPasswordResetEmail(auth, userEmail); // Use sendPasswordResetEmail directly
+      const auth = getAuth();
+      await sendPasswordResetEmail(auth, userEmail);
 
-      // Optionally, you can sign out the admin after approving the user
       handleSignOut();
     } catch (error) {
       console.error("Error approving user:", error);
@@ -81,11 +77,9 @@ const AdminDashboard = () => {
 
   const handleDisapprove = async (userId) => {
     try {
-      // Add logic to delete user data
       const userDocRef = doc(db, "alumni", userId);
       await deleteDoc(userDocRef);
 
-      // Fetch updated unverified users
       fetchUnverifiedUsers();
     } catch (error) {
       console.error("Error disapproving user:", error);
@@ -96,29 +90,24 @@ const AdminDashboard = () => {
     const authListener = auth.onAuthStateChanged((user) => {
       setUser(user);
 
-      // Check if the user is an admin based on UID
       if (user && user.uid !== adminUID) {
-        // Redirect to an error page or display an error message
-        // Automatically sign out on component mount
         navigate("/error");
         handleSignOut();
       }
     });
 
-    // Automatically sign out on component mount
     handleSignOut();
-
     fetchUnverifiedUsers();
 
     return () => {
-      authListener(); // Unsubscribe from the auth listener when the component unmounts
+      authListener();
     };
-  }, []); // Empty dependency array to run the effect only once when the component mounts
+  }, []);
 
   if (!user) {
     return (
-      <div className="container p-5">
-        <div className="card w-50 mx-auto sm-p-4 m-5">
+      <div className="container py-5 mt-5">
+        <div className="card w-50 mx-auto shadow p-4 m-5">
           <h2 className="mb-4">Sign In</h2>
           <div className="mb-3">
             <label className="form-label">Email:</label>
@@ -147,54 +136,58 @@ const AdminDashboard = () => {
   }
 
   return (
-    <div className="container mt-4">
-      <h2 className="mb-4">Admin Dashboard</h2>
-      <table className="table table-bordered">
-        <thead className="thead-dark">
-          <tr>
-            <th>Name</th>
-            <th>Email</th>
-            <th>Graduation Year</th>
-            <th>Major</th>
-            <th>Current Company</th>
-            <th>LinkedIn ID</th>
-            <th>PFP</th>
-            <th>Actions</th>
-          </tr>
-        </thead>
-        <tbody>
-          {unverifiedUsers.map((user) => (
-            <tr key={user.id}>
-              <td>{user.name}</td>
-              <td>{user.email}</td>
-              <td>{user.graduationYear}</td>
-              <td>{user.major}</td>
-              <td>{user.currentCompany}</td>
-              <td>https://linkedin.com/in/{user.linkedin}</td>
-              <td>
-                <img
-                  src={user.profileImageUrl}
-                  style={{ height: "150px", width: "150px" }}
-                />
-              </td>
-              <td className="d-flex">
-                <button
-                  className="btn btn-success me-2"
-                  onClick={() => handleApprove(user.id, user.email)}
-                >
-                  Approve
-                </button>
-                <button
-                  className="btn btn-danger"
-                  onClick={() => handleDisapprove(user.id)}
-                >
-                  Disapprove
-                </button>
-              </td>
+    <div className="container m-5 p-5">
+      <h2 className="mb-4 text-center">Admin Dashboard</h2>
+      <div className="table-responsive">
+        <table className="table table-bordered table-striped">
+          <thead className="thead-dark">
+            <tr>
+              <th>Name</th>
+              <th>Email</th>
+              <th>Graduation Year</th>
+              <th>Major</th>
+              <th>Current Company</th>
+              <th>LinkedIn ID</th>
+              <th>PFP</th>
+              <th>Actions</th>
             </tr>
-          ))}
-        </tbody>
-      </table>
+          </thead>
+          <tbody>
+            {unverifiedUsers.map((user) => (
+              <tr key={user.id}>
+                <td>{user.name}</td>
+                <td>{user.email}</td>
+                <td>{user.graduationYear}</td>
+                <td>{user.major}</td>
+                <td>{user.currentCompany}</td>
+                <td>https://linkedin.com/in/{user.linkedin}</td>
+                <td>
+                  <img
+                    src={user.profileImageUrl}
+                    style={{ height: "150px", width: "150px" }}
+                    className="img-fluid rounded"
+                    alt={user.name}
+                  />
+                </td>
+                <td className="d-flex">
+                  <button
+                    className="btn btn-success me-2"
+                    onClick={() => handleApprove(user.id, user.email)}
+                  >
+                    Approve
+                  </button>
+                  <button
+                    className="btn btn-danger"
+                    onClick={() => handleDisapprove(user.id)}
+                  >
+                    Disapprove
+                  </button>
+                </td>
+              </tr>
+            ))}
+          </tbody>
+        </table>
+      </div>
     </div>
   );
 };

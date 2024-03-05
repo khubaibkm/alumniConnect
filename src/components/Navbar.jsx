@@ -140,7 +140,17 @@ export const Navbar = () => {
             <li signn className="nav-item">
               {isSignedIn ? (
                 <a
+
                   className="signt nav-link bg-secondary rounded text-white px-3 py-2 mx-2 "
+                  style={{
+                    display: "inline-block",
+                    padding: "0.5rem",
+                    marginLeft: "0", // Adjust margin as needed
+                    borderRadius: "5px",
+                    backgroundColor: "#6c757d",
+                    textDecoration: "none",
+                    color: "white",
+                  }}
                   href="#"
                   onClick={handleSignOut}
                 >
@@ -149,7 +159,7 @@ export const Navbar = () => {
               ) : (
                 <Link
                   to="/signin"
-                  className="signn nav-link bg-primary rounded text-white px-3 py-2 mx-2 button-animated"
+                  className={`signn nav-link bg-primary rounded text-white px-3 py-2 mx-2 button-animated d-lg-inline-block`}
                   onClick={() => closeNavbar()}
                 >
                   Alumni Login

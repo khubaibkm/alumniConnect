@@ -227,7 +227,7 @@ const ProfileList = () => {
                         <p className="card-text ">
                           Current Company:{" "}
                           <span className="text-primary">
-                            {profile.currentCompany?.length > 15
+                            {profile.currentCompany?.length > 20
                               ? profile.currentCompany.slice(0, 15) + "..."
                               : profile.currentCompany}
                           </span>
