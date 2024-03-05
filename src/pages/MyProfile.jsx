@@ -99,13 +99,15 @@ const MyProfile = () => {
         const fileSizeInMB = image.size / (1024 * 1024);
         const allowedImageTypes = ["image/jpeg", "image/png", "image/gif"];
 
-        if (fileSizeInMB > 1) {
-          console.error("File size should not exceed 1MB");
+        if (fileSizeInMB > 10) {
+          console.error("File size should not exceed 10MB");
+          toast.error("File size should not exceed 10MB");
           return;
         }
 
         if (!allowedImageTypes.includes(image.type)) {
           console.error("Invalid image format. Please use JPEG, PNG, or GIF");
+          toast.error("Invalid image format. Please use JPEG, PNG, or GIF");
           return;
         }
 
