@@ -169,6 +169,18 @@ const OnBoardingForm = () => {
     return () => unsubscribe();
   }, []);
 
+  const handleImageDelete = () => {
+    if (window.confirm("Are you sure you want to remove the image?")) {
+      setImage(null);
+
+      // Reset the file input value to allow re-uploading the same file
+      const fileInput = document.getElementById("profileImage");
+      if (fileInput) {
+        fileInput.value = "";
+      }
+    }
+  };
+
   return (
     <div className="container onboarding-container mt-5">
       <div className="row align-items-center">
@@ -333,6 +345,16 @@ const OnBoardingForm = () => {
                     onChange={handleImageChange}
                     className="form-control form-control-onboard"
                   />
+                  {image && (
+                    <div className="mt-2">
+                      <span
+                        onClick={handleImageDelete}
+                        className="text-danger cursor-pointer"
+                      >
+                        <i className="fa fa-close"></i> Remove Image
+                      </span>
+                    </div>
+                  )}
                 </div>
                 <button
                   type="submit"
