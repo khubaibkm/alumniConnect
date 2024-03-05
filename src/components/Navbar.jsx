@@ -78,6 +78,7 @@ export const Navbar = () => {
       <div className="container-fluid">
         <Link to="/" className="navbar-brand">
           <img
+            className="logoo"
             style={{ marginLeft: "0.1rem" }}
             width={"225px"}
             src="/logo.svg"
@@ -136,10 +137,10 @@ export const Navbar = () => {
                 </Link>
               )}
             </li>
-            <li className="nav-item">
+            <li signn className="nav-item">
               {isSignedIn ? (
                 <a
-                  className="nav-link bg-secondary rounded text-white px-3 py-2 mx-2 "
+                  className="signt nav-link bg-secondary rounded text-white px-3 py-2 mx-2 "
                   href="#"
                   onClick={handleSignOut}
                 >
@@ -159,7 +160,7 @@ export const Navbar = () => {
               {isSignedIn ? null : (
                 <Link
                   to="/signup"
-                  className="signn  nav-link bg-primary rounded text-white px-3 py-2 mx-2 button-animated"
+                  className="signn1  nav-link bg-primary rounded text-white px-3 py-2 mx-2 button-animated"
                   onClick={() => closeNavbar()}
                 >
                   Alumni Registration
@@ -170,7 +171,7 @@ export const Navbar = () => {
               {isSignedIn && !hasFilledOutForm && (
                 <Link
                   to="/on_boarding_form"
-                  className="nav-link bg-primary rounded text-white px-3 py-2 mx-2 button-animated"
+                  className="signn2 nav-link bg-primary rounded text-white px-3 py-2 mx-2 button-animated"
                   onClick={() => closeNavbar()}
                 >
                   onboarding form

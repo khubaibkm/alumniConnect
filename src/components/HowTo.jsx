@@ -45,7 +45,7 @@ const HowTo = () => {
               >
                 <div className={`icon-bx-wraper style-1 ${item.bgColor}`}>
                   <div className="icon-media">
-                    <img src="/vite.svg" alt="image" className="rounded" />
+                    <img src="/favicon-removebg-preview.png" width={"60px"} alt="image" className="rounded" />
                   </div>
                   <div
                     className="icon-content mt-5"

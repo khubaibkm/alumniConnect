@@ -52,8 +52,29 @@
 }
 
 @media (max-width: 800px) {
+    .signt {
+        margin-left: 0rem !important;
+        width: 6rem;
+        margin-bottom: .5rem;
+    }
+
     .signn {
         margin-left: 0rem !important;
-        width: 13rem;
+        width: 9rem;
+        margin-top: .5rem;
+    }
+
+    .signn1 {
+        margin-left: 0rem !important;
+        width: 12.5rem;
+    }
+
+    .signn2 {
+        margin-left: 0rem !important;
+        width: 11rem;
+    }
+
+    .logoo {
+        width: 160px;
     }
 }

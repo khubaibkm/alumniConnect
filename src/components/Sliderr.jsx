@@ -67,6 +67,13 @@ const SliderComponent = () => {
 
     responsive: [
       {
+        breakpoint: 1600,
+        settings: {
+          slidesToShow: 4,
+          centerPadding: "5%",
+        },
+      },
+      {
         breakpoint: 1400,
         settings: {
           slidesToShow: 4,
@@ -112,7 +119,7 @@ const SliderComponent = () => {
       </div>
       <div
         className="slider-container"
-        style={{margin: "40px 0px", overflow: "hidden"}}
+        style={{margin: "40px 40px"}}
       >
         <Slider {...settings} className="autoplay-slider">
           {profiles.slice(0, 9).map((profile) => (

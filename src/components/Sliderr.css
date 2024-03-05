@@ -59,12 +59,15 @@ body {
     width: 100%;
     display: block;
     margin: 0 auto;
+    object-fit: cover;
+    border-radius: 50%;
 }
+
 
 .slider-image {
     width: 80%;
     height: 80%;
-    border-radius: 100%;
+    border-radius: 50%;
     margin-bottom: 10px;
     margin: 0 auto;
 }
