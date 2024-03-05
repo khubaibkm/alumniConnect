@@ -1,0 +1,15 @@
+.card {
+    height: 100%;
+    margin-bottom: 2rem;
+}
+
+.card-img-top {
+    height: 50%;
+    object-fit: cover;
+}
+
+@media (max-width: 768px) {
+    .card {
+        height: auto;
+    }
+}
