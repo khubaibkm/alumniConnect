@@ -11,6 +11,8 @@ import {
 } from "firebase/firestore";
 import { ref, uploadBytes, getDownloadURL } from "firebase/storage";
 import { FaPencilAlt } from "react-icons/fa";
+import { toast } from "react-toastify";
+import { to } from "react-spring";
 
 const MyProfile = () => {
   const [userData, setUserData] = useState(null);
@@ -87,7 +89,13 @@ const MyProfile = () => {
 
   const handleUpdate = async () => {
     try {
-      if (image) {
+      let updatedData = { ...updatedFormData };
+
+      if (!image && updatedData.profileImageUrl === "") {
+        // No image uploaded, and no existing profile image, set profileImageUrl to null
+        updatedData = { ...updatedData, profileImageUrl: null };
+      } else if (image) {
+        // Image uploaded
         const fileSizeInMB = image.size / (1024 * 1024);
         const allowedImageTypes = ["image/jpeg", "image/png", "image/gif"];
 
@@ -101,28 +109,43 @@ const MyProfile = () => {
           return;
         }
 
+        // Delete existing profile image from storage if it exists
+        if (updatedData.profileImageUrl) {
+          const existingImageRef = ref(storage, updatedData.profileImageUrl);
+          await deleteObject(existingImageRef);
+          console.log("Deleted existing image:", updatedData.profileImageUrl);
+        }
+
+        // Upload the new image
         const storageRef = ref(storage, `profile_images/${userData.email}`);
         const snapshot = await uploadBytes(storageRef, image);
         const imageUrl = await getDownloadURL(snapshot.ref);
-        setUpdatedFormData((prevData) => ({
-          ...prevData,
-          profileImageUrl: imageUrl,
-        }));
+        updatedData = { ...updatedData, profileImageUrl: imageUrl };
+        console.log("Uploaded new image:", imageUrl);
       }
 
       const alumniDocRef = doc(db, "alumni", userData.id);
       await updateDoc(alumniDocRef, {
-        ...updatedFormData,
+        ...updatedData,
         updatedAt: serverTimestamp(),
       });
 
       setUserData((prevUserData) => ({
         ...prevUserData,
-        ...updatedFormData,
+        ...updatedData,
       }));
 
       setEditingField(null);
       setImage(null);
+      setUpdatedFormData({
+        name: userData.name,
+        graduationYear: userData.graduationYear,
+        major: userData.major,
+        linkedin: userData.linkedin,
+        currentCompany: userData.currentCompany,
+        bio: userData.bio,
+        profileImageUrl: "", // Set to an empty string to clear the current profile image
+      });
     } catch (error) {
       console.error("Error updating user profile: ", error);
     }
