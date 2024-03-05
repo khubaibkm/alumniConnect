@@ -13,11 +13,21 @@
 
  .signup {
      position: relative;
-     top: -1.5rem;
+     top: 0rem;
      width: 16rem;
      padding: 1%;
-     border: 2px solid #8c8c8c;
+     border: 1px solid rgb(173, 173, 173);
+     border-radius: 8px;
+     color: black;
+     transition: all 0.4s ease;
  }
+
+ .signup:hover {
+     cursor: pointer;
+     background-color: rgb(173, 173, 173) !important;
+     color: #fff;
+ }
+
 
  .container {
      margin-top: 0rem !important;
