@@ -71,7 +71,7 @@ export const Navbar = () => {
   window.scrollTo(0, 0);
   return (
     <nav
-      className={`navbar navbar-expand-lg  fixed-top shadow-sm${
+      className={`navbar navbar-expand-lg  fixed-top shadow-sm ${
         isNavbarOpen ? "navbar-open" : ""
       }`}
     >
@@ -108,7 +108,7 @@ export const Navbar = () => {
             <li className="nav-item">
               <Link
                 to="/"
-                className="nav-link"
+                className="nav-link mt-1"
                 aria-current="page"
                 onClick={() => {
                   () => window.scrollTo(0, 0);
@@ -120,7 +120,7 @@ export const Navbar = () => {
             <li className="nav-item">
               <Link
                 to="/profilelist"
-                className="nav-link"
+                className="nav-link mt-1"
                 onClick={() => closeNavbar()}
               >
                 View Profiles
@@ -130,7 +130,7 @@ export const Navbar = () => {
               {isMyProfileVisible && (
                 <Link
                   to="/profile"
-                  className="nav-link"
+                  className="nav-link mt-1"
                   onClick={() => closeNavbar()}
                 >
                   My Profile
@@ -140,7 +140,7 @@ export const Navbar = () => {
             <li signn className="nav-item">
               {isSignedIn ? (
                 <a
-                  className="signt nav-link bg-secondary rounded text-white px-3 py-2 mx-2 "
+                  className="signt nav-link bg-secondary rounded text-white px-3 py-2 mx-2  "
                   style={{
                     display: "inline-block",
                     padding: "0.5rem",
@@ -158,7 +158,7 @@ export const Navbar = () => {
               ) : (
                 <Link
                   to="/signin"
-                  className={`signn nav-link bg-primary rounded text-white px-3 py-2 mx-2 button-animated d-lg-inline-block`}
+                  className={`signn nav-link bg-primary rounded text-white px-3 py-2 mx-2  d-lg-inline-block mt-1`}
                   onClick={() => closeNavbar()}
                 >
                   Alumni Login
@@ -169,7 +169,7 @@ export const Navbar = () => {
               {isSignedIn ? null : (
                 <Link
                   to="/signup"
-                  className="signn1  nav-link bg-primary rounded text-white px-3 py-2 mx-2 button-animated"
+                  className="signn1  nav-link bg-primary rounded text-white px-3 py-2 mx-2 button-animated mt-1"
                   onClick={() => closeNavbar()}
                 >
                   Alumni Registration
