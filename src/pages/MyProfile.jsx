@@ -8,8 +8,14 @@ import {
   updateDoc,
   doc,
   serverTimestamp,
+  deleteDoc,
 } from "firebase/firestore";
-import { ref, uploadBytes, getDownloadURL } from "firebase/storage";
+import {
+  ref,
+  uploadBytes,
+  getDownloadURL,
+  deleteObject,
+} from "firebase/storage";
 import { FaPencilAlt } from "react-icons/fa";
 import { toast } from "react-toastify";
 import { to } from "react-spring";
@@ -68,6 +74,32 @@ const MyProfile = () => {
 
     fetchUserProfile();
   }, []);
+  const handleDeleteAccount = async () => {
+    if (
+      window.confirm(
+        "Are you sure you want to permanently delete your profile?"
+      )
+    ) {
+      try {
+        // Delete user data from Firestore
+        await deleteDoc(doc(db, "alumni", userData.id));
+
+        // Delete user profile image from Storage if it exists
+        if (userData.profileImageUrl) {
+          const imageRef = ref(storage, userData.profileImageUrl);
+          await deleteObject(imageRef);
+        }
+
+        // Delete user from Authentication - you may need to handle this in your backend
+        await auth.currentUser.delete();
+        Navigate("/");
+        toast.success("Profile deleted successfully");
+      } catch (error) {
+        console.error("Error deleting user profile: ", error);
+        toast.error("Error deleting profile");
+      }
+    }
+  };
 
   const handleEditClick = (field) => {
     setEditingField(field);
@@ -334,6 +366,9 @@ const MyProfile = () => {
                 onClick={handleCancelEdit}
               >
                 Cancel
+              </button>
+              <button className="btn mt-2" onClick={handleDeleteAccount}>
+                Delete My Profile
               </button>
             </div>
           </div>
